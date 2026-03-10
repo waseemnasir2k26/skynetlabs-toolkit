@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 const tools = [
+  // Original 10
   { path: '/roi-calculator', name: 'AI ROI Calculator', emoji: '📊' },
   { path: '/rate-calculator', name: 'Freelance Rate Calculator', emoji: '💰' },
   { path: '/invoice-generator', name: 'Invoice Generator', emoji: '📄' },
@@ -12,31 +13,69 @@ const tools = [
   { path: '/project-tracker', name: 'Project Tracker', emoji: '📈' },
   { path: '/ai-quiz', name: 'AI Readiness Quiz', emoji: '🧠' },
   { path: '/client-onboarding', name: 'Client Onboarding', emoji: '🤝' },
+  // Phase 1: AI Intelligence
+  { path: '/brief-analyzer', name: 'Brief Analyzer', emoji: '🔍' },
+  { path: '/fire-or-keep', name: 'Fire or Keep', emoji: '🔥' },
+  { path: '/niche-scanner', name: 'Niche Scanner', emoji: '🔬' },
+  { path: '/sow-generator', name: 'SOW Generator', emoji: '📝' },
+  { path: '/client-health', name: 'Client Health', emoji: '💊' },
+  { path: '/meeting-manager', name: 'Meeting Manager', emoji: '📞' },
+  { path: '/positioning-generator', name: 'Positioning', emoji: '🏆' },
+  // Phase 2: Ad Creative & Marketing
+  { path: '/ad-brief-generator', name: 'Ad Brief', emoji: '📢' },
+  { path: '/ad-copy-generator', name: 'Ad Copy', emoji: '✍️' },
+  { path: '/campaign-strategy', name: 'Campaign Strategy', emoji: '🗺️' },
+  { path: '/landing-page-copy', name: 'Landing Page Copy', emoji: '🖥️' },
+  { path: '/ad-roi-calculator', name: 'Ad ROI Calculator', emoji: '📉' },
+  { path: '/ad-specs-guide', name: 'Ad Specs Guide', emoji: '📐' },
+  { path: '/competitor-angles', name: 'Competitor Angles', emoji: '🎯' },
+  // Phase 3: Agency Operations
+  { path: '/command-center', name: 'Command Center', emoji: '🖥️' },
+  { path: '/onboarding-portal', name: 'Onboarding Portal', emoji: '🚪' },
+  { path: '/scope-change', name: 'Scope Change', emoji: '📋' },
+  { path: '/productize-services', name: 'Productize Services', emoji: '📦' },
+  { path: '/post-mortem', name: 'Post-Mortem', emoji: '🔎' },
+  { path: '/client-report', name: 'Client Report', emoji: '📊' },
+  // Phase 4: Revenue & Growth
+  { path: '/micro-crm', name: 'Micro-CRM', emoji: '🔄' },
+  { path: '/service-configurator', name: 'Service Configurator', emoji: '⚙️' },
+  { path: '/revenue-goal', name: 'Revenue Goal', emoji: '🎯' },
+  { path: '/revenue-diversification', name: 'Revenue Diversification', emoji: '🥧' },
+  { path: '/win-back-campaigns', name: 'Win-Back Campaigns', emoji: '📧' },
+  // Phase 5: Authority Building
+  { path: '/content-planner', name: 'Content Planner', emoji: '📆' },
+  { path: '/social-proof-manager', name: 'Social Proof', emoji: '🌟' },
+  { path: '/business-scorecard', name: 'Business Scorecard', emoji: '💯' },
+  { path: '/website-audit', name: 'Website Audit', emoji: '🔍' },
+  { path: '/lead-magnet-factory', name: 'Lead Magnet', emoji: '🧲' },
 ]
 
 export default function Header() {
   const location = useLocation()
-  const isLanding = location.pathname === '/'
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const dropdownRef = useRef(null)
 
   const currentTool = tools.find(t => location.pathname.startsWith(t.path))
+
+  const filteredTools = searchQuery.trim()
+    ? tools.filter(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    : tools
 
   useEffect(() => {
     function handleClickOutside(e) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropdownOpen(false)
+        setSearchQuery('')
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Close mobile menu on route change
   useEffect(() => {
-    setMobileMenuOpen(false)
     setDropdownOpen(false)
+    setSearchQuery('')
   }, [location.pathname])
 
   return (
@@ -60,7 +99,7 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Center: Current tool or navigation */}
+          {/* Center: Current tool */}
           <div className="hidden md:flex items-center gap-3">
             {currentTool && (
               <>
@@ -101,25 +140,38 @@ export default function Header() {
 
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-72 bg-dark-100 border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden animate-fade-in">
-                  <div className="p-2">
-                    {tools.map((tool) => (
+                  <div className="p-2 border-b border-white/5">
+                    <input
+                      type="text"
+                      placeholder="Search tools..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full px-3 py-2 bg-dark-200/50 border border-white/5 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary/30"
+                      autoFocus
+                    />
+                  </div>
+                  <div className="p-2 max-h-80 overflow-y-auto custom-scrollbar">
+                    {filteredTools.map((tool) => (
                       <Link
                         key={tool.path}
                         to={tool.path}
-                        onClick={() => setDropdownOpen(false)}
-                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${
+                        onClick={() => { setDropdownOpen(false); setSearchQuery('') }}
+                        className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all ${
                           location.pathname.startsWith(tool.path)
                             ? 'bg-primary/10 text-primary'
                             : 'text-gray-300 hover:bg-dark-200 hover:text-white'
                         }`}
                       >
                         <span className="text-lg">{tool.emoji}</span>
-                        <span>{tool.name}</span>
+                        <span className="truncate">{tool.name}</span>
                         {location.pathname.startsWith(tool.path) && (
-                          <span className="ml-auto w-2 h-2 rounded-full bg-primary" />
+                          <span className="ml-auto w-2 h-2 rounded-full bg-primary flex-shrink-0" />
                         )}
                       </Link>
                     ))}
+                    {filteredTools.length === 0 && (
+                      <p className="text-gray-500 text-sm text-center py-4">No tools found</p>
+                    )}
                   </div>
                 </div>
               )}
