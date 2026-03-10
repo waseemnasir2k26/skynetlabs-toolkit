@@ -118,30 +118,30 @@ body {
 /* Glass morphism utility */
 @layer components {
   .glass {
-    background: rgba(26, 26, 36, 0.6);
+    background: color-mix(in srgb, var(--bg-card) 60%, transparent);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(19, 185, 115, 0.1);
+    border: 1px solid var(--border);
   }
 
   .glass-strong {
-    background: rgba(26, 26, 36, 0.8);
+    background: color-mix(in srgb, var(--bg-card) 80%, transparent);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(19, 185, 115, 0.15);
+    border: 1px solid var(--border-hover);
   }
 
   .glass-card {
-    background: rgba(18, 18, 26, 0.7);
+    background: color-mix(in srgb, var(--bg-card) 70%, transparent);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
   }
 
   .glass-card-hover:hover {
-    border-color: rgba(19, 185, 115, 0.2);
-    box-shadow: 0 0 30px rgba(19, 185, 115, 0.05);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-glow);
   }
 
   .gradient-border {
@@ -154,7 +154,7 @@ body {
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, #13b973, transparent 50%, #13b973);
+    background: linear-gradient(135deg, var(--accent), transparent 50%, var(--accent));
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
@@ -164,39 +164,37 @@ body {
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #13b973 0%, #3dd68a 50%, #13b973 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #13b973, #0ed4e6);
+    background: linear-gradient(135deg, var(--accent), var(--info));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .glow {
-    box-shadow: 0 0 20px rgba(19, 185, 115, 0.2),
-                0 0 60px rgba(19, 185, 115, 0.1);
+    box-shadow: var(--shadow-glow);
   }
 
   .glow-strong {
-    box-shadow: 0 0 30px rgba(19, 185, 115, 0.3),
-                0 0 80px rgba(19, 185, 115, 0.15);
+    box-shadow: var(--accent-glow);
   }
 
   .glow-green {
-    box-shadow: 0 0 20px rgba(19, 185, 115, 0.3), 0 0 60px rgba(19, 185, 115, 0.1);
+    box-shadow: var(--shadow-glow);
   }
 
   .glow-green-strong {
-    box-shadow: 0 0 30px rgba(19, 185, 115, 0.5), 0 0 80px rgba(19, 185, 115, 0.2);
+    box-shadow: var(--accent-glow);
   }
 
   .glow-text {
-    text-shadow: 0 0 20px rgba(19, 185, 115, 0.5);
+    text-shadow: var(--shadow-glow);
   }
 
   .star-glow {
@@ -204,34 +202,57 @@ body {
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg;
-    box-shadow: 0 4px 15px rgba(19, 185, 115, 0.3);
+    background: var(--accent);
+    color: var(--text-on-accent);
+    @apply font-semibold px-6 py-3 rounded-xl transition-all duration-200;
+    box-shadow: var(--shadow-glow);
   }
 
   .btn-primary:hover {
-    box-shadow: 0 6px 25px rgba(19, 185, 115, 0.4);
+    background: var(--accent-hover);
+    box-shadow: var(--accent-glow);
     transform: translateY(-1px);
   }
 
   .btn-secondary {
-    @apply bg-dark-200 hover:bg-dark-300 text-gray-200 font-medium px-6 py-3 rounded-xl transition-all duration-200 border border-dark-400/30;
+    background: var(--bg-elevated);
+    color: var(--text-body);
+    border: 1px solid var(--border);
+    @apply font-medium px-6 py-3 rounded-xl transition-all duration-200;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--border-hover);
   }
 
   .btn-danger {
-    @apply bg-red-600/20 hover:bg-red-600/30 text-red-400 font-medium px-6 py-2.5 rounded-lg border border-red-600/30 transition-all duration-200;
+    background: var(--danger-soft);
+    color: var(--danger);
+    border: 1px solid var(--danger-soft);
+    @apply font-medium px-6 py-2.5 rounded-lg transition-all duration-200;
   }
 
   .input-field {
-    @apply w-full bg-dark-200 border border-dark-400/30 rounded-xl px-4 py-3 text-gray-100 placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-200;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-heading);
+    @apply w-full rounded-xl px-4 py-3 placeholder-gray-500 focus:outline-none transition-all duration-200;
+  }
+
+  .input-field:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 2px var(--accent-soft);
   }
 
   .card {
-    @apply bg-dark-800 border border-dark-500 rounded-xl p-6 transition-all duration-300;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    @apply rounded-xl p-6 transition-all duration-300;
   }
 
   .card-hover:hover {
-    @apply border-dark-300 shadow-lg;
-    box-shadow: 0 0 20px rgba(19, 185, 115, 0.05);
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow-glow);
   }
 
   .badge {
@@ -250,7 +271,7 @@ input[type='range'] {
   width: 100%;
   height: 6px;
   border-radius: 3px;
-  background: linear-gradient(to right, #13b973 0%, #13b973 var(--value-percent, 50%), #252530 var(--value-percent, 50%), #252530 100%);
+  background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--value-percent, 50%), var(--bg-elevated) var(--value-percent, 50%), var(--bg-elevated) 100%);
   outline: none;
 }
 
@@ -260,24 +281,24 @@ input[type='range']::-webkit-slider-thumb {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #13b973;
+  background: var(--accent);
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(19, 185, 115, 0.5);
+  box-shadow: var(--shadow-glow);
   transition: box-shadow 0.2s;
 }
 
 input[type='range']::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 20px rgba(19, 185, 115, 0.8);
+  box-shadow: var(--accent-glow);
 }
 
 input[type='range']::-moz-range-thumb {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #13b973;
+  background: var(--accent);
   cursor: pointer;
   border: none;
-  box-shadow: 0 0 10px rgba(19, 185, 115, 0.5);
+  box-shadow: var(--shadow-glow);
 }
 
 /* Number input spinners */
@@ -305,11 +326,11 @@ select {
 /* Color input */
 input[type="color"] {
   -webkit-appearance: none;
-  border: 2px solid #2a2a3a;
+  border: 2px solid var(--border);
   border-radius: 8px;
   cursor: pointer;
   padding: 2px;
-  background: #111118;
+  background: var(--bg-input);
   width: 50px;
   height: 40px;
 }
@@ -336,15 +357,15 @@ input[type="color"]::-webkit-color-swatch {
 /* Background grid pattern */
 .bg-grid {
   background-image:
-    linear-gradient(rgba(19, 185, 115, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(19, 185, 115, 0.03) 1px, transparent 1px);
+    linear-gradient(var(--accent-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent-soft) 1px, transparent 1px);
   background-size: 50px 50px;
 }
 
 /* Pulse glow */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(19, 185, 115, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(19, 185, 115, 0.3); }
+  0%, 100% { box-shadow: var(--shadow-glow); }
+  50% { box-shadow: var(--accent-glow); }
 }
 .pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
@@ -416,11 +437,11 @@ input[type="color"]::-webkit-color-swatch {
 /* Dragging styles */
 .dragging {
   opacity: 0.5;
-  border: 2px dashed #13b973 !important;
+  border: 2px dashed var(--accent) !important;
 }
 
 .drag-over {
-  border-top: 2px solid #13b973 !important;
+  border-top: 2px solid var(--accent) !important;
 }
 
 /* Gauge animation */
@@ -448,8 +469,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .custom-tooltip {
-  background: #14141f !important;
-  border: 1px solid #2a2a3d !important;
+  background: var(--bg-tooltip) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 8px !important;
   padding: 12px !important;
 }
@@ -495,7 +516,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .change-order-pdf .accent {
-  color: #13b973;
+  color: var(--accent);
 }
 
 /* Checkbox styling */
@@ -572,7 +593,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .animated-gradient-text {
-  background: linear-gradient(270deg, #13b973, #0ed4e6, #3dd68a, #13b973);
+  background: linear-gradient(270deg, var(--accent), var(--info), var(--success), var(--accent));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
