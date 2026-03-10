@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 
 export async function generatePDF(elementId, filename = 'onboarding-package.pdf') {
   const element = document.getElementById(elementId);

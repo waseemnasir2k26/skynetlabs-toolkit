@@ -16,13 +16,13 @@ function App() {
       {!isClientFacing && <Header />}
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/templates" element={<TemplateList />} />
-        <Route path="/templates/new" element={<TemplateBuilder />} />
-        <Route path="/templates/:id" element={<TemplateBuilder />} />
-        <Route path="/client/:id" element={<ClientView />} />
-        <Route path="/onboard/:templateId" element={<ClientOnboarding />} />
-        <Route path="/onboard" element={<ClientOnboarding />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="templates" element={<TemplateList />} />
+        <Route path="templates/new" element={<TemplateBuilder />} />
+        <Route path="templates/:id" element={<TemplateBuilder />} />
+        <Route path="client/:id" element={<ClientView />} />
+        <Route path="onboard/:templateId" element={<ClientOnboarding />} />
+        <Route path="onboard" element={<ClientOnboarding />} />
+        <Route path="settings" element={<Settings />} />
       </Routes>
     </div>
   );

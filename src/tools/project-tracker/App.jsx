@@ -13,16 +13,16 @@ function AppContent() {
   return (
     <Routes>
       {/* Client view - standalone, no sidebar */}
-      <Route path="/client/:id" element={<ClientView />} />
+      <Route path="client/:id" element={<ClientView />} />
 
       {/* Agency views - with sidebar */}
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/new-project" element={<NewProject />} />
-        <Route path="/project/:id" element={<ProjectDetail />} />
-        <Route path="/kanban" element={<KanbanBoard />} />
-        <Route path="/calendar" element={<CalendarView />} />
-        <Route path="/settings" element={<DataManagement />} />
+        <Route path="new-project" element={<NewProject />} />
+        <Route path="project/:id" element={<ProjectDetail />} />
+        <Route path="kanban" element={<KanbanBoard />} />
+        <Route path="calendar" element={<CalendarView />} />
+        <Route path="settings" element={<DataManagement />} />
       </Route>
     </Routes>
   )
