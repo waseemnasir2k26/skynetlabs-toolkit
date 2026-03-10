@@ -264,6 +264,25 @@ body {
   }
 }
 
+/* Global focus styles for form inputs */
+input:not([type='range']):not([type='color']):not([type='checkbox']):not([type='radio']):focus,
+textarea:focus,
+select:focus {
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 0 0 2px var(--accent-soft);
+  outline: none;
+}
+
+/* Smooth transitions for interactive elements */
+button, a, input, textarea, select {
+  transition: all 0.2s ease;
+}
+
+/* Scroll-to-top smooth behavior */
+html {
+  scroll-padding-top: 5rem;
+}
+
 /* Range slider custom styling */
 input[type='range'] {
   -webkit-appearance: none;
@@ -599,4 +618,40 @@ input[type="color"]::-webkit-color-swatch {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: gradient-shift 4s ease infinite;
+}
+
+/* Stagger animation for lists */
+@keyframes stagger-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stagger-item {
+  animation: stagger-in 0.4s ease-out both;
+}
+
+/* Responsive hide/show */
+@media (max-width: 640px) {
+  .hide-mobile { display: none !important; }
+}
+@media (min-width: 641px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .particle { animation: none !important; }
+  .animated-gradient-text { animation: none !important; }
 }
