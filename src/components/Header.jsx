@@ -4,47 +4,36 @@ import ThemeToggle from '../tools/shared/ThemeToggle'
 import LiveUsers from '../tools/shared/LiveUsers'
 
 const tools = [
-  // Original 10
-  { path: '/roi-calculator', name: 'AI ROI Calculator', emoji: '📊' },
-  { path: '/rate-calculator', name: 'Freelance Rate Calculator', emoji: '💰' },
-  { path: '/invoice-generator', name: 'Invoice Generator', emoji: '📄' },
+  // Core Tools
   { path: '/proposal-builder', name: 'Proposal Builder', emoji: '📋' },
-  { path: '/content-calendar', name: 'Content Calendar', emoji: '📅' },
   { path: '/scope-tracker', name: 'Scope Creep Tracker', emoji: '🎯' },
   { path: '/testimonials', name: 'Testimonial Collector', emoji: '⭐' },
   { path: '/project-tracker', name: 'Project Tracker', emoji: '📈' },
-  { path: '/ai-quiz', name: 'AI Readiness Quiz', emoji: '🧠' },
   { path: '/client-onboarding', name: 'Client Onboarding', emoji: '🤝' },
-  // Phase 1: AI Intelligence
+  // AI Intelligence
   { path: '/brief-analyzer', name: 'Brief Analyzer', emoji: '🔍' },
-  { path: '/fire-or-keep', name: 'Fire or Keep', emoji: '🔥' },
   { path: '/niche-scanner', name: 'Niche Scanner', emoji: '🔬' },
   { path: '/sow-generator', name: 'SOW Generator', emoji: '📝' },
   { path: '/client-health', name: 'Client Health', emoji: '💊' },
   { path: '/meeting-manager', name: 'Meeting Manager', emoji: '📞' },
   { path: '/positioning-generator', name: 'Positioning', emoji: '🏆' },
-  // Phase 2: Ad Creative & Marketing
-  { path: '/ad-brief-generator', name: 'Ad Brief', emoji: '📢' },
-  { path: '/ad-copy-generator', name: 'Ad Copy', emoji: '✍️' },
-  { path: '/campaign-strategy', name: 'Campaign Strategy', emoji: '🗺️' },
-  { path: '/landing-page-copy', name: 'Landing Page Copy', emoji: '🖥️' },
+  // Ad Creative & Marketing
   { path: '/ad-roi-calculator', name: 'Ad ROI Calculator', emoji: '📉' },
-  { path: '/ad-specs-guide', name: 'Ad Specs Guide', emoji: '📐' },
   { path: '/competitor-angles', name: 'Competitor Angles', emoji: '🎯' },
-  // Phase 3: Agency Operations
+  // Agency Operations
   { path: '/command-center', name: 'Command Center', emoji: '🖥️' },
   { path: '/onboarding-portal', name: 'Onboarding Portal', emoji: '🚪' },
   { path: '/scope-change', name: 'Scope Change', emoji: '📋' },
   { path: '/productize-services', name: 'Productize Services', emoji: '📦' },
   { path: '/post-mortem', name: 'Post-Mortem', emoji: '🔎' },
   { path: '/client-report', name: 'Client Report', emoji: '📊' },
-  // Phase 4: Revenue & Growth
+  // Revenue & Growth
   { path: '/micro-crm', name: 'Micro-CRM', emoji: '🔄' },
   { path: '/service-configurator', name: 'Service Configurator', emoji: '⚙️' },
   { path: '/revenue-goal', name: 'Revenue Goal', emoji: '🎯' },
   { path: '/revenue-diversification', name: 'Revenue Diversification', emoji: '🥧' },
   { path: '/win-back-campaigns', name: 'Win-Back Campaigns', emoji: '📧' },
-  // Phase 5: Authority Building
+  // Authority Building
   { path: '/content-planner', name: 'Content Planner', emoji: '📆' },
   { path: '/social-proof-manager', name: 'Social Proof', emoji: '🌟' },
   { path: '/business-scorecard', name: 'Business Scorecard', emoji: '💯' },

@@ -28,16 +28,16 @@ export default function Footer() {
           <div>
             <h4 className="text-gray-300 font-semibold text-sm mb-3">Quick Links</h4>
             <div className="grid grid-cols-2 gap-1.5">
-              <Link to="/roi-calculator" className="text-gray-500 hover:text-primary text-xs transition-colors">ROI Calculator</Link>
-              <Link to="/rate-calculator" className="text-gray-500 hover:text-primary text-xs transition-colors">Rate Calculator</Link>
-              <Link to="/invoice-generator" className="text-gray-500 hover:text-primary text-xs transition-colors">Invoice Generator</Link>
               <Link to="/proposal-builder" className="text-gray-500 hover:text-primary text-xs transition-colors">Proposal Builder</Link>
-              <Link to="/content-calendar" className="text-gray-500 hover:text-primary text-xs transition-colors">Content Calendar</Link>
               <Link to="/scope-tracker" className="text-gray-500 hover:text-primary text-xs transition-colors">Scope Tracker</Link>
-              <Link to="/testimonials" className="text-gray-500 hover:text-primary text-xs transition-colors">Testimonials</Link>
               <Link to="/project-tracker" className="text-gray-500 hover:text-primary text-xs transition-colors">Project Tracker</Link>
-              <Link to="/ai-quiz" className="text-gray-500 hover:text-primary text-xs transition-colors">AI Readiness Quiz</Link>
+              <Link to="/micro-crm" className="text-gray-500 hover:text-primary text-xs transition-colors">Micro-CRM</Link>
+              <Link to="/testimonials" className="text-gray-500 hover:text-primary text-xs transition-colors">Testimonials</Link>
               <Link to="/client-onboarding" className="text-gray-500 hover:text-primary text-xs transition-colors">Client Onboarding</Link>
+              <Link to="/sow-generator" className="text-gray-500 hover:text-primary text-xs transition-colors">SOW Generator</Link>
+              <Link to="/command-center" className="text-gray-500 hover:text-primary text-xs transition-colors">Command Center</Link>
+              <Link to="/business-scorecard" className="text-gray-500 hover:text-primary text-xs transition-colors">Business Scorecard</Link>
+              <Link to="/lead-magnet-factory" className="text-gray-500 hover:text-primary text-xs transition-colors">Lead Magnet</Link>
             </div>
           </div>
 
