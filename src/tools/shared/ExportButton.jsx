@@ -17,12 +17,20 @@ export default function ExportButton({ elementId, filename = 'export.pdf', label
     element.style.height = 'auto'
     element.style.maxHeight = 'none'
 
+    // Temporarily switch to light theme for clean white-background PDF
+    const root = document.documentElement
+    const originalTheme = root.getAttribute('data-theme')
+    root.setAttribute('data-theme', 'light')
+
+    // Wait for styles to repaint
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+
     try {
       const canvas = await html2canvas(element, {
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507',
+        backgroundColor: '#ffffff',
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
       })
@@ -46,6 +54,8 @@ export default function ExportButton({ elementId, filename = 'export.pdf', label
       pdf.save(filename)
       if (toast) toast('PDF exported successfully!', 'success')
     } finally {
+      // Restore original theme
+      root.setAttribute('data-theme', originalTheme || 'dark')
       element.style.overflow = originalOverflow
       element.style.height = originalHeight
       element.style.maxHeight = originalMaxHeight

@@ -398,30 +398,35 @@ export default function App() {
     if (toast) toast('Landing page downloaded!', 'success')
   }
 
-  const downloadContentPdf = () => {
+  const downloadContentPdf = async () => {
     // Use the ExportButton pattern but trigger directly
     const el = document.getElementById('lead-magnet-content')
     if (!el) return
-    import('html2canvas').then(({ default: html2canvas }) => {
-      import('jspdf').then(({ jsPDF }) => {
-        html2canvas(el, { scale: 2, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507', useCORS: true }).then(canvas => {
-          const imgData = canvas.toDataURL('image/png')
-          const pdf = new jsPDF('p', 'mm', 'a4')
-          const pdfWidth = pdf.internal.pageSize.getWidth()
-          const pdfHeight = pdf.internal.pageSize.getHeight()
-          const ratio = pdfWidth / canvas.width
-          const totalPdfHeight = canvas.height * ratio
-          let position = 0
-          while (position < totalPdfHeight) {
-            if (position > 0) pdf.addPage()
-            pdf.addImage(imgData, 'PNG', 0, -position, pdfWidth, totalPdfHeight)
-            position += pdfHeight
-          }
-          pdf.save(`${(editedContent?.title || 'lead-magnet').toLowerCase().replace(/\s+/g, '-')}.pdf`)
-          if (toast) toast('Lead magnet exported as PDF!', 'success')
-        })
-      })
-    })
+    const root = document.documentElement
+    const originalTheme = root.getAttribute('data-theme')
+    root.setAttribute('data-theme', 'light')
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+    try {
+      const { default: html2canvas } = await import('html2canvas')
+      const { jsPDF } = await import('jspdf')
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: '#ffffff', useCORS: true })
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      const pdfWidth = pdf.internal.pageSize.getWidth()
+      const pdfHeight = pdf.internal.pageSize.getHeight()
+      const ratio = pdfWidth / canvas.width
+      const totalPdfHeight = canvas.height * ratio
+      let position = 0
+      while (position < totalPdfHeight) {
+        if (position > 0) pdf.addPage()
+        pdf.addImage(imgData, 'PNG', 0, -position, pdfWidth, totalPdfHeight)
+        position += pdfHeight
+      }
+      pdf.save(`${(editedContent?.title || 'lead-magnet').toLowerCase().replace(/\s+/g, '-')}.pdf`)
+      if (toast) toast('Lead magnet exported as PDF!', 'success')
+    } finally {
+      root.setAttribute('data-theme', originalTheme || 'dark')
+    }
   }
 
   const handleReset = () => {

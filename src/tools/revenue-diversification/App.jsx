@@ -98,8 +98,12 @@ export default function App() {
     el.style.overflow = 'visible'
     el.style.height = 'auto'
     el.style.maxHeight = 'none'
+    const root = document.documentElement
+    const originalTheme = root.getAttribute('data-theme')
+    root.setAttribute('data-theme', 'light')
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
     try {
-      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507' })
+      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const pw = pdf.internal.pageSize.getWidth()
@@ -115,6 +119,7 @@ export default function App() {
       pdf.save('revenue-diversification-report.pdf')
       if (toast) toast('Report exported as PDF!', 'success')
     } finally {
+      root.setAttribute('data-theme', originalTheme || 'dark')
       el.style.overflow = orig.overflow
       el.style.height = orig.height
       el.style.maxHeight = orig.maxHeight

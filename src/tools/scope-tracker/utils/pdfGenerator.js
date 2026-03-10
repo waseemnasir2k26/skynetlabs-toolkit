@@ -163,6 +163,11 @@ export async function generateChangeOrderPDF(project, selectedRequests, stats) {
 
   document.body.appendChild(container);
 
+  const root = document.documentElement;
+  const originalTheme = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', 'light');
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
   try {
     const canvas = await html2canvas(container, {
       scale: 2,
@@ -196,6 +201,7 @@ export async function generateChangeOrderPDF(project, selectedRequests, stats) {
 
     return orderNumber;
   } finally {
+    root.setAttribute('data-theme', originalTheme || 'dark');
     document.body.removeChild(container);
   }
 }

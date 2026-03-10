@@ -202,11 +202,19 @@ ${selected.map(t => `<div class="card">
 
   const downloadQuoteCard = async () => {
     if (!cardRef.current) return
-    const canvas = await html2canvas(cardRef.current, { scale: 2, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507', useCORS: true })
-    const url = canvas.toDataURL('image/png')
-    const a = document.createElement('a')
-    a.href = url; a.download = 'testimonial-card.png'; a.click()
-    if (toast) toast('Quote card downloaded!', 'success')
+    const root = document.documentElement
+    const originalTheme = root.getAttribute('data-theme')
+    root.setAttribute('data-theme', 'light')
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+    try {
+      const canvas = await html2canvas(cardRef.current, { scale: 2, backgroundColor: '#ffffff', useCORS: true })
+      const url = canvas.toDataURL('image/png')
+      const a = document.createElement('a')
+      a.href = url; a.download = 'testimonial-card.png'; a.click()
+      if (toast) toast('Quote card downloaded!', 'success')
+    } finally {
+      root.setAttribute('data-theme', originalTheme || 'dark')
+    }
   }
 
   // Generate shareable link (simulated)

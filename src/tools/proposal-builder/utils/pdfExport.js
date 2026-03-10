@@ -13,12 +13,17 @@ export const exportToPDF = async (elementId, filename = 'proposal.pdf') => {
   element.style.height = 'auto';
   element.style.maxHeight = 'none';
 
+  const root = document.documentElement;
+  const originalTheme = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', 'light');
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
   try {
     const canvas = await html2canvas(element, {
       scale: 2,
       useCORS: true,
       logging: false,
-      backgroundColor: null,
+      backgroundColor: '#ffffff',
       windowWidth: element.scrollWidth,
       windowHeight: element.scrollHeight,
     });
@@ -44,6 +49,7 @@ export const exportToPDF = async (elementId, filename = 'proposal.pdf') => {
 
     pdf.save(filename);
   } finally {
+    root.setAttribute('data-theme', originalTheme || 'dark');
     element.style.overflow = originalOverflow;
     element.style.height = originalHeight;
     element.style.maxHeight = originalMaxHeight;

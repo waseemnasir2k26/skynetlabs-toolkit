@@ -284,9 +284,13 @@ export default function App() {
   const exportPDF = async () => {
     if (!previewRef.current) return
     setExporting(true)
+    const root = document.documentElement
+    const originalTheme = root.getAttribute('data-theme')
+    root.setAttribute('data-theme', 'light')
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
     try {
       const canvas = await html2canvas(previewRef.current, {
-        backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507',
+        backgroundColor: '#ffffff',
         scale: 2,
         useCORS: true,
         logging: false
@@ -320,6 +324,7 @@ export default function App() {
       console.error('Export failed:', err)
       if (toast) toast('PDF export failed. Please try again.', 'error')
     } finally {
+      root.setAttribute('data-theme', originalTheme || 'dark')
       setExporting(false)
     }
   }

@@ -131,9 +131,13 @@ export default function App() {
     el.style.overflow = 'visible'
     el.style.height = 'auto'
     el.style.maxHeight = 'none'
+    const root = document.documentElement
+    const originalTheme = root.getAttribute('data-theme')
+    root.setAttribute('data-theme', 'light')
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
     try {
       const canvas = await html2canvas(el, {
-        scale: 2, useCORS: true, logging: false, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507',
+        scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff',
         windowWidth: el.scrollWidth, windowHeight: el.scrollHeight,
       })
       const imgData = canvas.toDataURL('image/png')
@@ -151,6 +155,7 @@ export default function App() {
       pdf.save('revenue-goal-plan.pdf')
       if (toast) toast('Revenue plan exported as PDF!', 'success')
     } finally {
+      root.setAttribute('data-theme', originalTheme || 'dark')
       el.style.overflow = origOverflow
       el.style.height = origHeight
       el.style.maxHeight = origMaxHeight

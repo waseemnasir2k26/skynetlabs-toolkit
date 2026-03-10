@@ -5,37 +5,46 @@ export async function generatePDF(elementId, filename = 'onboarding-package.pdf'
   const element = document.getElementById(elementId);
   if (!element) return;
 
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507',
-    logging: false,
-  });
+  const root = document.documentElement;
+  const originalTheme = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', 'light');
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-  const imgData = canvas.toDataURL('image/png');
-  const pdf = new jsPDF('p', 'mm', 'a4');
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = pdf.internal.pageSize.getHeight();
-  const imgWidth = canvas.width;
-  const imgHeight = canvas.height;
-  const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-  const imgScaledWidth = imgWidth * ratio;
-  const imgScaledHeight = imgHeight * ratio;
+  try {
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+    });
 
-  let heightLeft = imgScaledHeight;
-  let position = 0;
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+    const imgScaledWidth = imgWidth * ratio;
+    const imgScaledHeight = imgHeight * ratio;
 
-  pdf.addImage(imgData, 'PNG', 0, position, imgScaledWidth, imgScaledHeight);
-  heightLeft -= pdfHeight;
+    let heightLeft = imgScaledHeight;
+    let position = 0;
 
-  while (heightLeft > 0) {
-    position = heightLeft - imgScaledHeight;
-    pdf.addPage();
     pdf.addImage(imgData, 'PNG', 0, position, imgScaledWidth, imgScaledHeight);
     heightLeft -= pdfHeight;
-  }
 
-  pdf.save(filename);
+    while (heightLeft > 0) {
+      position = heightLeft - imgScaledHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgScaledWidth, imgScaledHeight);
+      heightLeft -= pdfHeight;
+    }
+
+    pdf.save(filename);
+  } finally {
+    root.setAttribute('data-theme', originalTheme || 'dark');
+  }
 }
 
 export async function generateClientPDF(clientData) {

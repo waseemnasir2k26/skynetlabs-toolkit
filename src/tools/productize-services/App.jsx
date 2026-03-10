@@ -269,12 +269,16 @@ export default function App() {
   }
 
   const exportPDF = useCallback(async () => {
+    const root = document.documentElement
+    const originalTheme = root.getAttribute('data-theme')
+    root.setAttribute('data-theme', 'light')
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
     try {
       const html2canvas = (await import('html2canvas')).default
       const { jsPDF } = await import('jspdf')
       const el = exportRef.current
       if (!el) return
-      const canvas = await html2canvas(el, { backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507', scale: 2 })
+      const canvas = await html2canvas(el, { backgroundColor: '#ffffff', scale: 2 })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const pdfWidth = pdf.internal.pageSize.getWidth()
@@ -296,6 +300,8 @@ export default function App() {
     } catch (err) {
       console.error('PDF export failed:', err)
       if (toast) toast('PDF export failed. Please try again.', 'error')
+    } finally {
+      root.setAttribute('data-theme', originalTheme || 'dark')
     }
   }, [])
 
