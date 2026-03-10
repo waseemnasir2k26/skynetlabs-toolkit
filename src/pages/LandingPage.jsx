@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import LiveUsers from '../tools/shared/LiveUsers'
 
 const tools = [
   // Original 10
@@ -162,23 +163,26 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          {/* Stats Bar */}
+          {/* Live Users + Stats Bar */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex items-center justify-center gap-6 sm:gap-10 mb-12"
+            className="flex flex-col items-center gap-6 mb-12"
           >
-            {[
-              { value: '40', label: 'Free Tools' },
-              { value: '100%', label: 'Free Forever' },
-              { value: 'Zero', label: 'Sign-up Required' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--text-heading)" }}>{stat.value}</div>
-                <div className="text-xs sm:text-sm" style={{ color: "var(--text-muted)" }}>{stat.label}</div>
-              </div>
-            ))}
+            <LiveUsers />
+            <div className="flex items-center justify-center gap-6 sm:gap-10">
+              {[
+                { value: '40', label: 'Free Tools' },
+                { value: '100%', label: 'Free Forever' },
+                { value: 'Zero', label: 'Sign-up Required' },
+              ].map((stat, i) => (
+                <div key={i} className="text-center">
+                  <div className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--text-heading)" }}>{stat.value}</div>
+                  <div className="text-xs sm:text-sm" style={{ color: "var(--text-muted)" }}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import ThemeToggle from '../tools/shared/ThemeToggle'
+import LiveUsers from '../tools/shared/LiveUsers'
 
 const tools = [
   // Original 10
@@ -124,6 +125,9 @@ export default function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
+            <div className="hidden lg:block">
+              <LiveUsers />
+            </div>
             {/* Tool Switcher Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button

@@ -1,8 +1,23 @@
-export default function ToolLayout({ title, description, icon, proTip, maxWidth = 'default', children }) {
+import { useLocation } from 'react-router-dom'
+import RelatedTools from './RelatedTools'
+import SEOHead from './SEOHead'
+
+export default function ToolLayout({ title, description, icon, proTip, category, maxWidth = 'default', children }) {
   const width = maxWidth === 'wide' ? 'max-w-7xl' : 'max-w-5xl'
+  const location = useLocation()
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
+      {/* SEO */}
+      {category && (
+        <SEOHead
+          title={title}
+          description={description || `Free ${title} for freelancers and agencies.`}
+          toolName={title}
+          category={category}
+        />
+      )}
+
       <div className={`${width} mx-auto px-4 sm:px-6 lg:px-8 py-8`}>
         {/* Hero */}
         <div className="text-center mb-8">
@@ -45,9 +60,17 @@ export default function ToolLayout({ title, description, icon, proTip, maxWidth 
           </div>
         )}
 
+        {/* Related Tools */}
+        {category && (
+          <RelatedTools
+            currentPath={location.pathname}
+            category={category}
+          />
+        )}
+
         {/* CTA */}
         <div
-          className="rounded-xl p-6 mb-8 text-center"
+          className="rounded-xl p-6 mb-8 mt-6 text-center"
           style={{
             background: 'var(--bg-elevated)',
             border: '1px solid var(--border)',
