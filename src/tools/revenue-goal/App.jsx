@@ -106,7 +106,7 @@ export default function App() {
     el.style.maxHeight = 'none'
     try {
       const canvas = await html2canvas(el, {
-        scale: 2, useCORS: true, logging: false, backgroundColor: '#0a0a0f',
+        scale: 2, useCORS: true, logging: false, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507',
         windowWidth: el.scrollWidth, windowHeight: el.scrollHeight,
       })
       const imgData = canvas.toDataURL('image/png')
@@ -132,8 +132,8 @@ export default function App() {
   const SliderInput = ({ label, value, onChange, min, max, step = 1, prefix = '', suffix = '' }) => (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
-        <label className="text-sm text-gray-400">{label}</label>
-        <span className="text-sm font-semibold text-white">{prefix}{typeof value === 'number' ? value.toLocaleString() : value}{suffix}</span>
+        <label className="text-sm" style={{ color: "var(--text-muted)" }}>{label}</label>
+        <span className="text-sm font-semibold" style={{ color: "var(--text-heading)" }}>{prefix}{typeof value === 'number' ? value.toLocaleString() : value}{suffix}</span>
       </div>
       <input
         type="range"
@@ -142,9 +142,10 @@ export default function App() {
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-[#13b973] bg-white/10"
+        className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+        style={{ accentColor: "var(--accent)", background: "rgba(255,255,255,0.1)" }}
       />
-      <div className="flex justify-between text-xs text-gray-600">
+      <div className="flex justify-between text-xs" style={{ color: "var(--text-muted)" }}>
         <span>{prefix}{min.toLocaleString()}{suffix}</span>
         <span>{prefix}{max.toLocaleString()}{suffix}</span>
       </div>
@@ -185,8 +186,8 @@ export default function App() {
                   }}
                 >
                   <div className="text-center">
-                    <div className="text-xs text-gray-400">{step.label}</div>
-                    <div className="text-lg font-bold text-white">{step.value}</div>
+                    <div className="text-xs" style={{ color: "var(--text-muted)" }}>{step.label}</div>
+                    <div className="text-lg font-bold" style={{ color: "var(--text-heading)" }}>{step.value}</div>
                   </div>
                 </div>
               ))}
@@ -202,9 +203,9 @@ export default function App() {
             { label: 'Billable Hrs/Day', value: metrics.billableHoursPerDay.toFixed(1) },
             { label: 'Projects/Month', value: (metrics.projectsNeeded / 12).toFixed(1) },
           ].map((m) => (
-            <div key={m.label} className="bg-dark-100/50 border border-white/5 rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-[#13b973]">{m.value}</div>
-              <div className="text-xs text-gray-400 mt-1">{m.label}</div>
+            <div key={m.label} className="rounded-xl p-4 text-center" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+              <div className="text-2xl font-bold" style={{ color: "var(--accent)" }}>{m.value}</div>
+              <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{m.label}</div>
             </div>
           ))}
         </div>
@@ -214,11 +215,11 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {actionPlan.map((section) => (
               <div key={section.title}>
-                <h4 className="text-white font-semibold mb-3 text-sm border-b border-white/10 pb-2">{section.title}</h4>
+                <h4 className="font-semibold mb-3 text-sm pb-2" style={{ color: "var(--text-heading)", borderBottom: "1px solid var(--border)" }}>{section.title}</h4>
                 <ul className="space-y-2">
                   {section.items.map((item, i) => (
-                    <li key={i} className="flex gap-2 text-sm text-gray-300">
-                      <span className="text-[#13b973] mt-0.5 shrink-0">&#10003;</span>
+                    <li key={i} className="flex gap-2 text-sm" style={{ color: "var(--text-body)" }}>
+                      <span className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }}>&#10003;</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -233,7 +234,8 @@ export default function App() {
       <div className="flex justify-center">
         <button
           onClick={handleExportPDF}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#13b973] hover:bg-[#0fa863] text-white font-medium rounded-lg transition-all"
+          className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all"
+          style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

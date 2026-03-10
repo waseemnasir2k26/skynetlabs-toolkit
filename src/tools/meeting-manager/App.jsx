@@ -270,8 +270,10 @@ function PreMeetingTab() {
     setAgenda(generateAgenda(clientName.trim(), meetingType, topics))
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition text-sm'
-  const labelClass = 'block text-sm font-medium text-gray-300 mb-1.5'
+  const inputClass = 'w-full rounded-lg px-4 py-2.5 placeholder-gray-500 focus:outline-none focus:ring-1 transition text-sm'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }
+  const labelClass = 'block text-sm font-medium mb-1.5'
+  const labelStyle = { color: 'var(--text-body)' }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -279,19 +281,20 @@ function PreMeetingTab() {
       <ResultCard title="Meeting Setup" icon="📅">
         <div className="space-y-4">
           <div>
-            <label className={labelClass}>Client Name *</label>
-            <input type="text" className={inputClass} placeholder="e.g., Acme Corp" value={clientName} onChange={(e) => setClientName(e.target.value)} />
+            <label className={labelClass} style={labelStyle}>Client Name *</label>
+            <input type="text" className={inputClass} style={inputStyle} placeholder="e.g., Acme Corp" value={clientName} onChange={(e) => setClientName(e.target.value)} />
           </div>
           <div>
-            <label className={labelClass}>Meeting Type</label>
-            <select className={inputClass} value={meetingType} onChange={(e) => setMeetingType(e.target.value)}>
+            <label className={labelClass} style={labelStyle}>Meeting Type</label>
+            <select className={inputClass} style={inputStyle} value={meetingType} onChange={(e) => setMeetingType(e.target.value)}>
               {MEETING_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
-            <label className={labelClass}>Key Topics (one per line)</label>
+            <label className={labelClass} style={labelStyle}>Key Topics (one per line)</label>
             <textarea
               className={`${inputClass} min-h-[120px] resize-y`}
+              style={inputStyle}
               placeholder="e.g.,&#10;Website redesign progress&#10;Budget review for Q2&#10;New feature request"
               value={topics}
               onChange={(e) => setTopics(e.target.value)}
@@ -301,7 +304,8 @@ function PreMeetingTab() {
           <button
             onClick={handleGenerate}
             disabled={!canGenerate}
-            className="w-full py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full py-2.5 font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
           >
             Generate Agenda
           </button>
@@ -316,23 +320,23 @@ function PreMeetingTab() {
               <CopyButton text={agendaToText(agenda)} label="Copy Agenda" />
             </div>
             <div className="space-y-1 mb-3">
-              <p className="text-gray-400 text-sm">Client: <span className="text-white">{agenda.clientName}</span></p>
-              <p className="text-gray-400 text-sm">Type: <span className="text-white">{agenda.meetingType}</span></p>
-              <p className="text-gray-400 text-sm">Date: <span className="text-white">{agenda.date}</span></p>
-              <p className="text-gray-400 text-sm">Estimated Duration: <span className="text-white">~{agenda.totalMinutes} min</span></p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Client: <span style={{ color: 'var(--text-heading)' }}>{agenda.clientName}</span></p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Type: <span style={{ color: 'var(--text-heading)' }}>{agenda.meetingType}</span></p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Date: <span style={{ color: 'var(--text-heading)' }}>{agenda.date}</span></p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Estimated Duration: <span style={{ color: 'var(--text-heading)' }}>~{agenda.totalMinutes} min</span></p>
             </div>
 
             <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
               {agenda.blocks.map((block, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-3 border border-white/5">
+                <div key={i} className="rounded-lg p-3" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded font-mono">{block.time}</span>
-                    <h4 className="text-white font-semibold text-sm">{block.title}</h4>
+                    <span className="text-xs px-2 py-0.5 rounded font-mono" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>{block.time}</span>
+                    <h4 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{block.title}</h4>
                   </div>
                   <ul className="space-y-1">
                     {block.points.map((p, j) => (
-                      <li key={j} className="text-gray-400 text-sm flex items-start gap-2">
-                        <span className="text-primary mt-0.5 text-xs">&#8226;</span>
+                      <li key={j} className="text-sm flex items-start gap-2" style={{ color: 'var(--text-muted)' }}>
+                        <span className="mt-0.5 text-xs" style={{ color: 'var(--accent)' }}>&#8226;</span>
                         <span>{p}</span>
                       </li>
                     ))}
@@ -341,12 +345,12 @@ function PreMeetingTab() {
               ))}
 
               {/* Decisions Needed */}
-              <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-3">
-                <h4 className="text-yellow-400 font-semibold text-sm mb-2">Decisions Needed</h4>
+              <div className="rounded-lg p-3" style={{ background: 'var(--warning-soft)', border: '1px solid color-mix(in srgb, var(--warning) 20%, transparent)' }}>
+                <h4 className="font-semibold text-sm mb-2" style={{ color: 'var(--warning)' }}>Decisions Needed</h4>
                 <ul className="space-y-1">
                   {agenda.decisions.map((d, i) => (
-                    <li key={i} className="text-gray-400 text-sm flex items-start gap-2">
-                      <span className="text-yellow-500 mt-0.5">&#9744;</span>
+                    <li key={i} className="text-sm flex items-start gap-2" style={{ color: 'var(--text-muted)' }}>
+                      <span className="mt-0.5" style={{ color: 'var(--warning)' }}>&#9744;</span>
                       <span>{d}</span>
                     </li>
                   ))}
@@ -357,8 +361,8 @@ function PreMeetingTab() {
         ) : (
           <ResultCard title="Agenda Preview" icon="📋">
             <div className="text-center py-16">
-              <p className="text-gray-500 text-lg mb-2">No agenda generated yet</p>
-              <p className="text-gray-600 text-sm">Enter a client name and click "Generate Agenda" to create a structured meeting agenda.</p>
+              <p className="text-lg mb-2" style={{ color: 'var(--text-muted)' }}>No agenda generated yet</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Enter a client name and click "Generate Agenda" to create a structured meeting agenda.</p>
             </div>
           </ResultCard>
         )}
@@ -379,8 +383,10 @@ function PostMeetingTab() {
     setResult(processNotes(clientName.trim(), rawNotes))
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition text-sm'
-  const labelClass = 'block text-sm font-medium text-gray-300 mb-1.5'
+  const inputClass = 'w-full rounded-lg px-4 py-2.5 placeholder-gray-500 focus:outline-none focus:ring-1 transition text-sm'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }
+  const labelClass = 'block text-sm font-medium mb-1.5'
+  const labelStyle = { color: 'var(--text-body)' }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -388,13 +394,14 @@ function PostMeetingTab() {
       <ResultCard title="Meeting Notes" icon="📝">
         <div className="space-y-4">
           <div>
-            <label className={labelClass}>Client Name *</label>
-            <input type="text" className={inputClass} placeholder="e.g., Acme Corp" value={clientName} onChange={(e) => setClientName(e.target.value)} />
+            <label className={labelClass} style={labelStyle}>Client Name *</label>
+            <input type="text" className={inputClass} style={inputStyle} placeholder="e.g., Acme Corp" value={clientName} onChange={(e) => setClientName(e.target.value)} />
           </div>
           <div>
-            <label className={labelClass}>Raw Meeting Notes *</label>
+            <label className={labelClass} style={labelStyle}>Raw Meeting Notes *</label>
             <textarea
               className={`${inputClass} min-h-[200px] resize-y`}
+              style={inputStyle}
               placeholder="Paste your raw meeting notes here...&#10;&#10;e.g.,&#10;Discussed the new homepage design. John will send updated wireframes by Friday.&#10;Decided to go with Option B for the color scheme.&#10;Budget is TBD - need to clarify with finance team.&#10;Sarah needs to review the content by next week."
               value={rawNotes}
               onChange={(e) => setRawNotes(e.target.value)}
@@ -404,7 +411,8 @@ function PostMeetingTab() {
           <button
             onClick={handleProcess}
             disabled={!canProcess}
-            className="w-full py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full py-2.5 font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
           >
             Process Notes
           </button>
@@ -420,8 +428,8 @@ function PostMeetingTab() {
               <ResultCard title="Decisions Made" icon="&#9989;">
                 <ul className="space-y-1.5">
                   {result.decisions.map((d, i) => (
-                    <li key={i} className="text-gray-300 text-sm flex items-start gap-2">
-                      <span className="text-green-400 mt-0.5">&#10003;</span>
+                    <li key={i} className="text-sm flex items-start gap-2" style={{ color: 'var(--text-body)' }}>
+                      <span className="mt-0.5" style={{ color: 'var(--success)' }}>&#10003;</span>
                       <span>{d}</span>
                     </li>
                   ))}
@@ -435,18 +443,18 @@ function PostMeetingTab() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/10">
-                        <th className="text-left py-2 pr-3 text-gray-400 font-medium">Who</th>
-                        <th className="text-left py-2 pr-3 text-gray-400 font-medium">What</th>
-                        <th className="text-left py-2 text-gray-400 font-medium">Deadline</th>
+                      <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                        <th className="text-left py-2 pr-3 font-medium" style={{ color: 'var(--text-muted)' }}>Who</th>
+                        <th className="text-left py-2 pr-3 font-medium" style={{ color: 'var(--text-muted)' }}>What</th>
+                        <th className="text-left py-2 font-medium" style={{ color: 'var(--text-muted)' }}>Deadline</th>
                       </tr>
                     </thead>
                     <tbody>
                       {result.actionItems.map((a, i) => (
-                        <tr key={i} className="border-b border-white/5">
-                          <td className="py-2 pr-3 text-primary font-medium whitespace-nowrap">{a.who}</td>
-                          <td className="py-2 pr-3 text-gray-300">{a.what}</td>
-                          <td className="py-2 text-gray-400 whitespace-nowrap">{a.deadline}</td>
+                        <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
+                          <td className="py-2 pr-3 font-medium whitespace-nowrap" style={{ color: 'var(--accent)' }}>{a.who}</td>
+                          <td className="py-2 pr-3" style={{ color: 'var(--text-body)' }}>{a.what}</td>
+                          <td className="py-2 whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{a.deadline}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -460,8 +468,8 @@ function PostMeetingTab() {
               <ResultCard title="Open Questions" icon="&#10067;">
                 <ul className="space-y-1.5">
                   {result.questions.map((q, i) => (
-                    <li key={i} className="text-gray-300 text-sm flex items-start gap-2">
-                      <span className="text-yellow-400 mt-0.5">?</span>
+                    <li key={i} className="text-sm flex items-start gap-2" style={{ color: 'var(--text-body)' }}>
+                      <span className="mt-0.5" style={{ color: 'var(--warning)' }}>?</span>
                       <span>{q}</span>
                     </li>
                   ))}
@@ -474,7 +482,7 @@ function PostMeetingTab() {
               <div className="flex gap-2 mb-3">
                 <CopyButton text={result.email} label="Copy Email" />
               </div>
-              <pre className="bg-dark-200/30 border border-white/5 rounded-lg p-4 text-sm text-gray-300 whitespace-pre-wrap font-sans overflow-x-auto max-h-[40vh] overflow-y-auto">
+              <pre className="rounded-lg p-4 text-sm whitespace-pre-wrap font-sans overflow-x-auto max-h-[40vh] overflow-y-auto" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-body)' }}>
                 {result.email}
               </pre>
             </ResultCard>
@@ -482,7 +490,7 @@ function PostMeetingTab() {
             {result.decisions.length === 0 && result.actionItems.length === 0 && result.questions.length === 0 && (
               <ResultCard>
                 <div className="text-center py-8">
-                  <p className="text-gray-500 text-sm">No structured items were extracted. Try adding more detail to your notes with action words like "will", "decided", "need to", etc.</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>No structured items were extracted. Try adding more detail to your notes with action words like "will", "decided", "need to", etc.</p>
                 </div>
               </ResultCard>
             )}
@@ -490,8 +498,8 @@ function PostMeetingTab() {
         ) : (
           <ResultCard title="Processed Notes" icon="&#128203;">
             <div className="text-center py-16">
-              <p className="text-gray-500 text-lg mb-2">No notes processed yet</p>
-              <p className="text-gray-600 text-sm">Paste your raw meeting notes and click "Process Notes" to extract decisions, action items, and generate a follow-up email.</p>
+              <p className="text-lg mb-2" style={{ color: 'var(--text-muted)' }}>No notes processed yet</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Paste your raw meeting notes and click "Process Notes" to extract decisions, action items, and generate a follow-up email.</p>
             </div>
           </ResultCard>
         )}
@@ -509,24 +517,24 @@ export default function App() {
       description="Prepare structured agendas before meetings and process raw notes into actionable items afterward."
     >
       {/* Tabs */}
-      <div className="flex gap-1 bg-dark-100/50 border border-white/5 rounded-xl p-1 mb-6 w-fit">
+      <div className="flex gap-1 rounded-xl p-1 mb-6 w-fit" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
         <button
           onClick={() => setActiveTab('pre')}
-          className={`px-5 py-2.5 rounded-lg text-sm font-medium transition ${
-            activeTab === 'pre'
-              ? 'bg-primary text-white'
-              : 'text-gray-400 hover:text-white hover:bg-dark-200/50'
-          }`}
+          className="px-5 py-2.5 rounded-lg text-sm font-medium transition"
+          style={activeTab === 'pre'
+            ? { background: 'var(--accent)', color: 'var(--text-on-accent)' }
+            : { color: 'var(--text-muted)' }
+          }
         >
           Pre-Meeting
         </button>
         <button
           onClick={() => setActiveTab('post')}
-          className={`px-5 py-2.5 rounded-lg text-sm font-medium transition ${
-            activeTab === 'post'
-              ? 'bg-primary text-white'
-              : 'text-gray-400 hover:text-white hover:bg-dark-200/50'
-          }`}
+          className="px-5 py-2.5 rounded-lg text-sm font-medium transition"
+          style={activeTab === 'post'
+            ? { background: 'var(--accent)', color: 'var(--text-on-accent)' }
+            : { color: 'var(--text-muted)' }
+          }
         >
           Post-Meeting
         </button>

@@ -219,10 +219,10 @@ export default function App() {
 
   // Estimated impact
   const getImpact = (score) => {
-    if (score >= 80) return { text: '5-10% conversion improvement possible', color: 'text-primary' }
-    if (score >= 60) return { text: '15-25% conversion improvement possible', color: 'text-blue-400' }
-    if (score >= 40) return { text: '30-50% conversion improvement possible', color: 'text-yellow-400' }
-    return { text: '50-100%+ conversion improvement possible', color: 'text-red-400' }
+    if (score >= 80) return { text: '5-10% conversion improvement possible', color: 'var(--accent)' }
+    if (score >= 60) return { text: '15-25% conversion improvement possible', color: 'var(--info)' }
+    if (score >= 40) return { text: '30-50% conversion improvement possible', color: 'var(--warning)' }
+    return { text: '50-100%+ conversion improvement possible', color: 'var(--danger)' }
   }
 
   return (
@@ -234,37 +234,37 @@ export default function App() {
           <ResultCard>
             <form onSubmit={handleAudit} className="space-y-6 py-4">
               <div className="text-center mb-6">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
-                  <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4" style={{ background: "var(--accent-soft)" }}>
+                  <svg className="w-8 h-8" style={{ color: "var(--accent)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h2 className="text-xl font-bold text-white">Audit Your Website</h2>
-                <p className="text-gray-400 text-sm mt-1">Enter your URL and business type for a personalized conversion audit.</p>
+                <h2 className="text-xl font-bold" style={{ color: "var(--text-heading)" }}>Audit Your Website</h2>
+                <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Enter your URL and business type for a personalized conversion audit.</p>
               </div>
 
               <div>
-                <label className="block text-gray-400 text-sm mb-2">Website URL</label>
+                <label className="block text-sm mb-2" style={{ color: "var(--text-muted)" }}>Website URL</label>
                 <input type="url" value={url} onChange={e => setUrl(e.target.value)} placeholder="https://www.example.com" required
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 text-lg" />
+                  className="w-full rounded-xl px-4 py-3 focus:outline-none text-lg" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
               </div>
 
               <div>
-                <label className="block text-gray-400 text-sm mb-2">Business Type</label>
+                <label className="block text-sm mb-2" style={{ color: "var(--text-muted)" }}>Business Type</label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {BUSINESS_TYPES.map(type => (
                     <button key={type} type="button" onClick={() => setBusinessType(type)}
-                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-all border ${
-                        businessType === type
-                          ? 'bg-primary/10 text-primary border-primary/30'
-                          : 'bg-dark-200/30 text-gray-400 border-white/5 hover:border-white/10 hover:text-white'
-                      }`}>{type}</button>
+                      className="px-4 py-3 rounded-xl text-sm font-medium transition-all"
+                      style={businessType === type
+                        ? { background: 'var(--accent-soft)', color: 'var(--accent)', border: '1px solid var(--accent-soft)' }
+                        : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }
+                      }>{type}</button>
                   ))}
                 </div>
               </div>
 
               <button type="submit" disabled={!url || !businessType}
-                className="w-full py-3.5 bg-primary hover:bg-primary/80 disabled:bg-gray-700 disabled:text-gray-500 text-white font-semibold rounded-xl transition-colors text-lg">
+                className="w-full py-3.5 disabled:opacity-40 font-semibold rounded-xl transition-colors text-lg" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
                 Run Audit
               </button>
             </form>
@@ -278,27 +278,27 @@ export default function App() {
           <ResultCard>
             <div className="py-12 text-center">
               <div className="w-16 h-16 mx-auto mb-6 relative">
-                <div className="absolute inset-0 rounded-full border-4 border-primary/20" />
-                <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+                <div className="absolute inset-0 rounded-full border-4" style={{ borderColor: "var(--accent-soft)" }} />
+                <div className="absolute inset-0 rounded-full border-4 border-t-transparent animate-spin" style={{ borderColor: "var(--accent)", borderTopColor: "transparent" }} />
               </div>
-              <p className="text-white font-semibold text-lg mb-2">Auditing {url}</p>
+              <p className="font-semibold text-lg mb-2" style={{ color: "var(--text-heading)" }}>Auditing {url}</p>
               <div className="space-y-2 mt-6 max-w-sm mx-auto">
                 {LOADING_STEPS.map((step, i) => (
                   <div key={i} className={`flex items-center gap-2 transition-all duration-300 ${
                     i < loadingStep ? 'opacity-100' : i === loadingStep ? 'opacity-100' : 'opacity-20'
                   }`}>
                     {i < loadingStep ? (
-                      <svg className="w-4 h-4 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4 flex-shrink-0" style={{ color: "var(--accent)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     ) : i === loadingStep ? (
                       <div className="w-4 h-4 flex-shrink-0">
-                        <div className="w-3 h-3 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+                        <div className="w-3 h-3 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "var(--accent)", borderTopColor: "transparent" }} />
                       </div>
                     ) : (
-                      <div className="w-4 h-4 flex-shrink-0 rounded-full border border-gray-600" />
+                      <div className="w-4 h-4 flex-shrink-0 rounded-full" style={{ border: "1px solid var(--text-muted)" }} />
                     )}
-                    <span className={`text-sm ${i <= loadingStep ? 'text-white' : 'text-gray-600'}`}>{step}</span>
+                    <span className="text-sm" style={{ color: i <= loadingStep ? 'var(--text-heading)' : 'var(--text-muted)' }}>{step}</span>
                   </div>
                 ))}
               </div>
@@ -312,7 +312,7 @@ export default function App() {
         <div id="website-audit-results" className="space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <button onClick={() => { setResults(null); setUrl(''); setBusinessType('') }}
-              className="text-gray-400 hover:text-white text-sm flex items-center gap-1 transition-colors">
+              className="text-sm flex items-center gap-1 transition-colors" style={{ color: "var(--text-muted)" }}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               New Audit
             </button>
@@ -324,14 +324,14 @@ export default function App() {
             <div className="flex flex-col sm:flex-row items-center gap-8 py-4">
               <ScoreGauge score={overallScore} label={overallScore >= 80 ? 'Excellent' : overallScore >= 60 ? 'Good' : overallScore >= 40 ? 'Needs Work' : 'Critical'} size={180} />
               <div className="flex-1 text-center sm:text-left">
-                <h2 className="text-2xl font-bold text-white mb-1">Conversion Score</h2>
-                <p className="text-gray-400 text-sm mb-2">{url} ({businessType})</p>
-                <p className={`font-semibold text-lg ${getImpact(overallScore).color}`}>{getImpact(overallScore).text}</p>
+                <h2 className="text-2xl font-bold mb-1" style={{ color: "var(--text-heading)" }}>Conversion Score</h2>
+                <p className="text-sm mb-2" style={{ color: "var(--text-muted)" }}>{url} ({businessType})</p>
+                <p className="font-semibold text-lg" style={{ color: getImpact(overallScore).color }}>{getImpact(overallScore).text}</p>
                 <div className="flex gap-3 mt-4 flex-wrap">
                   {categoryScores.map(cat => (
-                    <div key={cat.name} className="bg-dark-200/30 rounded-lg px-3 py-2 border border-white/5">
-                      <p className="text-gray-400 text-xs">{cat.name}</p>
-                      <p className="text-white font-bold">{cat.score}<span className="text-gray-500 text-xs">/100</span></p>
+                    <div key={cat.name} className="rounded-lg px-3 py-2" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+                      <p className="text-xs" style={{ color: "var(--text-muted)" }}>{cat.name}</p>
+                      <p className="font-bold" style={{ color: "var(--text-heading)" }}>{cat.score}<span className="text-xs" style={{ color: "var(--text-muted)" }}>/100</span></p>
                     </div>
                   ))}
                 </div>
@@ -344,20 +344,20 @@ export default function App() {
             <ResultCard title="Top 5 Quick Wins">
               <div className="space-y-3">
                 {quickWins.map((win, i) => (
-                  <div key={i} className="flex gap-3 p-3 bg-dark-200/30 rounded-lg border border-white/5">
-                    <div className="w-8 h-8 rounded-full bg-yellow-500/10 text-yellow-400 flex items-center justify-center flex-shrink-0 font-bold text-sm">
+                  <div key={i} className="flex gap-3 p-3 rounded-lg" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm" style={{ background: "var(--warning-soft)", color: "var(--warning)" }}>
                       {i + 1}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <p className="text-white text-sm font-medium">{win.name}</p>
-                        <span className="text-gray-500 text-xs">({win.category})</span>
+                        <p className="text-sm font-medium" style={{ color: "var(--text-heading)" }}>{win.name}</p>
+                        <span className="text-xs" style={{ color: "var(--text-muted)" }}>({win.category})</span>
                       </div>
-                      <p className="text-primary/80 text-xs mt-1">{win.recommendation}</p>
+                      <p className="text-xs mt-1" style={{ color: "var(--accent)" }}>{win.recommendation}</p>
                     </div>
                     <div className="flex items-center gap-1">
                       {[1, 2, 3, 4, 5].map(s => (
-                        <div key={s} className={`w-2 h-2 rounded-full ${s <= win.score ? 'bg-primary' : 'bg-gray-700'}`} />
+                        <div key={s} className="w-2 h-2 rounded-full" style={{ background: s <= win.score ? 'var(--accent)' : 'var(--bg-elevated)' }} />
                       ))}
                     </div>
                   </div>
@@ -371,42 +371,40 @@ export default function App() {
             <ResultCard key={catIdx} title={cat.name}>
               <div className="space-y-4">
                 {cat.points.map((point, pointIdx) => (
-                  <div key={pointIdx} className="p-4 bg-dark-200/20 rounded-lg border border-white/5">
+                  <div key={pointIdx} className="p-4 rounded-lg" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <h4 className="text-white font-medium text-sm">{point.name}</h4>
-                        <p className="text-gray-500 text-xs">{point.description}</p>
+                        <h4 className="font-medium text-sm" style={{ color: "var(--text-heading)" }}>{point.name}</h4>
+                        <p className="text-xs" style={{ color: "var(--text-muted)" }}>{point.description}</p>
                       </div>
                       <div className="flex items-center gap-1 ml-4">
-                        <span className={`text-lg font-bold ${
-                          point.score >= 4 ? 'text-primary' : point.score >= 3 ? 'text-blue-400' : point.score >= 2 ? 'text-yellow-400' : 'text-red-400'
-                        }`}>{point.score}</span>
-                        <span className="text-gray-500 text-xs">/5</span>
+                        <span className="text-lg font-bold" style={{ color: point.score >= 4 ? 'var(--accent)' : point.score >= 3 ? 'var(--info)' : point.score >= 2 ? 'var(--warning)' : 'var(--danger)' }}>{point.score}</span>
+                        <span className="text-xs" style={{ color: "var(--text-muted)" }}>/5</span>
                       </div>
                     </div>
-                    <div className="w-full bg-dark-200/50 rounded-full h-1.5 mb-3">
+                    <div className="w-full rounded-full h-1.5 mb-3" style={{ background: "var(--bg-elevated)" }}>
                       <div className="h-full rounded-full transition-all" style={{
                         width: `${(point.score / 5) * 100}%`,
-                        backgroundColor: point.score >= 4 ? '#13b973' : point.score >= 3 ? '#3b82f6' : point.score >= 2 ? '#f59e0b' : '#ef4444'
+                        backgroundColor: point.score >= 4 ? 'var(--success)' : point.score >= 3 ? 'var(--info)' : point.score >= 2 ? 'var(--warning)' : 'var(--danger)'
                       }} />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="flex gap-2">
-                        <svg className={`w-4 h-4 mt-0.5 flex-shrink-0 ${point.score >= 4 ? 'text-primary' : 'text-yellow-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: point.score >= 4 ? 'var(--accent)' : 'var(--warning)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={point.score >= 4 ? 'M5 13l4 4L19 7' : 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'} />
                         </svg>
                         <div>
-                          <p className="text-gray-400 text-xs font-medium mb-0.5">Finding</p>
-                          <p className="text-gray-300 text-xs">{point.finding}</p>
+                          <p className="text-xs font-medium mb-0.5" style={{ color: "var(--text-muted)" }}>Finding</p>
+                          <p className="text-xs" style={{ color: "var(--text-body)" }}>{point.finding}</p>
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <svg className="w-4 h-4 mt-0.5 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "var(--info)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                         <div>
-                          <p className="text-gray-400 text-xs font-medium mb-0.5">Recommendation</p>
-                          <p className="text-gray-300 text-xs">{point.recommendation}</p>
+                          <p className="text-xs font-medium mb-0.5" style={{ color: "var(--text-muted)" }}>Recommendation</p>
+                          <p className="text-xs" style={{ color: "var(--text-body)" }}>{point.recommendation}</p>
                         </div>
                       </div>
                     </div>
@@ -419,10 +417,10 @@ export default function App() {
           {/* CTA */}
           <ResultCard>
             <div className="text-center py-6">
-              <h3 className="text-xl font-bold text-white mb-2">Want Us to Fix These Issues?</h3>
-              <p className="text-gray-400 mb-4">SkynetLabs offers CRO optimization services to maximize your website's conversion rate.</p>
+              <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text-heading)" }}>Want Us to Fix These Issues?</h3>
+              <p className="mb-4" style={{ color: "var(--text-muted)" }}>SkynetLabs offers CRO optimization services to maximize your website's conversion rate.</p>
               <a href="https://www.skynetjoe.com" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/80 text-white font-semibold rounded-xl transition-colors">
+                className="inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-xl transition-colors" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
                 Get a Free CRO Consultation
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </a>

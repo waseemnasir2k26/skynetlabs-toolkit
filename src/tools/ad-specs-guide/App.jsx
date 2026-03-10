@@ -604,11 +604,7 @@ function PlatformGrid({ selected, onSelect }) {
           <button
             key={name}
             onClick={() => onSelect(name)}
-            className={`p-4 rounded-xl border-2 transition-all text-center font-medium text-sm ${
-              isActive
-                ? 'border-primary bg-primary/10 text-white'
-                : 'border-white/10 bg-dark-200/30 text-gray-400 hover:border-white/20 hover:text-white'
-            }`}
+            className="p-4 rounded-xl border-2 transition-all text-center font-medium text-sm" style={isActive ? { borderColor: 'var(--accent)', background: 'var(--accent-soft)', color: 'var(--text-heading)' } : { borderColor: 'var(--border)', background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}
           >
             <div
               className="w-8 h-8 rounded-full mx-auto mb-2 flex items-center justify-center text-xs font-bold text-black"
@@ -635,11 +631,7 @@ function FormatGrid({ platform, selected, onSelect }) {
           <button
             key={fmt}
             onClick={() => onSelect(fmt)}
-            className={`p-3 rounded-lg border transition-all text-sm font-medium ${
-              isActive
-                ? 'border-primary bg-primary/10 text-white'
-                : 'border-white/10 bg-dark-200/30 text-gray-400 hover:border-white/20 hover:text-white'
-            }`}
+            className="p-3 rounded-lg border transition-all text-sm font-medium" style={isActive ? { borderColor: 'var(--accent)', background: 'var(--accent-soft)', color: 'var(--text-heading)' } : { borderColor: 'var(--border)', background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}
           >
             {fmt}
           </button>
@@ -663,38 +655,38 @@ function SpecsCard({ platform, format }) {
       </div>
       <div className="relative space-y-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <div className="bg-dark-200/50 p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-0.5">Dimensions</p>
-            <p className="text-white font-semibold text-sm">{spec.dimensions}</p>
+          <div className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+            <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Dimensions</p>
+            <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{spec.dimensions}</p>
           </div>
-          <div className="bg-dark-200/50 p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-0.5">Aspect Ratio</p>
-            <p className="text-white font-semibold text-sm">{spec.aspect}</p>
+          <div className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+            <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Aspect Ratio</p>
+            <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{spec.aspect}</p>
           </div>
-          <div className="bg-dark-200/50 p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-0.5">File Types</p>
-            <p className="text-white font-semibold text-sm">{spec.fileTypes}</p>
+          <div className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+            <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>File Types</p>
+            <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{spec.fileTypes}</p>
           </div>
-          <div className="bg-dark-200/50 p-3 rounded-lg">
-            <p className="text-xs text-gray-500 mb-0.5">Max File Size</p>
-            <p className="text-white font-semibold text-sm">{spec.maxFileSize}</p>
+          <div className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+            <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Max File Size</p>
+            <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{spec.maxFileSize}</p>
           </div>
           {spec.duration && (
-            <div className="bg-dark-200/50 p-3 rounded-lg">
-              <p className="text-xs text-gray-500 mb-0.5">Duration</p>
-              <p className="text-white font-semibold text-sm">{spec.duration}</p>
+            <div className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+              <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Duration</p>
+              <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{spec.duration}</p>
             </div>
           )}
         </div>
 
         {spec.charLimits && Object.keys(spec.charLimits).length > 0 && (
           <div>
-            <h4 className="text-white font-medium text-sm mb-2">Character Limits</h4>
+            <h4 className="font-medium text-sm mb-2" style={{ color: 'var(--text-heading)' }}>Character Limits</h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {Object.entries(spec.charLimits).map(([key, val]) => (
-                <div key={key} className="bg-dark-200/30 p-2 rounded-lg">
-                  <p className="text-xs text-gray-500 capitalize">{key.replace(/([A-Z])/g, ' $1')}</p>
-                  <p className="text-primary font-semibold text-sm">{val}</p>
+                <div key={key} className="p-2 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+                  <p className="text-xs capitalize" style={{ color: 'var(--text-muted)' }}>{key.replace(/([A-Z])/g, ' $1')}</p>
+                  <p className="font-semibold text-sm" style={{ color: 'var(--accent)' }}>{val}</p>
                 </div>
               ))}
             </div>
@@ -702,20 +694,20 @@ function SpecsCard({ platform, format }) {
         )}
 
         <div>
-          <h4 className="text-white font-medium text-sm mb-2">Best Practices</h4>
+          <h4 className="font-medium text-sm mb-2" style={{ color: 'var(--text-heading)' }}>Best Practices</h4>
           <ul className="space-y-1.5">
             {spec.bestPractices.map((bp, i) => (
-              <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
-                <span className="text-primary mt-0.5">&#10003;</span>
+              <li key={i} className="flex items-start gap-2 text-sm" style={{ color: 'var(--text-body)' }}>
+                <span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#10003;</span>
                 {bp}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-          <p className="text-xs text-primary font-medium mb-0.5">Quick Tips</p>
-          <p className="text-gray-300 text-sm">{spec.quickTips}</p>
+        <div className="border rounded-lg p-3" style={{ background: 'var(--accent-soft)', borderColor: 'var(--accent)' }}>
+          <p className="text-xs font-medium mb-0.5" style={{ color: 'var(--accent)' }}>Quick Tips</p>
+          <p className="text-sm" style={{ color: 'var(--text-body)' }}>{spec.quickTips}</p>
         </div>
       </div>
     </ResultCard>
@@ -775,14 +767,14 @@ export default function App() {
       <div className="space-y-8">
         {/* Step 1: Platform */}
         <div>
-          <h2 className="text-lg font-semibold text-white mb-3">Step 1: Select Platform</h2>
+          <h2 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-heading)' }}>Step 1: Select Platform</h2>
           <PlatformGrid selected={platform} onSelect={handlePlatformSelect} />
         </div>
 
         {/* Step 2: Format */}
         {platform && (
           <div>
-            <h2 className="text-lg font-semibold text-white mb-3">Step 2: Select Format</h2>
+            <h2 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-heading)' }}>Step 2: Select Format</h2>
             <FormatGrid platform={platform} selected={format} onSelect={setFormat} />
           </div>
         )}
@@ -790,33 +782,25 @@ export default function App() {
         {/* Step 3: Specs */}
         {platform && format && (
           <div>
-            <h2 className="text-lg font-semibold text-white mb-3">Step 3: Specs & Guidelines</h2>
+            <h2 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-heading)' }}>Step 3: Specs & Guidelines</h2>
             <div className="flex flex-wrap gap-2 mb-4">
               <button
                 onClick={toggleBookmark}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  isBookmarked
-                    ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-                    : 'bg-dark-200/50 text-gray-400 border border-white/10 hover:text-white'
-                }`}
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-all border" style={isBookmarked ? { background: 'var(--warning-soft)', color: 'var(--warning)', borderColor: 'var(--warning)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}
               >
                 {isBookmarked ? '\u2605 Bookmarked' : '\u2606 Bookmark'}
               </button>
               <button
                 onClick={() => toggleCompare(platform, format)}
                 disabled={!isInCompare && compareList.length >= 3}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  isInCompare
-                    ? 'bg-primary/20 text-primary border border-primary/30'
-                    : 'bg-dark-200/50 text-gray-400 border border-white/10 hover:text-white'
-                } ${!isInCompare && compareList.length >= 3 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${!isInCompare && compareList.length >= 3 ? 'opacity-50 cursor-not-allowed' : ''}`} style={isInCompare ? { background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}
               >
                 {isInCompare ? 'Remove from Compare' : `Add to Compare (${compareList.length}/3)`}
               </button>
               {compareList.length >= 2 && (
                 <button
                   onClick={() => setShowCompare(!showCompare)}
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-white hover:bg-primary/90 transition-all"
+                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}
                 >
                   {showCompare ? 'Hide Comparison' : 'Compare Formats'}
                 </button>
@@ -829,16 +813,16 @@ export default function App() {
         {/* Compare View */}
         {showCompare && compareList.length >= 2 && (
           <div>
-            <h2 className="text-lg font-semibold text-white mb-3">Format Comparison</h2>
+            <h2 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-heading)' }}>Format Comparison</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left py-3 px-4 text-gray-400 font-medium">Spec</th>
+                  <tr className="border-b" style={{ borderColor: 'var(--border)' }}>
+                    <th className="text-left py-3 px-4 font-medium" style={{ color: 'var(--text-muted)' }}>Spec</th>
                     {compareList.map(key => {
                       const [p, f] = key.split('::')
                       return (
-                        <th key={key} className="text-left py-3 px-4 text-white font-medium">
+                        <th key={key} className="text-left py-3 px-4 font-medium" style={{ color: 'var(--text-heading)' }}>
                           {p} &mdash; {f}
                         </th>
                       )
@@ -847,13 +831,13 @@ export default function App() {
                 </thead>
                 <tbody>
                   {['dimensions', 'aspect', 'fileTypes', 'maxFileSize', 'duration', 'quickTips'].map(field => (
-                    <tr key={field} className="border-b border-white/5">
-                      <td className="py-3 px-4 text-gray-400 capitalize">{field.replace(/([A-Z])/g, ' $1')}</td>
+                    <tr key={field} className="border-b" style={{ borderColor: 'var(--border)' }}>
+                      <td className="py-3 px-4 capitalize" style={{ color: 'var(--text-muted)' }}>{field.replace(/([A-Z])/g, ' $1')}</td>
                       {compareList.map(key => {
                         const [p, f] = key.split('::')
                         const spec = PLATFORMS[p]?.formats[f]
                         return (
-                          <td key={key} className="py-3 px-4 text-gray-300">
+                          <td key={key} className="py-3 px-4" style={{ color: 'var(--text-body)' }}>
                             {spec?.[field] || 'N/A'}
                           </td>
                         )
@@ -869,7 +853,7 @@ export default function App() {
         {/* Bookmarks */}
         {bookmarks.length > 0 && (
           <div>
-            <h2 className="text-lg font-semibold text-white mb-3">Bookmarked Formats</h2>
+            <h2 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-heading)' }}>Bookmarked Formats</h2>
             <div className="flex flex-wrap gap-2">
               {bookmarks.map(key => {
                 const [p, f] = key.split('::')
@@ -877,7 +861,7 @@ export default function App() {
                   <button
                     key={key}
                     onClick={() => { setPlatform(p); setFormat(f) }}
-                    className="px-3 py-1.5 bg-dark-200/50 border border-yellow-500/20 text-yellow-400/80 rounded-lg text-sm hover:bg-dark-200 transition-all"
+                    className="px-3 py-1.5 border rounded-lg text-sm transition-all" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--warning)', color: 'var(--warning)' }}
                   >
                     {p} &mdash; {f}
                   </button>

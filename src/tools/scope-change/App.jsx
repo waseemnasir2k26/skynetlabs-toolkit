@@ -17,16 +17,16 @@ const TIMELINE_OPTIONS = [
 ]
 
 const PRIORITY_OPTIONS = [
-  { value: 'nice', label: 'Nice to Have', color: 'text-gray-400' },
-  { value: 'important', label: 'Important', color: 'text-yellow-400' },
-  { value: 'critical', label: 'Critical', color: 'text-red-400' },
+  { value: 'nice', label: 'Nice to Have', colorVar: 'var(--text-muted)' },
+  { value: 'important', label: 'Important', colorVar: 'var(--warning)' },
+  { value: 'critical', label: 'Critical', colorVar: 'var(--danger)' },
 ]
 
 const CR_STATUSES = [
-  { value: 'draft', label: 'Draft', color: 'bg-gray-500/20 text-gray-400' },
-  { value: 'sent', label: 'Sent', color: 'bg-blue-500/20 text-blue-400' },
-  { value: 'approved', label: 'Approved', color: 'bg-green-500/20 text-green-400' },
-  { value: 'rejected', label: 'Rejected', color: 'bg-red-500/20 text-red-400' },
+  { value: 'draft', label: 'Draft', bg: 'var(--bg-elevated)', text: 'var(--text-muted)' },
+  { value: 'sent', label: 'Sent', bg: 'var(--info-soft)', text: 'var(--info)' },
+  { value: 'approved', label: 'Approved', bg: 'var(--success-soft)', text: 'var(--success)' },
+  { value: 'rejected', label: 'Rejected', bg: 'var(--danger-soft)', text: 'var(--danger)' },
 ]
 
 function Modal({ open, onClose, title, children }) {
@@ -34,10 +34,10 @@ function Modal({ open, onClose, title, children }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-      <div className="relative bg-[#0f0f18] border border-white/10 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6" onClick={(e) => e.stopPropagation()}>
+      <div className="relative rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }} onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-white text-xl font-bold">{title}</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors text-2xl leading-none">&times;</button>
+          <h2 className="text-xl font-bold" style={{ color: 'var(--text-heading)' }}>{title}</h2>
+          <button onClick={onClose} className="transition-colors text-2xl leading-none hover:opacity-80" style={{ color: 'var(--text-muted)' }}>&times;</button>
         </div>
         {children}
       </div>
@@ -174,7 +174,7 @@ export default function App() {
       const { jsPDF } = await import('jspdf')
       const el = crDocRef.current
       if (!el) return
-      const canvas = await html2canvas(el, { backgroundColor: '#0a0a0f', scale: 2 })
+      const canvas = await html2canvas(el, { backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507', scale: 2 })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const pdfWidth = pdf.internal.pageSize.getWidth()
@@ -187,28 +187,29 @@ export default function App() {
     }
   }, [viewCR])
 
-  const inputClass = "w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#13b973]/50"
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }
+  const inputClass = "w-full rounded-xl px-4 py-3 placeholder-gray-500 focus:outline-none"
 
   // View: Projects
   if (view === 'projects') {
     return (
       <ToolLayout title="Scope Change Request System" description="Manage projects and track scope change requests with automated cost calculations.">
         <div className="flex items-center gap-3 mb-6">
-          <button onClick={() => setView('projects')} className="px-4 py-2 text-sm rounded-xl bg-[#13b973] text-white">Projects</button>
-          <button onClick={() => setView('requests')} className="px-4 py-2 text-sm rounded-xl bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 transition-all">Change Requests</button>
-          <button onClick={() => { setCRForm((f) => ({ ...f, projectId: projects[0]?.id || '' })); if (projects[0]) selectProjectForCR(projects[0].id); setView('new-cr') }} className="ml-auto px-5 py-2 bg-[#13b973] hover:bg-[#13b973]/80 text-white rounded-xl font-medium transition-colors text-sm">
+          <button onClick={() => setView('projects')} className="px-4 py-2 text-sm rounded-xl" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>Projects</button>
+          <button onClick={() => setView('requests')} className="px-4 py-2 text-sm rounded-xl transition-all hover:opacity-80" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>Change Requests</button>
+          <button onClick={() => { setCRForm((f) => ({ ...f, projectId: projects[0]?.id || '' })); if (projects[0]) selectProjectForCR(projects[0].id); setView('new-cr') }} className="ml-auto px-5 py-2 rounded-xl font-medium transition-colors text-sm hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
             + New Change Request
           </button>
         </div>
 
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-white text-lg font-semibold">Active Projects</h2>
-          <button onClick={openNewProject} className="px-4 py-2 text-sm bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 rounded-xl transition-all">+ Add Project</button>
+          <h2 className="text-lg font-semibold" style={{ color: 'var(--text-heading)' }}>Active Projects</h2>
+          <button onClick={openNewProject} className="px-4 py-2 text-sm rounded-xl transition-all hover:opacity-80" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>+ Add Project</button>
         </div>
 
         {projects.length === 0 ? (
           <ResultCard>
-            <p className="text-gray-500 text-center py-12">No projects yet. Add a project to start tracking scope changes.</p>
+            <p className="text-center py-12" style={{ color: 'var(--text-muted)' }}>No projects yet. Add a project to start tracking scope changes.</p>
           </ResultCard>
         ) : (
           <div className="space-y-4">
@@ -216,21 +217,21 @@ export default function App() {
               const crs = getProjectCRs(proj.id)
               const approvedExtra = crs.filter((cr) => cr.status === 'approved').reduce((s, cr) => s + cr.additionalHours * cr.hourlyRate, 0)
               return (
-                <div key={proj.id} className="bg-dark-100/50 border border-white/5 rounded-xl p-5 hover:border-white/10 transition-all">
+                <div key={proj.id} className="rounded-xl p-5 transition-all" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-white font-semibold text-lg mb-1">{proj.name}</h3>
-                      {proj.scopeSummary && <p className="text-gray-400 text-sm mb-2 max-w-2xl">{proj.scopeSummary}</p>}
+                      <h3 className="font-semibold text-lg mb-1" style={{ color: 'var(--text-heading)' }}>{proj.name}</h3>
+                      {proj.scopeSummary && <p className="text-sm mb-2 max-w-2xl" style={{ color: 'var(--text-muted)' }}>{proj.scopeSummary}</p>}
                       <div className="flex items-center gap-4 text-sm">
-                        <span className="text-gray-500">Budget: <span className="text-[#13b973] font-medium">${Number(proj.budget).toLocaleString()}</span></span>
-                        <span className="text-gray-500">Rate: <span className="text-gray-300">${proj.hourlyRate}/hr</span></span>
-                        <span className="text-gray-500">CRs: <span className="text-gray-300">{crs.length}</span></span>
-                        {approvedExtra > 0 && <span className="text-yellow-400">+${approvedExtra.toLocaleString()} approved</span>}
+                        <span style={{ color: 'var(--text-muted)' }}>Budget: <span style={{ color: 'var(--accent)' }} className="font-medium">${Number(proj.budget).toLocaleString()}</span></span>
+                        <span style={{ color: 'var(--text-muted)' }}>Rate: <span style={{ color: 'var(--text-body)' }}>${proj.hourlyRate}/hr</span></span>
+                        <span style={{ color: 'var(--text-muted)' }}>CRs: <span style={{ color: 'var(--text-body)' }}>{crs.length}</span></span>
+                        {approvedExtra > 0 && <span style={{ color: 'var(--warning)' }}>+${approvedExtra.toLocaleString()} approved</span>}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button onClick={() => openEditProject(proj)} className="px-3 py-1.5 text-xs bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 rounded-lg transition-all">Edit</button>
-                      <button onClick={() => deleteProject(proj.id)} className="px-3 py-1.5 text-xs bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg transition-all">Delete</button>
+                      <button onClick={() => openEditProject(proj)} className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>Edit</button>
+                      <button onClick={() => deleteProject(proj.id)} className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>Delete</button>
                     </div>
                   </div>
                 </div>
@@ -243,26 +244,26 @@ export default function App() {
         <Modal open={showProjectModal} onClose={() => setShowProjectModal(false)} title={editProject ? 'Edit Project' : 'Add Project'}>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">Project Name *</label>
-              <input type="text" value={projectForm.name} onChange={(e) => updateProjectField('name', e.target.value)} className={inputClass} placeholder="Website Redesign" />
+              <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Project Name *</label>
+              <input type="text" value={projectForm.name} onChange={(e) => updateProjectField('name', e.target.value)} className={inputClass} style={inputStyle} placeholder="Website Redesign" />
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-1.5">Original Scope Summary</label>
-              <textarea value={projectForm.scopeSummary} onChange={(e) => updateProjectField('scopeSummary', e.target.value)} rows={3} className={`${inputClass} resize-none`} placeholder="Describe the original project scope..." />
+              <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Original Scope Summary</label>
+              <textarea value={projectForm.scopeSummary} onChange={(e) => updateProjectField('scopeSummary', e.target.value)} rows={3} className={`${inputClass} resize-none`} style={inputStyle} placeholder="Describe the original project scope..." />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-1.5">Budget ($)</label>
-                <input type="number" value={projectForm.budget} onChange={(e) => updateProjectField('budget', e.target.value)} className={inputClass} placeholder="10000" />
+                <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Budget ($)</label>
+                <input type="number" value={projectForm.budget} onChange={(e) => updateProjectField('budget', e.target.value)} className={inputClass} style={inputStyle} placeholder="10000" />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-1.5">Hourly Rate ($)</label>
-                <input type="number" value={projectForm.hourlyRate} onChange={(e) => updateProjectField('hourlyRate', e.target.value)} className={inputClass} placeholder="150" />
+                <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Hourly Rate ($)</label>
+                <input type="number" value={projectForm.hourlyRate} onChange={(e) => updateProjectField('hourlyRate', e.target.value)} className={inputClass} style={inputStyle} placeholder="150" />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
-              <button onClick={() => setShowProjectModal(false)} className="px-4 py-2 text-gray-400 hover:text-white transition-colors">Cancel</button>
-              <button onClick={saveProject} className="px-6 py-2.5 bg-[#13b973] hover:bg-[#13b973]/80 text-white rounded-xl font-medium transition-colors">{editProject ? 'Update' : 'Add Project'}</button>
+              <button onClick={() => setShowProjectModal(false)} className="px-4 py-2 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Cancel</button>
+              <button onClick={saveProject} className="px-6 py-2.5 rounded-xl font-medium transition-colors hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>{editProject ? 'Update' : 'Add Project'}</button>
             </div>
           </div>
         </Modal>
@@ -280,50 +281,50 @@ export default function App() {
     return (
       <ToolLayout title="Scope Change Request System" description="Create a new change request.">
         <div className="flex items-center gap-3 mb-6">
-          <button onClick={() => setView('projects')} className="px-4 py-2 text-sm rounded-xl bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 transition-all">Projects</button>
-          <button onClick={() => setView('requests')} className="px-4 py-2 text-sm rounded-xl bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 transition-all">Change Requests</button>
+          <button onClick={() => setView('projects')} className="px-4 py-2 text-sm rounded-xl transition-all hover:opacity-80" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>Projects</button>
+          <button onClick={() => setView('requests')} className="px-4 py-2 text-sm rounded-xl transition-all hover:opacity-80" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>Change Requests</button>
         </div>
 
         <div className="max-w-2xl mx-auto">
           <ResultCard title="New Change Request" icon="\uD83D\uDCDD">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-gray-400 mb-1.5">Select Project *</label>
-                <select value={crForm.projectId} onChange={(e) => selectProjectForCR(e.target.value)} className={inputClass}>
+                <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Select Project *</label>
+                <select value={crForm.projectId} onChange={(e) => selectProjectForCR(e.target.value)} className={inputClass} style={inputStyle}>
                   <option value="">-- Select a project --</option>
                   {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-1.5">Change Description *</label>
-                <textarea value={crForm.description} onChange={(e) => updateCRField('description', e.target.value)} rows={4} className={`${inputClass} resize-none`} placeholder="Describe the scope change in detail..." />
+                <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Change Description *</label>
+                <textarea value={crForm.description} onChange={(e) => updateCRField('description', e.target.value)} rows={4} className={`${inputClass} resize-none`} style={inputStyle} placeholder="Describe the scope change in detail..." />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">Additional Hours *</label>
-                  <input type="number" value={crForm.additionalHours} onChange={(e) => updateCRField('additionalHours', e.target.value)} className={inputClass} placeholder="20" />
+                  <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Additional Hours *</label>
+                  <input type="number" value={crForm.additionalHours} onChange={(e) => updateCRField('additionalHours', e.target.value)} className={inputClass} style={inputStyle} placeholder="20" />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">Hourly Rate ($)</label>
-                  <input type="number" value={crForm.hourlyRate} onChange={(e) => updateCRField('hourlyRate', e.target.value)} className={inputClass} placeholder="150" />
+                  <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Hourly Rate ($)</label>
+                  <input type="number" value={crForm.hourlyRate} onChange={(e) => updateCRField('hourlyRate', e.target.value)} className={inputClass} style={inputStyle} placeholder="150" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">Timeline Impact</label>
-                  <select value={crForm.timelineImpact} onChange={(e) => updateCRField('timelineImpact', e.target.value)} className={inputClass}>
+                  <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Timeline Impact</label>
+                  <select value={crForm.timelineImpact} onChange={(e) => updateCRField('timelineImpact', e.target.value)} className={inputClass} style={inputStyle}>
                     {TIMELINE_OPTIONS.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
                   </select>
                   {crForm.timelineImpact === 'custom' && (
-                    <input type="text" value={crForm.customTimeline} onChange={(e) => updateCRField('customTimeline', e.target.value)} className={`${inputClass} mt-2`} placeholder="e.g., +3 weeks" />
+                    <input type="text" value={crForm.customTimeline} onChange={(e) => updateCRField('customTimeline', e.target.value)} className={`${inputClass} mt-2`} style={inputStyle} placeholder="e.g., +3 weeks" />
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-400 mb-1.5">Priority</label>
-                  <select value={crForm.priority} onChange={(e) => updateCRField('priority', e.target.value)} className={inputClass}>
+                  <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Priority</label>
+                  <select value={crForm.priority} onChange={(e) => updateCRField('priority', e.target.value)} className={inputClass} style={inputStyle}>
                     {PRIORITY_OPTIONS.map((p) => <option key={p.value} value={p.value}>{p.label}</option>)}
                   </select>
                 </div>
@@ -331,26 +332,26 @@ export default function App() {
 
               {/* Cost Summary */}
               {(Number(crForm.additionalHours) > 0 && Number(crForm.hourlyRate) > 0) && (
-                <div className="bg-dark-200/30 border border-white/5 rounded-xl p-4 mt-4">
-                  <h4 className="text-white font-medium mb-3">Cost Impact</h4>
+                <div className="rounded-xl p-4 mt-4" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+                  <h4 className="font-medium mb-3" style={{ color: 'var(--text-heading)' }}>Cost Impact</h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Additional Cost</p>
-                      <p className="text-[#13b973] font-bold">${additionalCost.toLocaleString()}</p>
+                      <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Additional Cost</p>
+                      <p className="font-bold" style={{ color: 'var(--accent)' }}>${additionalCost.toLocaleString()}</p>
                     </div>
                     {selectedProject && (
                       <>
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">Original Budget</p>
-                          <p className="text-gray-300 font-bold">${Number(selectedProject.budget).toLocaleString()}</p>
+                          <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Original Budget</p>
+                          <p className="font-bold" style={{ color: 'var(--text-body)' }}>${Number(selectedProject.budget).toLocaleString()}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">New Total</p>
-                          <p className="text-white font-bold">${newTotal.toLocaleString()}</p>
+                          <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>New Total</p>
+                          <p className="font-bold" style={{ color: 'var(--text-heading)' }}>${newTotal.toLocaleString()}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 mb-1">Over Budget</p>
-                          <p className={`font-bold ${Number(overPercent) > 20 ? 'text-red-400' : Number(overPercent) > 10 ? 'text-yellow-400' : 'text-[#13b973]'}`}>+{overPercent}%</p>
+                          <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Over Budget</p>
+                          <p className="font-bold" style={{ color: Number(overPercent) > 20 ? 'var(--danger)' : Number(overPercent) > 10 ? 'var(--warning)' : 'var(--accent)' }}>+{overPercent}%</p>
                         </div>
                       </>
                     )}
@@ -359,8 +360,8 @@ export default function App() {
               )}
 
               <div className="flex justify-end gap-3 pt-2">
-                <button onClick={() => setView('projects')} className="px-4 py-2 text-gray-400 hover:text-white transition-colors">Cancel</button>
-                <button onClick={submitCR} disabled={!crForm.projectId || !crForm.description.trim() || !crForm.additionalHours} className="px-6 py-2.5 bg-[#13b973] hover:bg-[#13b973]/80 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl font-medium transition-colors">
+                <button onClick={() => setView('projects')} className="px-4 py-2 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Cancel</button>
+                <button onClick={submitCR} disabled={!crForm.projectId || !crForm.description.trim() || !crForm.additionalHours} className="px-6 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl font-medium transition-colors hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
                   Create Change Request
                 </button>
               </div>
@@ -380,24 +381,25 @@ export default function App() {
     return (
       <ToolLayout title="Scope Change Request System" description={`Change Request: CR-${viewCR.id.slice(0, 6).toUpperCase()}`}>
         <div className="flex items-center justify-between mb-6">
-          <button onClick={() => { setViewCR(null); setView('requests') }} className="text-gray-400 hover:text-white text-sm inline-flex items-center gap-1 transition-colors">
+          <button onClick={() => { setViewCR(null); setView('requests') }} className="text-sm inline-flex items-center gap-1 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>
             &larr; Back to Requests
           </button>
           <div className="flex items-center gap-3">
             <select
               value={viewCR.status}
               onChange={(e) => { updateCRStatus(viewCR.id, e.target.value); setViewCR({ ...viewCR, status: e.target.value }) }}
-              className="bg-dark-200/50 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-[#13b973]/50"
+              className="rounded-xl px-3 py-2 text-sm focus:outline-none"
+              style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }}
             >
               {CR_STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
             </select>
             <CopyButton text={docText} label="Copy" />
-            <button onClick={exportPDF} className="px-4 py-2 text-sm bg-[#13b973] hover:bg-[#13b973]/80 text-white rounded-xl font-medium transition-colors">Export PDF</button>
+            <button onClick={exportPDF} className="px-4 py-2 text-sm rounded-xl font-medium transition-colors hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>Export PDF</button>
           </div>
         </div>
 
-        <div ref={crDocRef} className="max-w-2xl mx-auto bg-dark-100/50 border border-white/10 rounded-2xl p-8">
-          <pre className="text-gray-300 text-sm whitespace-pre-wrap font-mono leading-relaxed">{docText}</pre>
+        <div ref={crDocRef} className="max-w-2xl mx-auto rounded-2xl p-8" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+          <pre className="text-sm whitespace-pre-wrap font-mono leading-relaxed" style={{ color: 'var(--text-body)' }}>{docText}</pre>
         </div>
       </ToolLayout>
     )
@@ -407,24 +409,24 @@ export default function App() {
   return (
     <ToolLayout title="Scope Change Request System" description="View and manage all change requests across projects.">
       <div className="flex items-center gap-3 mb-6">
-        <button onClick={() => setView('projects')} className="px-4 py-2 text-sm rounded-xl bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 transition-all">Projects</button>
-        <button onClick={() => setView('requests')} className="px-4 py-2 text-sm rounded-xl bg-[#13b973] text-white">Change Requests</button>
-        <button onClick={() => { setCRForm((f) => ({ ...f, projectId: projects[0]?.id || '' })); if (projects[0]) selectProjectForCR(projects[0].id); setView('new-cr') }} className="ml-auto px-5 py-2 bg-[#13b973] hover:bg-[#13b973]/80 text-white rounded-xl font-medium transition-colors text-sm">
+        <button onClick={() => setView('projects')} className="px-4 py-2 text-sm rounded-xl transition-all hover:opacity-80" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>Projects</button>
+        <button onClick={() => setView('requests')} className="px-4 py-2 text-sm rounded-xl" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>Change Requests</button>
+        <button onClick={() => { setCRForm((f) => ({ ...f, projectId: projects[0]?.id || '' })); if (projects[0]) selectProjectForCR(projects[0].id); setView('new-cr') }} className="ml-auto px-5 py-2 rounded-xl font-medium transition-colors text-sm hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
           + New Change Request
         </button>
       </div>
 
       {/* Filter by project */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <button onClick={() => setSelectedProjectId(null)} className={`px-3 py-1.5 text-xs rounded-lg transition-all ${!selectedProjectId ? 'bg-[#13b973] text-white' : 'bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200'}`}>All Projects</button>
+        <button onClick={() => setSelectedProjectId(null)} className="px-3 py-1.5 text-xs rounded-lg transition-all" style={!selectedProjectId ? { background: 'var(--accent)', color: 'var(--text-heading)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>All Projects</button>
         {projects.map((p) => (
-          <button key={p.id} onClick={() => setSelectedProjectId(p.id)} className={`px-3 py-1.5 text-xs rounded-lg transition-all ${selectedProjectId === p.id ? 'bg-[#13b973] text-white' : 'bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200'}`}>{p.name}</button>
+          <button key={p.id} onClick={() => setSelectedProjectId(p.id)} className="px-3 py-1.5 text-xs rounded-lg transition-all" style={selectedProjectId === p.id ? { background: 'var(--accent)', color: 'var(--text-heading)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>{p.name}</button>
         ))}
       </div>
 
       {changeRequests.length === 0 ? (
         <ResultCard>
-          <p className="text-gray-500 text-center py-12">No change requests yet. Create one from the Projects view.</p>
+          <p className="text-center py-12" style={{ color: 'var(--text-muted)' }}>No change requests yet. Create one from the Projects view.</p>
         </ResultCard>
       ) : (
         <div className="space-y-3">
@@ -437,25 +439,25 @@ export default function App() {
               const statusObj = CR_STATUSES.find((s) => s.value === cr.status)
               const priorityObj = PRIORITY_OPTIONS.find((p) => p.value === cr.priority)
               return (
-                <div key={cr.id} className="bg-dark-100/50 border border-white/5 rounded-xl p-5 hover:border-white/10 transition-all">
+                <div key={cr.id} className="rounded-xl p-5 transition-all" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="text-gray-500 text-xs font-mono">CR-{cr.id.slice(0, 6).toUpperCase()}</span>
-                        <span className={`px-2.5 py-0.5 text-xs rounded-full font-medium ${statusObj?.color}`}>{statusObj?.label}</span>
-                        <span className={`text-xs ${priorityObj?.color}`}>{priorityObj?.label}</span>
+                        <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>CR-{cr.id.slice(0, 6).toUpperCase()}</span>
+                        <span className="px-2.5 py-0.5 text-xs rounded-full font-medium" style={{ background: statusObj?.bg, color: statusObj?.text }}>{statusObj?.label}</span>
+                        <span className="text-xs" style={{ color: priorityObj?.colorVar }}>{priorityObj?.label}</span>
                       </div>
-                      <p className="text-gray-400 text-sm mb-1">Project: <span className="text-gray-300">{project?.name || 'Unknown'}</span></p>
-                      <p className="text-gray-500 text-sm mb-2 line-clamp-2">{cr.description}</p>
+                      <p className="text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Project: <span style={{ color: 'var(--text-body)' }}>{project?.name || 'Unknown'}</span></p>
+                      <p className="text-sm mb-2 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{cr.description}</p>
                       <div className="flex items-center gap-4 text-sm">
-                        <span className="text-[#13b973] font-medium">+${cost.toLocaleString()}</span>
-                        <span className="text-gray-500">{cr.additionalHours}h @ ${cr.hourlyRate}/hr</span>
-                        <span className="text-gray-600">{new Date(cr.createdAt).toLocaleDateString()}</span>
+                        <span className="font-medium" style={{ color: 'var(--accent)' }}>+${cost.toLocaleString()}</span>
+                        <span style={{ color: 'var(--text-muted)' }}>{cr.additionalHours}h @ ${cr.hourlyRate}/hr</span>
+                        <span style={{ color: 'var(--text-muted)' }}>{new Date(cr.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 ml-4">
-                      <button onClick={() => { setViewCR(cr); setView('view-cr') }} className="px-3 py-1.5 text-xs bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 rounded-lg transition-all">View</button>
-                      <button onClick={() => deleteCR(cr.id)} className="px-3 py-1.5 text-xs bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg transition-all">Delete</button>
+                      <button onClick={() => { setViewCR(cr); setView('view-cr') }} className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>View</button>
+                      <button onClick={() => deleteCR(cr.id)} className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>Delete</button>
                     </div>
                   </div>
                 </div>

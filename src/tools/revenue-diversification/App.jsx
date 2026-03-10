@@ -11,7 +11,7 @@ const SERVICE_TYPES = [
   'Consulting', 'Advertising', 'Email Marketing', 'Video Production', 'Other',
 ]
 
-const COLORS = ['#13b973', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1']
+const COLORS = ['var(--accent)', 'var(--info)', 'var(--warning)', 'var(--danger)', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1']
 
 const EMPTY_SOURCE = { clientName: '', monthlyRevenue: '', serviceType: SERVICE_TYPES[0] }
 
@@ -95,7 +95,7 @@ export default function App() {
     el.style.height = 'auto'
     el.style.maxHeight = 'none'
     try {
-      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: '#0a0a0f' })
+      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507' })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const pw = pdf.internal.pageSize.getWidth()
@@ -117,17 +117,17 @@ export default function App() {
   }
 
   const getRiskColor = (pct) => {
-    if (pct <= 20) return '#13b973'
-    if (pct <= 30) return '#f59e0b'
-    return '#ef4444'
+    if (pct <= 20) return 'var(--success)'
+    if (pct <= 30) return 'var(--warning)'
+    return 'var(--danger)'
   }
 
   const CustomTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null
     return (
-      <div className="bg-dark-100 border border-white/10 rounded-lg px-3 py-2 text-sm">
-        <p className="text-white font-medium">{payload[0].name}</p>
-        <p className="text-gray-400">${Number(payload[0].value).toLocaleString()}/mo ({((payload[0].value / analysis.totalRevenue) * 100).toFixed(1)}%)</p>
+      <div className="rounded-lg px-3 py-2 text-sm" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+        <p className="font-medium" style={{ color: "var(--text-heading)" }}>{payload[0].name}</p>
+        <p style={{ color: "var(--text-muted)" }}>${Number(payload[0].value).toLocaleString()}/mo ({((payload[0].value / analysis.totalRevenue) * 100).toFixed(1)}%)</p>
       </div>
     )
   }
@@ -143,40 +143,40 @@ export default function App() {
           {sources.map((source, idx) => (
             <div key={source.id} className="grid grid-cols-1 sm:grid-cols-[1fr_120px_160px_40px] gap-3 items-end">
               <div>
-                {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Client Name</label>}
+                {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Client Name</label>}
                 <input
                   type="text"
                   value={source.clientName}
                   onChange={(e) => updateSource(source.id, 'clientName', e.target.value)}
                   placeholder="Client name"
-                  className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
                 />
               </div>
               <div>
-                {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Monthly $</label>}
+                {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Monthly $</label>}
                 <input
                   type="number"
                   value={source.monthlyRevenue}
                   onChange={(e) => updateSource(source.id, 'monthlyRevenue', e.target.value)}
                   placeholder="0"
-                  className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
                 />
               </div>
               <div>
-                {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Service Type</label>}
+                {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Service Type</label>}
                 <select
                   value={source.serviceType}
                   onChange={(e) => updateSource(source.id, 'serviceType', e.target.value)}
-                  className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
                 >
                   {SERVICE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
               <div>
-                {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">&nbsp;</label>}
+                {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>&nbsp;</label>}
                 <button
                   onClick={() => removeSource(source.id)}
-                  className="w-full py-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors text-lg"
+                  className="w-full py-2 rounded-lg transition-colors text-lg" style={{ color: "var(--danger)" }}
                   title="Remove"
                 >
                   &times;
@@ -187,7 +187,7 @@ export default function App() {
         </div>
         <button
           onClick={addSource}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm text-[#13b973] border border-[#13b973]/30 hover:bg-[#13b973]/10 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors" style={{ color: "var(--accent)", border: "1px solid var(--accent-soft)" }}
         >
           + Add Income Source
         </button>
@@ -227,10 +227,10 @@ export default function App() {
                   score={analysis.diversificationScore}
                   label={analysis.diversificationScore >= 70 ? 'Well Diversified' : analysis.diversificationScore >= 40 ? 'Moderate Risk' : 'High Risk'}
                 />
-                <div className="text-center space-y-1 text-sm text-gray-400">
+                <div className="text-center space-y-1 text-sm" style={{ color: "var(--text-muted)" }}>
                   <p>{activeSources.length} active source{activeSources.length !== 1 ? 's' : ''}</p>
                   <p>{analysis.uniqueServices} service type{analysis.uniqueServices !== 1 ? 's' : ''}</p>
-                  <p className="text-white font-semibold">${analysis.totalRevenue.toLocaleString()}/mo total</p>
+                  <p className="font-semibold" style={{ color: "var(--text-heading)" }}>${analysis.totalRevenue.toLocaleString()}/mo total</p>
                 </div>
               </div>
             </ResultCard>
@@ -242,12 +242,12 @@ export default function App() {
               {analysis.withPct.map((s, i) => (
                 <div key={s.id || i}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-300">{s.clientName}</span>
+                    <span style={{ color: "var(--text-body)" }}>{s.clientName}</span>
                     <span className="font-medium" style={{ color: getRiskColor(s.percentage) }}>
                       {s.percentage.toFixed(1)}% &middot; ${s.revenue.toLocaleString()}/mo
                     </span>
                   </div>
-                  <div className="w-full h-3 bg-white/5 rounded-full overflow-hidden">
+                  <div className="w-full h-3 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
                     <div
                       className="h-full rounded-full transition-all duration-700"
                       style={{
@@ -258,27 +258,28 @@ export default function App() {
                   </div>
                 </div>
               ))}
-              <div className="flex gap-4 mt-3 text-xs text-gray-500">
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#13b973]" /> Safe (&le;20%)</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#f59e0b]" /> Caution (20-30%)</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#ef4444]" /> High Risk (&gt;30%)</span>
+              <div className="flex gap-4 mt-3 text-xs" style={{ color: "var(--text-muted)" }}>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: "var(--success)" }} /> Safe (&le;20%)</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: "var(--warning)" }} /> Caution (20-30%)</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full" style={{ background: "var(--danger)" }} /> High Risk (&gt;30%)</span>
               </div>
             </div>
           </ResultCard>
 
           {/* What-If Simulator */}
           <ResultCard title="&quot;What If&quot; Simulator" icon="🔀" className="mb-8">
-            <p className="text-sm text-gray-400 mb-4">Toggle clients off to simulate losing them. See the impact on your revenue.</p>
+            <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>Toggle clients off to simulate losing them. See the impact on your revenue.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-4">
               {validSources.map((s) => (
                 <button
                   key={s.id}
                   onClick={() => toggleRemove(s.id)}
-                  className={`flex items-center justify-between px-4 py-3 rounded-lg border transition-all text-sm ${
+                  className="flex items-center justify-between px-4 py-3 rounded-lg transition-all text-sm"
+                  style={
                     removedIds.has(s.id)
-                      ? 'border-red-500/30 bg-red-500/10 text-red-400 line-through'
-                      : 'border-white/10 bg-dark-200/30 text-white hover:border-[#13b973]/30'
-                  }`}
+                      ? { border: '1px solid var(--danger-soft)', background: 'var(--danger-soft)', color: 'var(--danger)', textDecoration: 'line-through' }
+                      : { border: '1px solid var(--border)', background: 'var(--bg-elevated)', color: 'var(--text-heading)' }
+                  }
                 >
                   <span>{s.clientName}</span>
                   <span className="font-medium">${Number(s.monthlyRevenue).toLocaleString()}</span>
@@ -286,9 +287,9 @@ export default function App() {
               ))}
             </div>
             {revenueGap > 0 && (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
-                <p className="text-red-400 font-semibold">Revenue Gap: ${revenueGap.toLocaleString()}/mo (${(revenueGap * 12).toLocaleString()}/yr)</p>
-                <p className="text-sm text-gray-400 mt-1">
+              <div className="rounded-lg p-4" style={{ background: "var(--danger-soft)", border: "1px solid var(--danger)" }}>
+                <p className="font-semibold" style={{ color: "var(--danger)" }}>Revenue Gap: ${revenueGap.toLocaleString()}/mo (${(revenueGap * 12).toLocaleString()}/yr)</p>
+                <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>
                   You would lose {((revenueGap / originalTotal) * 100).toFixed(0)}% of your revenue.
                   {revenueGap / originalTotal > 0.3 && ' This is a survival-level risk. Diversify urgently.'}
                   {revenueGap / originalTotal > 0.15 && revenueGap / originalTotal <= 0.3 && ' This is a significant risk. Start diversifying.'}
@@ -301,8 +302,8 @@ export default function App() {
           <ResultCard title="Recommendations" icon="💡" className="mb-8">
             <ul className="space-y-3">
               {analysis.recommendations.map((rec, i) => (
-                <li key={i} className="flex gap-3 text-sm text-gray-300">
-                  <span className="text-[#13b973] mt-0.5 shrink-0">&#10003;</span>
+                <li key={i} className="flex gap-3 text-sm" style={{ color: "var(--text-body)" }}>
+                  <span className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }}>&#10003;</span>
                   <span>{rec}</span>
                 </li>
               ))}
@@ -315,7 +316,7 @@ export default function App() {
         <div className="flex justify-center">
           <button
             onClick={handleExportPDF}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#13b973] hover:bg-[#0fa863] text-white font-medium rounded-lg transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

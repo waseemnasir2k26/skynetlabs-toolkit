@@ -175,31 +175,32 @@ export default function App() {
     doc.save('service-quote.pdf')
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary/50 transition-colors'
-  const btnPrimary = 'px-4 py-2 bg-primary hover:bg-primary-light text-black font-medium rounded-lg transition-colors text-sm'
-  const btnSecondary = 'px-3 py-1.5 bg-dark-200/50 hover:bg-dark-200 text-gray-300 hover:text-white border border-white/10 rounded-lg transition-colors text-sm'
+  const inputClass = 'w-full rounded-lg px-3 py-2 text-sm placeholder-gray-500 focus:outline-none transition-colors'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }
+  const btnPrimaryStyle = { background: 'var(--accent)', color: 'var(--text-heading)' }
+  const btnSecondaryStyle = { background: 'var(--bg-elevated)', color: 'var(--text-body)', border: '1px solid var(--border)' }
 
   const InlineForm = ({ fields, data, onSave, onCancel }) => {
     const [form, setForm] = useState({ ...data })
     return (
-      <div className="bg-dark-200/30 rounded-lg p-4 space-y-3">
+      <div className="rounded-lg p-4 space-y-3" style={{ background: 'var(--bg-elevated)' }}>
         {fields.map(f => (
           <div key={f.key}>
-            <label className="block text-gray-400 text-xs mb-1">{f.label}</label>
+            <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{f.label}</label>
             {f.type === 'select' ? (
-              <select className={inputClass} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}>
+              <select className={inputClass} style={inputStyle} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}>
                 {f.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             ) : f.type === 'textarea' ? (
-              <textarea className={inputClass + ' min-h-[60px]'} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder} />
+              <textarea className={inputClass + ' min-h-[60px]'} style={inputStyle} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder} />
             ) : (
-              <input type={f.type || 'text'} className={inputClass} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder} />
+              <input type={f.type || 'text'} className={inputClass} style={inputStyle} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder} />
             )}
           </div>
         ))}
         <div className="flex gap-2">
-          <button onClick={() => onSave(form)} className={btnPrimary + ' text-xs'}>Save</button>
-          <button onClick={onCancel} className={btnSecondary + ' text-xs'}>Cancel</button>
+          <button onClick={() => onSave(form)} className="px-4 py-2 font-medium rounded-lg transition-colors text-sm text-xs" style={btnPrimaryStyle}>Save</button>
+          <button onClick={onCancel} className="px-3 py-1.5 rounded-lg transition-colors text-sm text-xs" style={btnSecondaryStyle}>Cancel</button>
         </div>
       </div>
     )
@@ -212,10 +213,10 @@ export default function App() {
     >
       {/* Mode Toggle */}
       <div className="flex gap-2 mb-6">
-        <button onClick={() => setMode('setup')} className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${mode === 'setup' ? 'bg-primary text-black' : 'bg-dark-100/50 text-gray-400 hover:text-white border border-white/10'}`}>
+        <button onClick={() => setMode('setup')} className="px-4 py-2 rounded-lg text-sm font-medium transition-colors" style={mode === 'setup' ? btnPrimaryStyle : { ...btnSecondaryStyle }}>
           Setup Mode
         </button>
-        <button onClick={() => setMode('client')} className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${mode === 'client' ? 'bg-primary text-black' : 'bg-dark-100/50 text-gray-400 hover:text-white border border-white/10'}`}>
+        <button onClick={() => setMode('client')} className="px-4 py-2 rounded-lg text-sm font-medium transition-colors" style={mode === 'client' ? btnPrimaryStyle : { ...btnSecondaryStyle }}>
           Client Preview
         </button>
       </div>
@@ -226,15 +227,15 @@ export default function App() {
           <ResultCard title="Base Services" icon="&#128230;">
             <div className="space-y-3">
               {config.services.map(svc => (
-                <div key={svc.id} className="flex items-center justify-between bg-dark-200/30 rounded-lg p-3">
+                <div key={svc.id} className="flex items-center justify-between rounded-lg p-3" style={{ background: 'var(--bg-elevated)' }}>
                   <div>
-                    <p className="text-white text-sm font-medium">{svc.name}</p>
-                    <p className="text-gray-400 text-xs">{svc.description}</p>
-                    <p className="text-primary text-sm mt-1">${svc.basePrice.toLocaleString()} &middot; {svc.timeline}d</p>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>{svc.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{svc.description}</p>
+                    <p className="text-sm mt-1" style={{ color: 'var(--accent)' }}>${svc.basePrice.toLocaleString()} &middot; {svc.timeline}d</p>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => setEditingService(svc)} className="text-primary text-xs hover:text-primary-light">Edit</button>
-                    <button onClick={() => deleteService(svc.id)} className="text-gray-500 text-xs hover:text-red-400">Delete</button>
+                    <button onClick={() => setEditingService(svc)} className="text-xs hover:opacity-80" style={{ color: 'var(--accent)' }}>Edit</button>
+                    <button onClick={() => deleteService(svc.id)} className="text-xs hover:opacity-70" style={{ color: 'var(--danger)' }}>Delete</button>
                   </div>
                 </div>
               ))}
@@ -251,7 +252,7 @@ export default function App() {
                   onCancel={() => setEditingService(null)}
                 />
               ) : (
-                <button onClick={() => setEditingService({ ...emptyService })} className={btnSecondary}>+ Add Service</button>
+                <button onClick={() => setEditingService({ ...emptyService })} className="px-3 py-1.5 rounded-lg transition-colors text-sm" style={btnSecondaryStyle}>+ Add Service</button>
               )}
             </div>
           </ResultCard>
@@ -260,15 +261,15 @@ export default function App() {
           <ResultCard title="Add-on Modules" icon="&#128296;">
             <div className="space-y-3">
               {config.addons.map(addon => (
-                <div key={addon.id} className="flex items-center justify-between bg-dark-200/30 rounded-lg p-3">
+                <div key={addon.id} className="flex items-center justify-between rounded-lg p-3" style={{ background: 'var(--bg-elevated)' }}>
                   <div>
-                    <p className="text-white text-sm font-medium">{addon.name}</p>
-                    <p className="text-gray-400 text-xs">{addon.description}</p>
-                    <p className="text-primary text-sm mt-1">+${addon.price.toLocaleString()} &middot; +{addon.time}d</p>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>{addon.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{addon.description}</p>
+                    <p className="text-sm mt-1" style={{ color: 'var(--accent)' }}>+${addon.price.toLocaleString()} &middot; +{addon.time}d</p>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => setEditingAddon(addon)} className="text-primary text-xs hover:text-primary-light">Edit</button>
-                    <button onClick={() => deleteAddon(addon.id)} className="text-gray-500 text-xs hover:text-red-400">Delete</button>
+                    <button onClick={() => setEditingAddon(addon)} className="text-xs hover:opacity-80" style={{ color: 'var(--accent)' }}>Edit</button>
+                    <button onClick={() => deleteAddon(addon.id)} className="text-xs hover:opacity-70" style={{ color: 'var(--danger)' }}>Delete</button>
                   </div>
                 </div>
               ))}
@@ -285,7 +286,7 @@ export default function App() {
                   onCancel={() => setEditingAddon(null)}
                 />
               ) : (
-                <button onClick={() => setEditingAddon({ ...emptyAddon })} className={btnSecondary}>+ Add Module</button>
+                <button onClick={() => setEditingAddon({ ...emptyAddon })} className="px-3 py-1.5 rounded-lg transition-colors text-sm" style={btnSecondaryStyle}>+ Add Module</button>
               )}
             </div>
           </ResultCard>
@@ -294,27 +295,27 @@ export default function App() {
           <ResultCard title="Rush Multipliers" icon="&#9889;">
             <div className="flex flex-wrap gap-3">
               {config.rushMultipliers.map((rm, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg px-4 py-2 text-center">
-                  <p className="text-white text-sm font-medium">{rm.label}</p>
-                  <p className="text-yellow-400 text-xs">{rm.value}x price</p>
+                <div key={i} className="rounded-lg px-4 py-2 text-center" style={{ background: 'var(--bg-elevated)' }}>
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>{rm.label}</p>
+                  <p className="text-xs" style={{ color: 'var(--warning)' }}>{rm.value}x price</p>
                 </div>
               ))}
             </div>
-            <p className="text-gray-500 text-xs mt-2">Rush delivery multiplies the price and reduces the timeline proportionally.</p>
+            <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>Rush delivery multiplies the price and reduces the timeline proportionally.</p>
           </ResultCard>
 
           {/* Revision Packages */}
           <ResultCard title="Revision Packages" icon="&#128260;">
             <div className="space-y-3">
               {config.revisionPackages.map(rev => (
-                <div key={rev.id} className="flex items-center justify-between bg-dark-200/30 rounded-lg p-3">
+                <div key={rev.id} className="flex items-center justify-between rounded-lg p-3" style={{ background: 'var(--bg-elevated)' }}>
                   <div>
-                    <p className="text-white text-sm font-medium">{rev.name}</p>
-                    <p className="text-gray-400 text-xs">{rev.revisions} revisions &middot; ${rev.price.toLocaleString()}</p>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>{rev.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{rev.revisions} revisions &middot; ${rev.price.toLocaleString()}</p>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => setEditingRevision(rev)} className="text-primary text-xs hover:text-primary-light">Edit</button>
-                    <button onClick={() => deleteRevision(rev.id)} className="text-gray-500 text-xs hover:text-red-400">Delete</button>
+                    <button onClick={() => setEditingRevision(rev)} className="text-xs hover:opacity-80" style={{ color: 'var(--accent)' }}>Edit</button>
+                    <button onClick={() => deleteRevision(rev.id)} className="text-xs hover:opacity-70" style={{ color: 'var(--danger)' }}>Delete</button>
                   </div>
                 </div>
               ))}
@@ -330,7 +331,7 @@ export default function App() {
                   onCancel={() => setEditingRevision(null)}
                 />
               ) : (
-                <button onClick={() => setEditingRevision({ ...emptyRevisionPkg })} className={btnSecondary}>+ Add Package</button>
+                <button onClick={() => setEditingRevision({ ...emptyRevisionPkg })} className="px-3 py-1.5 rounded-lg transition-colors text-sm" style={btnSecondaryStyle}>+ Add Package</button>
               )}
             </div>
           </ResultCard>
@@ -339,16 +340,16 @@ export default function App() {
           <ResultCard title="Discount Rules" icon="&#127991;">
             <div className="space-y-3">
               {config.discountRules.map(disc => (
-                <div key={disc.id} className="flex items-center justify-between bg-dark-200/30 rounded-lg p-3">
+                <div key={disc.id} className="flex items-center justify-between rounded-lg p-3" style={{ background: 'var(--bg-elevated)' }}>
                   <div>
-                    <p className="text-white text-sm font-medium">{disc.name}</p>
-                    <p className="text-gray-400 text-xs">
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>{disc.name}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                       {disc.type === 'percentage' ? `${disc.value}% off` : `$${disc.value} off`} when spending ${disc.minSpend}+
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => setEditingDiscount(disc)} className="text-primary text-xs hover:text-primary-light">Edit</button>
-                    <button onClick={() => deleteDiscount(disc.id)} className="text-gray-500 text-xs hover:text-red-400">Delete</button>
+                    <button onClick={() => setEditingDiscount(disc)} className="text-xs hover:opacity-80" style={{ color: 'var(--accent)' }}>Edit</button>
+                    <button onClick={() => deleteDiscount(disc.id)} className="text-xs hover:opacity-70" style={{ color: 'var(--danger)' }}>Delete</button>
                   </div>
                 </div>
               ))}
@@ -365,7 +366,7 @@ export default function App() {
                   onCancel={() => setEditingDiscount(null)}
                 />
               ) : (
-                <button onClick={() => setEditingDiscount({ ...emptyDiscount })} className={btnSecondary}>+ Add Rule</button>
+                <button onClick={() => setEditingDiscount({ ...emptyDiscount })} className="px-3 py-1.5 rounded-lg transition-colors text-sm" style={btnSecondaryStyle}>+ Add Rule</button>
               )}
             </div>
           </ResultCard>
@@ -376,7 +377,7 @@ export default function App() {
         <div className="space-y-6">
           {config.services.length === 0 ? (
             <ResultCard>
-              <p className="text-gray-400 text-center py-8">No services configured yet. Switch to Setup Mode to add services.</p>
+              <p className="text-center py-8" style={{ color: 'var(--text-muted)' }}>No services configured yet. Switch to Setup Mode to add services.</p>
             </ResultCard>
           ) : (
             <>
@@ -387,13 +388,14 @@ export default function App() {
                     <button
                       key={svc.id}
                       onClick={() => setSelectedService(svc.id === selectedService ? null : svc.id)}
-                      className={`text-left rounded-xl p-4 border-2 transition-all ${selectedService === svc.id ? 'border-primary bg-primary/5' : 'border-white/10 bg-dark-200/30 hover:border-white/20'}`}
+                      className="text-left rounded-xl p-4 border-2 transition-all"
+                      style={selectedService === svc.id ? { borderColor: 'var(--accent)', background: 'var(--accent-soft)' } : { borderColor: 'var(--border)', background: 'var(--bg-elevated)' }}
                     >
-                      <h4 className="text-white font-semibold">{svc.name}</h4>
-                      <p className="text-gray-400 text-sm mt-1 line-clamp-2">{svc.description}</p>
+                      <h4 className="font-semibold" style={{ color: 'var(--text-heading)' }}>{svc.name}</h4>
+                      <p className="text-sm mt-1 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{svc.description}</p>
                       <div className="mt-3 flex items-center justify-between">
-                        <span className="text-primary text-lg font-bold">${svc.basePrice.toLocaleString()}</span>
-                        <span className="text-gray-500 text-sm">{svc.timeline} days</span>
+                        <span className="text-lg font-bold" style={{ color: 'var(--accent)' }}>${svc.basePrice.toLocaleString()}</span>
+                        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{svc.timeline} days</span>
                       </div>
                     </button>
                   ))}
@@ -410,16 +412,17 @@ export default function App() {
                         <button
                           key={addon.id}
                           onClick={() => setSelectedAddons(prev => active ? prev.filter(x => x !== addon.id) : [...prev, addon.id])}
-                          className={`text-left rounded-lg p-3 border transition-all ${active ? 'border-primary bg-primary/5' : 'border-white/10 bg-dark-200/30 hover:border-white/20'}`}
+                          className="text-left rounded-lg p-3 transition-all"
+                          style={active ? { border: '1px solid var(--accent)', background: 'var(--accent-soft)' } : { border: '1px solid var(--border)', background: 'var(--bg-elevated)' }}
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-white text-sm font-medium">{addon.name}</span>
-                            <span className={`text-xs px-2 py-0.5 rounded-full ${active ? 'bg-primary/20 text-primary' : 'bg-dark-200 text-gray-400'}`}>
+                            <span className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>{addon.name}</span>
+                            <span className="text-xs px-2 py-0.5 rounded-full" style={active ? { background: 'var(--accent-soft)', color: 'var(--accent)' } : { background: 'var(--bg-card)', color: 'var(--text-muted)' }}>
                               {active ? 'Added' : `+$${addon.price.toLocaleString()}`}
                             </span>
                           </div>
-                          <p className="text-gray-400 text-xs mt-1">{addon.description}</p>
-                          <p className="text-gray-500 text-xs mt-1">+{addon.time} days</p>
+                          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{addon.description}</p>
+                          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>+{addon.time} days</p>
                         </button>
                       )
                     })}
@@ -433,7 +436,8 @@ export default function App() {
                   <div className="flex flex-wrap gap-3">
                     <button
                       onClick={() => setRushMultiplier(1)}
-                      className={`px-4 py-2 rounded-lg text-sm transition-colors ${rushMultiplier === 1 ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-dark-200/30 text-gray-400 border border-white/10'}`}
+                      className="px-4 py-2 rounded-lg text-sm transition-colors"
+                      style={rushMultiplier === 1 ? { background: 'var(--accent-soft)', color: 'var(--accent)', border: '1px solid var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                     >
                       Standard
                     </button>
@@ -441,7 +445,8 @@ export default function App() {
                       <button
                         key={i}
                         onClick={() => setRushMultiplier(rm.value)}
-                        className={`px-4 py-2 rounded-lg text-sm transition-colors ${rushMultiplier === rm.value ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' : 'bg-dark-200/30 text-gray-400 border border-white/10'}`}
+                        className="px-4 py-2 rounded-lg text-sm transition-colors"
+                        style={rushMultiplier === rm.value ? { background: 'var(--warning-soft)', color: 'var(--warning)', border: '1px solid var(--warning)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                       >
                         {rm.label}
                       </button>
@@ -456,7 +461,8 @@ export default function App() {
                   <div className="flex flex-wrap gap-3">
                     <button
                       onClick={() => setSelectedRevision(null)}
-                      className={`px-4 py-2 rounded-lg text-sm transition-colors ${selectedRevision === null ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-dark-200/30 text-gray-400 border border-white/10'}`}
+                      className="px-4 py-2 rounded-lg text-sm transition-colors"
+                      style={selectedRevision === null ? { background: 'var(--accent-soft)', color: 'var(--accent)', border: '1px solid var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                     >
                       None
                     </button>
@@ -464,7 +470,8 @@ export default function App() {
                       <button
                         key={rev.id}
                         onClick={() => setSelectedRevision(rev.id === selectedRevision ? null : rev.id)}
-                        className={`px-4 py-2 rounded-lg text-sm transition-colors ${selectedRevision === rev.id ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-dark-200/30 text-gray-400 border border-white/10'}`}
+                        className="px-4 py-2 rounded-lg text-sm transition-colors"
+                        style={selectedRevision === rev.id ? { background: 'var(--accent-soft)', color: 'var(--accent)', border: '1px solid var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                       >
                         {rev.name} ({rev.revisions} revisions) +${rev.price.toLocaleString()}
                       </button>
@@ -475,29 +482,29 @@ export default function App() {
 
               {/* Sticky Running Total */}
               {quote && (
-                <div className="sticky bottom-0 z-40 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-4 bg-[#0a0a0f]/95 backdrop-blur border-t border-white/10">
+                <div className="sticky bottom-0 z-40 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-4 backdrop-blur" style={{ background: 'var(--bg-page)', borderTop: '1px solid var(--border)' }}>
                   <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-6 flex-wrap">
                       <div>
-                        <p className="text-gray-400 text-xs uppercase">Total</p>
-                        <p className="text-primary text-2xl font-bold">${quote.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        <p className="text-xs uppercase" style={{ color: 'var(--text-muted)' }}>Total</p>
+                        <p className="text-2xl font-bold" style={{ color: 'var(--accent)' }}>${quote.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                       </div>
                       <div>
-                        <p className="text-gray-400 text-xs uppercase">Timeline</p>
-                        <p className="text-white text-lg font-semibold">{quote.totalTime} days</p>
+                        <p className="text-xs uppercase" style={{ color: 'var(--text-muted)' }}>Timeline</p>
+                        <p className="text-lg font-semibold" style={{ color: 'var(--text-heading)' }}>{quote.totalTime} days</p>
                       </div>
                       {quote.discount > 0 && (
                         <div>
-                          <p className="text-gray-400 text-xs uppercase">Savings</p>
-                          <p className="text-green-400 text-lg font-semibold">-${quote.discount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                          <p className="text-xs uppercase" style={{ color: 'var(--text-muted)' }}>Savings</p>
+                          <p className="text-lg font-semibold" style={{ color: 'var(--success)' }}>-${quote.discount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                         </div>
                       )}
                     </div>
                     <div className="flex gap-3">
-                      <button onClick={() => setShowQuote(!showQuote)} className={btnSecondary}>
+                      <button onClick={() => setShowQuote(!showQuote)} className="px-4 py-2 rounded-lg transition-colors text-sm" style={btnSecondaryStyle}>
                         {showQuote ? 'Hide Breakdown' : 'Get Your Quote'}
                       </button>
-                      <button onClick={exportQuotePDF} className={btnPrimary}>Export PDF</button>
+                      <button onClick={exportQuotePDF} className="px-4 py-2 font-medium rounded-lg transition-colors text-sm" style={btnPrimaryStyle}>Export PDF</button>
                     </div>
                   </div>
                 </div>
@@ -508,25 +515,25 @@ export default function App() {
                 <ResultCard title="Quote Summary" icon="&#128203;" className="mt-4">
                   <div className="space-y-2">
                     {quote.lineItems.map((item, i) => (
-                      <div key={i} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+                      <div key={i} className="flex items-center justify-between py-2 last:border-0" style={{ borderBottom: '1px solid var(--border)' }}>
                         <div>
-                          <p className="text-gray-300 text-sm">{item.label}</p>
-                          {item.time && <p className="text-gray-500 text-xs">{item.time} days</p>}
+                          <p className="text-sm" style={{ color: 'var(--text-body)' }}>{item.label}</p>
+                          {item.time && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{item.time} days</p>}
                         </div>
-                        <p className="text-white font-medium">${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        <p className="font-medium" style={{ color: 'var(--text-heading)' }}>${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                       </div>
                     ))}
                     {quote.discount > 0 && (
-                      <div className="flex items-center justify-between py-2 border-b border-white/5">
-                        <p className="text-green-400 text-sm">Discount: {quote.discountLabel}</p>
-                        <p className="text-green-400 font-medium">-${quote.discount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                      <div className="flex items-center justify-between py-2" style={{ borderBottom: '1px solid var(--border)' }}>
+                        <p className="text-sm" style={{ color: 'var(--success)' }}>Discount: {quote.discountLabel}</p>
+                        <p className="font-medium" style={{ color: 'var(--success)' }}>-${quote.discount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                       </div>
                     )}
                     <div className="flex items-center justify-between pt-3">
-                      <p className="text-white font-bold text-lg">Total</p>
-                      <p className="text-primary font-bold text-xl">${quote.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                      <p className="font-bold text-lg" style={{ color: 'var(--text-heading)' }}>Total</p>
+                      <p className="font-bold text-xl" style={{ color: 'var(--accent)' }}>${quote.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                     </div>
-                    <p className="text-gray-500 text-sm text-center pt-2">Estimated delivery: {quote.totalTime} days</p>
+                    <p className="text-sm text-center pt-2" style={{ color: 'var(--text-muted)' }}>Estimated delivery: {quote.totalTime} days</p>
                   </div>
                   <div className="mt-4 flex gap-2">
                     <CopyButton text={quote.lineItems.map(i => `${i.label}: $${i.price}`).join('\n') + `\nTotal: $${quote.total}`} label="Copy Quote" />

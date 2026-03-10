@@ -245,7 +245,7 @@ export default function App() {
           <ResultCard title="Competitor Info">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Competitor Business Name / URL
                 </label>
                 <input
@@ -253,11 +253,11 @@ export default function App() {
                   value={form.competitorName}
                   onChange={e => update('competitorName', e.target.value)}
                   placeholder="e.g. CompetitorCo or competitor.com"
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Competitor&apos;s Positioning *
                 </label>
                 <textarea
@@ -265,7 +265,7 @@ export default function App() {
                   onChange={e => update('competitorPositioning', e.target.value)}
                   rows={3}
                   placeholder="Describe how they position themselves. What do they claim? What's their tagline, key messaging, unique selling points?"
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 resize-none"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
             </div>
@@ -274,7 +274,7 @@ export default function App() {
           <ResultCard title="Your Business">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   YOUR Service Description *
                 </label>
                 <textarea
@@ -282,11 +282,11 @@ export default function App() {
                   onChange={e => update('yourService', e.target.value)}
                   rows={3}
                   placeholder="Describe what you offer. What's your service or product?"
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 resize-none"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Your Differentiators *
                 </label>
                 <textarea
@@ -294,7 +294,7 @@ export default function App() {
                   onChange={e => update('differentiators', e.target.value)}
                   rows={3}
                   placeholder="What makes you different? List your unique advantages, one per line."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 resize-none"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
             </div>
@@ -306,27 +306,19 @@ export default function App() {
                 <button
                   key={p}
                   onClick={() => togglePlatform(p)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                    form.platforms.includes(p)
-                      ? 'bg-primary/20 text-primary border border-primary/30'
-                      : 'bg-dark-200/50 text-gray-400 border border-white/10 hover:text-white'
-                  }`}
+                  className="px-3 py-1.5 rounded-lg text-sm font-medium transition-all border" style={form.platforms.includes(p) ? { background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}
                 >
                   {p}
                 </button>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-2">Select platforms to get platform-specific headlines. Defaults to Meta + Google if none selected.</p>
+            <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>Select platforms to get platform-specific headlines. Defaults to Meta + Google if none selected.</p>
           </ResultCard>
 
           <button
             onClick={handleGenerate}
             disabled={!canGenerate}
-            className={`w-full py-3 rounded-xl font-semibold text-lg transition-all ${
-              canGenerate
-                ? 'bg-primary hover:bg-primary/90 text-white'
-                : 'bg-dark-200/50 text-gray-500 cursor-not-allowed'
-            }`}
+            className={`w-full py-3 rounded-xl font-semibold text-lg transition-all ${!canGenerate ? 'cursor-not-allowed' : ''}`} style={canGenerate ? { background: 'var(--accent)', color: 'var(--text-heading)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}
           >
             Find Counter-Angles
           </button>
@@ -336,7 +328,7 @@ export default function App() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={handleReset}
-              className="px-4 py-2 bg-dark-200/50 border border-white/10 text-gray-300 hover:text-white rounded-lg transition-all text-sm"
+              className="px-4 py-2 border rounded-lg transition-all text-sm" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-body)' }}
             >
               &larr; Start Over
             </button>
@@ -355,17 +347,17 @@ export default function App() {
           <div id="competitor-angles-results" className="space-y-6">
             {/* Summary */}
             <ResultCard title="Competitor Analysis Summary">
-              <p className="text-gray-300 text-sm leading-relaxed">{results.summary}</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-body)' }}>{results.summary}</p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="text-xs text-gray-500">Competitor keywords:</span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Competitor keywords:</span>
                 {results.compKeywords.slice(0, 6).map(k => (
-                  <span key={k} className="px-2 py-0.5 bg-red-500/10 text-red-400 rounded text-xs">{k}</span>
+                  <span key={k} className="px-2 py-0.5 rounded text-xs" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>{k}</span>
                 ))}
               </div>
               <div className="mt-2 flex flex-wrap gap-2">
-                <span className="text-xs text-gray-500">Your benefits:</span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Your benefits:</span>
                 {results.benefits.slice(0, 4).map((b, i) => (
-                  <span key={i} className="px-2 py-0.5 bg-primary/10 text-primary rounded text-xs">{b}</span>
+                  <span key={i} className="px-2 py-0.5 rounded text-xs" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>{b}</span>
                 ))}
               </div>
             </ResultCard>
@@ -383,30 +375,30 @@ export default function App() {
 
                   <div className="space-y-4 pr-16">
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Why it works</p>
-                      <p className="text-gray-300 text-sm">{angle.whyItWorks}</p>
+                      <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Why it works</p>
+                      <p className="text-sm" style={{ color: 'var(--text-body)' }}>{angle.whyItWorks}</p>
                     </div>
 
                     <div>
-                      <p className="text-xs text-gray-500 mb-2">Example Headlines by Platform</p>
+                      <p className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>Example Headlines by Platform</p>
                       <div className="space-y-2">
                         {Object.entries(angle.headlines).map(([platform, headline]) => (
-                          <div key={platform} className="bg-dark-200/30 p-3 rounded-lg">
-                            <p className="text-xs text-primary font-medium mb-0.5">{platform}</p>
-                            <p className="text-white text-sm font-medium">&ldquo;{headline}&rdquo;</p>
+                          <div key={platform} className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+                            <p className="text-xs font-medium mb-0.5" style={{ color: 'var(--accent)' }}>{platform}</p>
+                            <p className="text-sm font-medium" style={{ color: 'var(--text-heading)' }}>&ldquo;{headline}&rdquo;</p>
                           </div>
                         ))}
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div className="bg-dark-200/30 p-3 rounded-lg">
-                        <p className="text-xs text-gray-500 mb-0.5">Visual Concept</p>
-                        <p className="text-gray-300 text-sm">{angle.visualConcept}</p>
+                      <div className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+                        <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Visual Concept</p>
+                        <p className="text-sm" style={{ color: 'var(--text-body)' }}>{angle.visualConcept}</p>
                       </div>
-                      <div className="bg-dark-200/30 p-3 rounded-lg">
-                        <p className="text-xs text-gray-500 mb-0.5">Emotional Trigger</p>
-                        <p className="text-primary text-sm font-medium">{angle.emotionalTrigger}</p>
+                      <div className="p-3 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+                        <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Emotional Trigger</p>
+                        <p className="text-sm font-medium" style={{ color: 'var(--accent)' }}>{angle.emotionalTrigger}</p>
                       </div>
                     </div>
                   </div>
@@ -419,20 +411,20 @@ export default function App() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="text-left py-3 px-3 text-gray-400 font-medium">Angle</th>
-                      <th className="text-left py-3 px-3 text-gray-400 font-medium">Target Keyword</th>
-                      <th className="text-left py-3 px-3 text-gray-400 font-medium">Your Benefit</th>
-                      <th className="text-left py-3 px-3 text-gray-400 font-medium">Emotional Trigger</th>
+                    <tr className="border-b" style={{ borderColor: 'var(--border)' }}>
+                      <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Angle</th>
+                      <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Target Keyword</th>
+                      <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Your Benefit</th>
+                      <th className="text-left py-3 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Emotional Trigger</th>
                     </tr>
                   </thead>
                   <tbody>
                     {results.angles.map((angle, idx) => (
-                      <tr key={idx} className="border-b border-white/5">
-                        <td className="py-3 px-3 text-white font-medium">{angle.name}</td>
-                        <td className="py-3 px-3 text-red-400">{angle.keyword}</td>
-                        <td className="py-3 px-3 text-primary">{angle.benefit}</td>
-                        <td className="py-3 px-3 text-gray-300">{angle.emotionalTrigger}</td>
+                      <tr key={idx} className="border-b" style={{ borderColor: 'var(--border)' }}>
+                        <td className="py-3 px-3 font-medium" style={{ color: 'var(--text-heading)' }}>{angle.name}</td>
+                        <td className="py-3 px-3" style={{ color: 'var(--danger)' }}>{angle.keyword}</td>
+                        <td className="py-3 px-3" style={{ color: 'var(--accent)' }}>{angle.benefit}</td>
+                        <td className="py-3 px-3" style={{ color: 'var(--text-body)' }}>{angle.emotionalTrigger}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -444,15 +436,15 @@ export default function App() {
             <ResultCard title="Recommended Top 2 Angles">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {results.top2.map((angle, idx) => (
-                  <div key={idx} className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                  <div key={idx} className="border rounded-lg p-4" style={{ background: 'var(--accent-soft)', borderColor: 'var(--accent)' }}>
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="w-6 h-6 rounded-full bg-primary text-black text-xs font-bold flex items-center justify-center">
+                      <span className="w-6 h-6 rounded-full text-black text-xs font-bold flex items-center justify-center" style={{ background: 'var(--accent)' }}>
                         {idx + 1}
                       </span>
-                      <h4 className="text-white font-semibold text-sm">{angle.name}</h4>
+                      <h4 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{angle.name}</h4>
                     </div>
-                    <p className="text-gray-400 text-xs mb-2">{angle.whyItWorks}</p>
-                    <p className="text-primary text-xs font-medium">{angle.emotionalTrigger}</p>
+                    <p className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>{angle.whyItWorks}</p>
+                    <p className="text-xs font-medium" style={{ color: 'var(--accent)' }}>{angle.emotionalTrigger}</p>
                   </div>
                 ))}
               </div>

@@ -63,36 +63,36 @@ const categories = [
 ]
 
 const categoryColors = {
-  'AI Intelligence': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  'Ad Creative & Marketing': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  'Agency Operations': 'bg-orange-500/10 text-orange-400 border-orange-500/20',
-  'Revenue & Growth': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  'Authority Building': 'bg-pink-500/10 text-pink-400 border-pink-500/20',
-  Calculator: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
-  Generator: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-  Tracker: 'bg-red-500/10 text-red-400 border-red-500/20',
+  'AI Intelligence': { background: 'rgba(168,85,247,0.1)', color: '#a78bfa', border: '1px solid rgba(168,85,247,0.2)' },
+  'Ad Creative & Marketing': { background: 'rgba(59,130,246,0.1)', color: '#60a5fa', border: '1px solid rgba(59,130,246,0.2)' },
+  'Agency Operations': { background: 'rgba(249,115,22,0.1)', color: '#fb923c', border: '1px solid rgba(249,115,22,0.2)' },
+  'Revenue & Growth': { background: 'rgba(16,185,129,0.1)', color: '#34d399', border: '1px solid rgba(16,185,129,0.2)' },
+  'Authority Building': { background: 'rgba(236,72,153,0.1)', color: '#f472b6', border: '1px solid rgba(236,72,153,0.2)' },
+  Calculator: { background: 'rgba(6,182,212,0.1)', color: '#22d3ee', border: '1px solid rgba(6,182,212,0.2)' },
+  Generator: { background: 'rgba(234,179,8,0.1)', color: '#facc15', border: '1px solid rgba(234,179,8,0.2)' },
+  Tracker: { background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' },
 }
 
 const gradientColors = {
-  'AI Intelligence': 'from-purple-500/20 to-violet-500/20',
-  'Ad Creative & Marketing': 'from-blue-500/20 to-cyan-500/20',
-  'Agency Operations': 'from-orange-500/20 to-amber-500/20',
-  'Revenue & Growth': 'from-emerald-500/20 to-green-500/20',
-  'Authority Building': 'from-pink-500/20 to-rose-500/20',
-  Calculator: 'from-cyan-500/20 to-teal-500/20',
-  Generator: 'from-yellow-500/20 to-amber-500/20',
-  Tracker: 'from-red-500/20 to-orange-500/20',
+  'AI Intelligence': 'linear-gradient(to bottom right, rgba(168,85,247,0.2), rgba(139,92,246,0.2))',
+  'Ad Creative & Marketing': 'linear-gradient(to bottom right, rgba(59,130,246,0.2), rgba(6,182,212,0.2))',
+  'Agency Operations': 'linear-gradient(to bottom right, rgba(249,115,22,0.2), rgba(245,158,11,0.2))',
+  'Revenue & Growth': 'linear-gradient(to bottom right, rgba(16,185,129,0.2), rgba(34,197,94,0.2))',
+  'Authority Building': 'linear-gradient(to bottom right, rgba(236,72,153,0.2), rgba(244,63,94,0.2))',
+  Calculator: 'linear-gradient(to bottom right, rgba(6,182,212,0.2), rgba(20,184,166,0.2))',
+  Generator: 'linear-gradient(to bottom right, rgba(234,179,8,0.2), rgba(245,158,11,0.2))',
+  Tracker: 'linear-gradient(to bottom right, rgba(239,68,68,0.2), rgba(249,115,22,0.2))',
 }
 
-const borderHover = {
-  'AI Intelligence': 'hover:border-purple-500/30',
-  'Ad Creative & Marketing': 'hover:border-blue-500/30',
-  'Agency Operations': 'hover:border-orange-500/30',
-  'Revenue & Growth': 'hover:border-emerald-500/30',
-  'Authority Building': 'hover:border-pink-500/30',
-  Calculator: 'hover:border-cyan-500/30',
-  Generator: 'hover:border-yellow-500/30',
-  Tracker: 'hover:border-red-500/30',
+const borderHoverColors = {
+  'AI Intelligence': 'rgba(168,85,247,0.3)',
+  'Ad Creative & Marketing': 'rgba(59,130,246,0.3)',
+  'Agency Operations': 'rgba(249,115,22,0.3)',
+  'Revenue & Growth': 'rgba(16,185,129,0.3)',
+  'Authority Building': 'rgba(236,72,153,0.3)',
+  Calculator: 'rgba(6,182,212,0.3)',
+  Generator: 'rgba(234,179,8,0.3)',
+  Tracker: 'rgba(239,68,68,0.3)',
 }
 
 export default function LandingPage() {
@@ -122,8 +122,9 @@ export default function LandingPage() {
         {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
-            className="particle absolute w-1 h-1 bg-primary/20 rounded-full"
+            className="particle absolute w-1 h-1 rounded-full"
             style={{
+              background: "var(--accent-soft)",
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               '--duration': `${4 + Math.random() * 8}s`,
@@ -141,20 +142,20 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/5 border border-primary/20 rounded-full text-primary text-sm font-medium mb-6">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6" style={{ background: "var(--accent-soft)", border: "1px solid var(--accent-soft)", color: "var(--accent)" }}>
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "var(--accent)" }} />
               40 Free Tools for Your Business
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black mb-6 leading-tight">
-              <span className="text-white">Free Tools for</span>
+              <span style={{ color: "var(--text-heading)" }}>Free Tools for</span>
               <br />
               <span className="animated-gradient-text">Freelancers & Agencies</span>
             </h1>
 
-            <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-8 leading-relaxed" style={{ color: "var(--text-muted)" }}>
               Professional-grade business tools built by{' '}
-              <a href="https://www.skynetjoe.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-light transition-colors font-medium">
+              <a href="https://www.skynetjoe.com" target="_blank" rel="noopener noreferrer" className="transition-colors font-medium" style={{ color: "var(--accent)" }}>
                 SKYNET LABS
               </a>
               {' '}&mdash; AI Automation Agency. No sign-up required. Just open and use.
@@ -174,8 +175,8 @@ export default function LandingPage() {
               { value: 'Zero', label: 'Sign-up Required' },
             ].map((stat, i) => (
               <div key={i} className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-white">{stat.value}</div>
-                <div className="text-xs sm:text-sm text-gray-500">{stat.label}</div>
+                <div className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--text-heading)" }}>{stat.value}</div>
+                <div className="text-xs sm:text-sm" style={{ color: "var(--text-muted)" }}>{stat.label}</div>
               </div>
             ))}
           </motion.div>
@@ -186,7 +187,7 @@ export default function LandingPage() {
       <section className="px-4 sm:px-6 lg:px-8 mb-4">
         <div className="max-w-xl mx-auto">
           <div className="relative">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: "var(--text-muted)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
@@ -194,7 +195,7 @@ export default function LandingPage() {
               placeholder="Search tools..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-dark-100/50 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
+              className="w-full pl-10 pr-4 py-3 rounded-xl focus:outline-none transition-all" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
             />
           </div>
         </div>
@@ -213,11 +214,11 @@ export default function LandingPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  activeCategory === cat
-                    ? 'bg-primary text-white shadow-lg shadow-primary/25'
-                    : 'bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200'
-                }`}
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+                style={activeCategory === cat
+                  ? { background: 'var(--accent)', color: 'var(--text-on-accent)' }
+                  : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }
+                }
               >
                 {cat}
                 {cat !== 'All' && (
@@ -234,7 +235,7 @@ export default function LandingPage() {
       {/* Tool Cards Grid */}
       <section className="px-4 sm:px-6 lg:px-8 pb-16">
         <div className="max-w-7xl mx-auto">
-          <div className="text-sm text-gray-500 mb-4">
+          <div className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
             Showing {filteredTools.length} of {tools.length} tools
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -248,32 +249,37 @@ export default function LandingPage() {
               >
                 <Link
                   to={tool.path}
-                  className={`group block relative overflow-hidden rounded-2xl border border-white/5 ${borderHover[tool.category] || 'hover:border-primary/30'} bg-dark-100/50 backdrop-blur-sm p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/5`}
+                  className="group block relative overflow-hidden rounded-2xl backdrop-blur-sm p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
+                  style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = borderHoverColors[tool.category] || 'var(--accent-soft)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)' }}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${gradientColors[tool.category] || 'from-primary/20 to-emerald-500/20'} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: gradientColors[tool.category] || 'linear-gradient(to bottom right, rgba(19,185,115,0.2), rgba(16,185,129,0.2))' }} />
 
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-4">
-                      <span className={`text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md border ${categoryColors[tool.category] || 'bg-gray-500/10 text-gray-400 border-gray-500/20'}`}>
+                      <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md"
+                        style={categoryColors[tool.category] || { background: 'rgba(107,114,128,0.1)', color: '#9ca3af', border: '1px solid rgba(107,114,128,0.2)' }}>
                         {tool.category}
                       </span>
-                      <svg className="w-5 h-5 text-gray-600 group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-all" style={{ color: "var(--text-muted)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </div>
 
                     <div className="flex items-center gap-3 mb-3">
                       <span className="text-3xl group-hover:scale-110 transition-transform duration-300">{tool.emoji}</span>
-                      <h3 className="text-white font-bold text-lg group-hover:text-primary-light transition-colors">
+                      <h3 className="font-bold text-lg transition-colors" style={{ color: "var(--text-heading)" }}>
                         {tool.name}
                       </h3>
                     </div>
 
-                    <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>
                       {tool.description}
                     </p>
 
-                    <div className="flex items-center gap-2 text-primary font-semibold text-sm group-hover:text-primary-light transition-colors">
+                    <div className="flex items-center gap-2 font-semibold text-sm transition-colors" style={{ color: "var(--accent)" }}>
                       Launch Tool
                       <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -297,21 +303,21 @@ export default function LandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-dark-100 to-dark-200 p-8 sm:p-12 text-center"
+            className="relative overflow-hidden rounded-2xl p-8 sm:p-12 text-center" style={{ border: "1px solid var(--accent-soft)", background: "var(--bg-card)" }}
           >
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+            <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl" style={{ background: "var(--accent-soft)" }} />
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full blur-3xl" style={{ background: "var(--accent-soft)", opacity: 0.5 }} />
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-primary text-xs font-medium mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4" style={{ background: "var(--accent-soft)", border: "1px solid var(--accent-soft)", color: "var(--accent)" }}>
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--accent)" }} />
                 AI Automation Agency
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
+              <h2 className="text-2xl sm:text-4xl font-bold mb-4" style={{ color: "var(--text-heading)" }}>
                 Need Custom Automation Solutions?
               </h2>
-              <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto mb-8">
+              <p className="text-base sm:text-lg max-w-xl mx-auto mb-8" style={{ color: "var(--text-muted)" }}>
                 We build AI-powered automation systems that save businesses thousands of hours.
                 Let us transform your workflows.
               </p>
@@ -321,7 +327,7 @@ export default function LandingPage() {
                   href="https://www.skynetjoe.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition-all shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105"
+                  className="inline-flex items-center gap-2 px-8 py-4 font-bold rounded-xl transition-all hover:scale-105" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
                 >
                   Visit skynetjoe.com
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -332,7 +338,7 @@ export default function LandingPage() {
                   href="https://www.waseemnasir.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-4 bg-dark-200/50 hover:bg-dark-200 border border-white/10 text-gray-300 hover:text-white font-medium rounded-xl transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-4 font-medium rounded-xl transition-all" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-body)" }}
                 >
                   About the Creator
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

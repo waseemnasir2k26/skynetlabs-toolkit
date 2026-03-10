@@ -339,7 +339,7 @@ export default function App() {
     bullets: ['', '', '', ''],
     ctaText: 'Get My Free Copy Now',
     bgColor: '#0a0a0f',
-    accentColor: '#13b973',
+    accentColor: '#13b973', // User-configurable color for exported landing page HTML
   })
 
   const goToStep = (s) => {
@@ -401,7 +401,7 @@ export default function App() {
     if (!el) return
     import('html2canvas').then(({ default: html2canvas }) => {
       import('jspdf').then(({ jsPDF }) => {
-        html2canvas(el, { scale: 2, backgroundColor: '#0a0a0f', useCORS: true }).then(canvas => {
+        html2canvas(el, { scale: 2, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507', useCORS: true }).then(canvas => {
           const imgData = canvas.toDataURL('image/png')
           const pdf = new jsPDF('p', 'mm', 'a4')
           const pdfWidth = pdf.internal.pageSize.getWidth()
@@ -439,17 +439,19 @@ export default function App() {
         {[1, 2, 3].map(s => (
           <React.Fragment key={s}>
             <button onClick={() => s < step && goToStep(s)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
-                s === step ? 'bg-primary text-white shadow-lg shadow-primary/30' :
-                s < step ? 'bg-primary/20 text-primary cursor-pointer hover:bg-primary/30' :
-                'bg-dark-200/50 text-gray-500'
-              }`}>{s}</button>
-            {s < 3 && <div className={`w-12 h-0.5 ${s < step ? 'bg-primary/40' : 'bg-dark-200/50'}`} />}
+              className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all"
+              style={s === step
+                ? { background: 'var(--accent)', color: 'var(--text-on-accent)' }
+                : s < step
+                  ? { background: 'var(--accent-soft)', color: 'var(--accent)', cursor: 'pointer' }
+                  : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }
+              }>{s}</button>
+            {s < 3 && <div className="w-12 h-0.5" style={{ background: s < step ? 'var(--accent-soft)' : 'var(--bg-elevated)' }} />}
           </React.Fragment>
         ))}
       </div>
       <div className="text-center mb-8">
-        <p className="text-gray-400 text-sm">
+        <p className="text-sm" style={{ color: "var(--text-muted)" }}>
           {step === 1 && 'Step 1: Choose Your Lead Magnet Type'}
           {step === 2 && 'Step 2: Generate & Edit Content'}
           {step === 3 && 'Step 3: Create Landing Page'}
@@ -463,20 +465,19 @@ export default function App() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {LEAD_MAGNET_TYPES.map(type => (
               <button key={type.id} onClick={() => setSelectedType(type.id)}
-                className={`p-6 rounded-xl border text-left transition-all ${
-                  selectedType === type.id
-                    ? 'bg-primary/5 border-primary/30 shadow-lg shadow-primary/10'
-                    : 'bg-dark-100/50 border-white/5 hover:border-white/10'
-                }`}>
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-3 ${
-                  selectedType === type.id ? 'bg-primary/20' : 'bg-dark-200/50'
-                }`}>
-                  <svg className={`w-6 h-6 ${selectedType === type.id ? 'text-primary' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                className="p-6 rounded-xl text-left transition-all"
+                style={selectedType === type.id
+                  ? { background: 'var(--accent-soft)', border: '1px solid var(--accent-soft)' }
+                  : { background: 'var(--bg-elevated)', border: '1px solid var(--border)' }
+                }>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-3"
+                  style={{ background: selectedType === type.id ? 'var(--accent-soft)' : 'var(--bg-elevated)' }}>
+                  <svg className="w-6 h-6" style={{ color: selectedType === type.id ? 'var(--accent)' : 'var(--text-muted)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={type.icon} />
                   </svg>
                 </div>
-                <h3 className={`font-semibold mb-1 ${selectedType === type.id ? 'text-primary' : 'text-white'}`}>{type.name}</h3>
-                <p className="text-gray-400 text-sm">{type.description}</p>
+                <h3 className="font-semibold mb-1" style={{ color: selectedType === type.id ? 'var(--accent)' : 'var(--text-heading)' }}>{type.name}</h3>
+                <p className="text-sm" style={{ color: "var(--text-muted)" }}>{type.description}</p>
               </button>
             ))}
           </div>
@@ -486,28 +487,28 @@ export default function App() {
             <ResultCard title="Content Details">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div>
-                  <label className="block text-gray-400 text-sm mb-1">Topic *</label>
+                  <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Topic *</label>
                   <input value={topic} onChange={e => setTopic(e.target.value)} placeholder="e.g., Social Media Marketing"
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary/50" />
+                    className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
                 <div>
-                  <label className="block text-gray-400 text-sm mb-1">Target Audience *</label>
+                  <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Target Audience *</label>
                   <input value={audience} onChange={e => setAudience(e.target.value)} placeholder="e.g., Small Business Owners"
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary/50" />
+                    className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
                 <div>
-                  <label className="block text-gray-400 text-sm mb-1">Your Name/Brand</label>
+                  <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Your Name/Brand</label>
                   <input value={brand} onChange={e => setBrand(e.target.value)} placeholder="e.g., SkynetLabs"
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary/50" />
+                    className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
                 <div>
-                  <label className="block text-gray-400 text-sm mb-1">Your Niche</label>
+                  <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Your Niche</label>
                   <input value={niche} onChange={e => setNiche(e.target.value)} placeholder="e.g., Digital Marketing"
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary/50" />
+                    className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
               </div>
               <button onClick={handleGenerate} disabled={!topic || !audience}
-                className="px-6 py-2.5 bg-primary hover:bg-primary/80 disabled:bg-gray-700 disabled:text-gray-500 text-white font-medium rounded-xl transition-colors">
+                className="px-6 py-2.5 disabled:opacity-40 font-medium rounded-xl transition-colors" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
                 Generate Content
               </button>
             </ResultCard>
@@ -519,16 +520,16 @@ export default function App() {
       {step === 2 && editedContent && (
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <button onClick={() => goToStep(1)} className="text-gray-400 hover:text-white text-sm flex items-center gap-1 transition-colors">
+            <button onClick={() => goToStep(1)} className="text-sm flex items-center gap-1 transition-colors" style={{ color: "var(--text-muted)" }}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               Back
             </button>
             <div className="flex gap-3">
-              <button onClick={downloadContentPdf} className="px-4 py-2 bg-dark-200/50 text-gray-300 hover:text-white rounded-lg text-sm transition-colors flex items-center gap-2">
+              <button onClick={downloadContentPdf} className="px-4 py-2 rounded-lg text-sm transition-colors flex items-center gap-2" style={{ background: "var(--bg-elevated)", color: "var(--text-body)" }}>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                 Export as PDF
               </button>
-              <button onClick={() => goToStep(3)} className="px-6 py-2 bg-primary hover:bg-primary/80 text-white font-medium rounded-lg text-sm transition-colors">
+              <button onClick={() => goToStep(3)} className="px-6 py-2 font-medium rounded-lg text-sm transition-colors" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
                 Create Landing Page
               </button>
             </div>
@@ -540,11 +541,11 @@ export default function App() {
               <div className="space-y-2 mb-6">
                 <input value={editedContent.title}
                   onChange={e => setEditedContent(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full bg-transparent text-2xl font-bold text-white focus:outline-none border-b border-transparent focus:border-primary/30 pb-1" />
+                  className="w-full bg-transparent text-2xl font-bold focus:outline-none border-b border-transparent pb-1" style={{ color: "var(--text-heading)" }} />
                 <input value={editedContent.subtitle}
                   onChange={e => setEditedContent(prev => ({ ...prev, subtitle: e.target.value }))}
-                  className="w-full bg-transparent text-gray-400 focus:outline-none border-b border-transparent focus:border-primary/30 pb-1" />
-                {brand && <p className="text-primary text-sm">by {brand}</p>}
+                  className="w-full bg-transparent focus:outline-none border-b border-transparent pb-1" style={{ color: "var(--text-muted)" }} />
+                {brand && <p className="text-sm" style={{ color: "var(--accent)" }}>by {brand}</p>}
               </div>
             </ResultCard>
 
@@ -558,11 +559,11 @@ export default function App() {
                       return updated
                     })
                   }}
-                  className="w-full bg-transparent text-white font-semibold text-lg focus:outline-none border-b border-transparent focus:border-primary/30 pb-1 mb-4" />
+                  className="w-full bg-transparent font-semibold text-lg focus:outline-none border-b border-transparent pb-1 mb-4" style={{ color: "var(--text-heading)" }} />
                 <div className="space-y-2">
                   {section.items.map((item, iIdx) => (
                     <div key={iIdx} className="flex items-start gap-2">
-                      <span className="text-primary mt-1 flex-shrink-0">
+                      <span className="mt-1 flex-shrink-0" style={{ color: "var(--accent)" }}>
                         {selectedType === 'checklist' ? (
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                         ) : (
@@ -570,7 +571,7 @@ export default function App() {
                         )}
                       </span>
                       <input value={item} onChange={e => updateSectionItem(sIdx, iIdx, e.target.value)}
-                        className="w-full bg-transparent text-gray-300 text-sm focus:outline-none border-b border-transparent focus:border-white/10 pb-0.5" />
+                        className="w-full bg-transparent text-sm focus:outline-none border-b border-transparent pb-0.5" style={{ color: "var(--text-body)" }} />
                     </div>
                   ))}
                 </div>
@@ -584,16 +585,16 @@ export default function App() {
       {step === 3 && (
         <div className="max-w-5xl mx-auto space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <button onClick={() => goToStep(2)} className="text-gray-400 hover:text-white text-sm flex items-center gap-1 transition-colors">
+            <button onClick={() => goToStep(2)} className="text-sm flex items-center gap-1 transition-colors" style={{ color: "var(--text-muted)" }}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               Back to Content
             </button>
             <div className="flex gap-3">
-              <button onClick={downloadLandingPage} className="px-6 py-2 bg-primary hover:bg-primary/80 text-white font-medium rounded-lg text-sm transition-colors flex items-center gap-2">
+              <button onClick={downloadLandingPage} className="px-6 py-2 font-medium rounded-lg text-sm transition-colors flex items-center gap-2" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                 Download Landing Page HTML
               </button>
-              <button onClick={handleReset} className="px-4 py-2 bg-dark-200/50 text-gray-400 hover:text-white rounded-lg text-sm transition-colors">Start Over</button>
+              <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }}>Start Over</button>
             </div>
           </div>
 
@@ -603,40 +604,40 @@ export default function App() {
               <ResultCard title="Customize Landing Page">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-400 text-sm mb-1">Headline</label>
+                    <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Headline</label>
                     <input value={lpConfig.headline} onChange={e => setLpConfig(p => ({ ...p, headline: e.target.value }))}
-                      className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary/50" />
+                      className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                   </div>
 
                   {lpConfig.bullets.map((b, i) => (
                     <div key={i}>
-                      <label className="block text-gray-400 text-sm mb-1">Bullet {i + 1}</label>
+                      <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Bullet {i + 1}</label>
                       <input value={b} onChange={e => updateBullet(i, e.target.value)}
-                        className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary/50" />
+                        className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                     </div>
                   ))}
 
                   <div>
-                    <label className="block text-gray-400 text-sm mb-1">CTA Button Text</label>
+                    <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>CTA Button Text</label>
                     <input value={lpConfig.ctaText} onChange={e => setLpConfig(p => ({ ...p, ctaText: e.target.value }))}
-                      className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary/50" />
+                      className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-gray-400 text-sm mb-1">Background</label>
+                      <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Background</label>
                       <div className="flex items-center gap-2">
                         <input type="color" value={lpConfig.bgColor} onChange={e => setLpConfig(p => ({ ...p, bgColor: e.target.value }))}
                           className="w-8 h-8 rounded cursor-pointer bg-transparent" />
-                        <span className="text-gray-400 text-xs">{lpConfig.bgColor}</span>
+                        <span className="text-xs" style={{ color: "var(--text-muted)" }}>{lpConfig.bgColor}</span>
                       </div>
                     </div>
                     <div>
-                      <label className="block text-gray-400 text-sm mb-1">Accent Color</label>
+                      <label className="block text-sm mb-1" style={{ color: "var(--text-muted)" }}>Accent Color</label>
                       <div className="flex items-center gap-2">
                         <input type="color" value={lpConfig.accentColor} onChange={e => setLpConfig(p => ({ ...p, accentColor: e.target.value }))}
                           className="w-8 h-8 rounded cursor-pointer bg-transparent" />
-                        <span className="text-gray-400 text-xs">{lpConfig.accentColor}</span>
+                        <span className="text-xs" style={{ color: "var(--text-muted)" }}>{lpConfig.accentColor}</span>
                       </div>
                     </div>
                   </div>
@@ -646,16 +647,16 @@ export default function App() {
               {/* Preview Toggle */}
               <ResultCard>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-400 text-sm">Preview Mode</span>
+                  <span className="text-sm" style={{ color: "var(--text-muted)" }}>Preview Mode</span>
                   <div className="flex gap-2">
                     <button onClick={() => setPreviewMode('desktop')}
-                      className={`p-2 rounded-lg transition-colors ${previewMode === 'desktop' ? 'bg-primary/20 text-primary' : 'bg-dark-200/50 text-gray-400'}`}>
+                      className="p-2 rounded-lg transition-colors" style={previewMode === 'desktop' ? { background: 'var(--accent-soft)', color: 'var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </button>
                     <button onClick={() => setPreviewMode('mobile')}
-                      className={`p-2 rounded-lg transition-colors ${previewMode === 'mobile' ? 'bg-primary/20 text-primary' : 'bg-dark-200/50 text-gray-400'}`}>
+                      className="p-2 rounded-lg transition-colors" style={previewMode === 'mobile' ? { background: 'var(--accent-soft)', color: 'var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                       </svg>
@@ -668,7 +669,7 @@ export default function App() {
             {/* Preview */}
             <div className="lg:col-span-2">
               <ResultCard title="Landing Page Preview">
-                <div className={`mx-auto rounded-xl overflow-hidden border border-white/10 transition-all ${
+                <div className={`mx-auto rounded-xl overflow-hidden transition-all ${
                   previewMode === 'mobile' ? 'max-w-[375px]' : 'w-full'
                 }`}>
                   <div style={{ background: lpConfig.bgColor }} className="p-8 sm:p-12 text-center">
@@ -676,8 +677,8 @@ export default function App() {
                       style={{ background: `${lpConfig.accentColor}15`, color: lpConfig.accentColor, borderColor: `${lpConfig.accentColor}30` }}>
                       FREE RESOURCE
                     </div>
-                    <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-3 leading-tight">{lpConfig.headline}</h2>
-                    <p className="text-gray-400 text-sm mb-8 max-w-md mx-auto">
+                    <h2 className="text-xl sm:text-2xl font-extrabold mb-3 leading-tight" style={{ color: "var(--text-heading)" }}>{lpConfig.headline}</h2>
+                    <p className="text-sm mb-8 max-w-md mx-auto" style={{ color: "var(--text-muted)" }}>
                       Join thousands of {audience.toLowerCase()} who have used this resource to get real results.
                     </p>
                     <div className="text-left max-w-sm mx-auto mb-8 space-y-3">
@@ -687,23 +688,23 @@ export default function App() {
                             style={{ background: `${lpConfig.accentColor}20`, color: lpConfig.accentColor }}>
                             &#10003;
                           </div>
-                          <p className="text-gray-300 text-sm">{b}</p>
+                          <p className="text-sm" style={{ color: "var(--text-body)" }}>{b}</p>
                         </div>
                       ))}
                     </div>
-                    <div className="max-w-xs mx-auto bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 mb-6">
-                      <div className="bg-white/[0.05] border border-white/10 rounded-lg px-4 py-3 mb-3">
-                        <span className="text-gray-500 text-sm">Your full name</span>
+                    <div className="max-w-xs mx-auto rounded-2xl p-6 mb-6" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                      <div className="rounded-lg px-4 py-3 mb-3" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                        <span className="text-sm" style={{ color: "var(--text-muted)" }}>Your full name</span>
                       </div>
-                      <div className="bg-white/[0.05] border border-white/10 rounded-lg px-4 py-3 mb-3">
-                        <span className="text-gray-500 text-sm">Your best email address</span>
+                      <div className="rounded-lg px-4 py-3 mb-3" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                        <span className="text-sm" style={{ color: "var(--text-muted)" }}>Your best email address</span>
                       </div>
-                      <button className="w-full py-3 rounded-lg text-white font-bold text-sm"
-                        style={{ background: lpConfig.accentColor }}>
+                      <button className="w-full py-3 rounded-lg font-bold text-sm"
+                        style={{ background: lpConfig.accentColor, color: "var(--text-on-accent)" }}>
                         {lpConfig.ctaText}
                       </button>
                     </div>
-                    <div className="flex justify-center gap-6 text-gray-500 text-xs">
+                    <div className="flex justify-center gap-6 text-xs" style={{ color: "var(--text-muted)" }}>
                       <span>No spam, ever</span>
                       <span>Instant download</span>
                       <span>100% free</span>

@@ -257,41 +257,44 @@ export default function App() {
             onChange={(e) => setBriefText(e.target.value)}
             placeholder="Paste your client brief here... Include as much detail as possible about the project requirements, goals, timeline, and deliverables."
             rows={8}
-            className="w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 resize-y text-sm leading-relaxed"
+            className="w-full rounded-xl px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 resize-y text-sm leading-relaxed"
+            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }}
           />
           {briefText && (
-            <p className="text-gray-500 text-xs mt-1">{briefText.split(/\s+/).filter(Boolean).length} words</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{briefText.split(/\s+/).filter(Boolean).length} words</p>
           )}
         </ResultCard>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1.5">
+            <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text-body)' }}>
               Hourly Rate (optional)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-muted)' }}>$</span>
               <input
                 type="number"
                 value={hourlyRate}
                 onChange={(e) => setHourlyRate(e.target.value)}
                 placeholder="150"
                 min="0"
-                className="w-full bg-dark-200/50 border border-white/10 rounded-xl pl-7 pr-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 text-sm"
+                className="w-full rounded-xl pl-7 pr-4 py-2.5 placeholder-gray-500 focus:outline-none focus:ring-2 text-sm"
+                style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }}
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1.5">
+            <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text-body)' }}>
               Service Type
             </label>
             <select
               value={serviceType}
               onChange={(e) => setServiceType(e.target.value)}
-              className="w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 text-sm appearance-none cursor-pointer"
+              className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 text-sm appearance-none cursor-pointer"
+              style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }}
             >
               {SERVICE_TYPES.map((t) => (
-                <option key={t} value={t} className="bg-dark-200">{t}</option>
+                <option key={t} value={t} style={{ background: 'var(--bg-card)' }}>{t}</option>
               ))}
             </select>
           </div>
@@ -301,14 +304,16 @@ export default function App() {
           <button
             onClick={handleAnalyze}
             disabled={!briefText.trim()}
-            className="px-6 py-3 bg-primary hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all text-sm"
+            className="px-6 py-3 disabled:opacity-40 disabled:cursor-not-allowed font-semibold rounded-xl transition-all text-sm"
+            style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
           >
             Analyze Brief
           </button>
           {results && (
             <button
               onClick={handleReset}
-              className="px-6 py-3 bg-dark-200/50 hover:bg-dark-200 text-gray-300 font-medium rounded-xl transition-all text-sm border border-white/5"
+              className="px-6 py-3 font-medium rounded-xl transition-all text-sm"
+              style={{ background: 'var(--bg-elevated)', color: 'var(--text-body)', border: '1px solid var(--border)' }}
             >
               Reset
             </button>
@@ -323,36 +328,36 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ResultCard title="Brief Quality" icon="📊" className="flex flex-col items-center">
               <ScoreGauge score={results.score} label={results.scoreLabel} />
-              <p className="text-gray-400 text-xs mt-2 text-center">
+              <p className="text-xs mt-2 text-center" style={{ color: 'var(--text-muted)' }}>
                 {results.wordCount} words &middot; {results.vagueCount} vague phrase{results.vagueCount !== 1 ? 's' : ''}
               </p>
             </ResultCard>
 
             <ResultCard title="Scope Estimate" icon="⏱️" className="md:col-span-2">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-dark-200/30 rounded-lg p-4 text-center">
-                  <p className="text-2xl font-bold text-white">{results.totalHours} hrs</p>
-                  <p className="text-gray-400 text-xs mt-1">Estimated Total Hours</p>
+                <div className="rounded-lg p-4 text-center" style={{ background: 'var(--bg-elevated)' }}>
+                  <p className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>{results.totalHours} hrs</p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Estimated Total Hours</p>
                 </div>
-                <div className="bg-dark-200/30 rounded-lg p-4 text-center">
+                <div className="rounded-lg p-4 text-center" style={{ background: 'var(--bg-elevated)' }}>
                   {results.totalCost ? (
                     <>
-                      <p className="text-2xl font-bold text-primary">
+                      <p className="text-2xl font-bold" style={{ color: 'var(--accent)' }}>
                         ${results.totalCost.toLocaleString()}
                       </p>
-                      <p className="text-gray-400 text-xs mt-1">
+                      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                         Estimated Cost @ ${parseFloat(hourlyRate)}/hr
                       </p>
                     </>
                   ) : (
                     <>
-                      <p className="text-2xl font-bold text-gray-500">--</p>
-                      <p className="text-gray-400 text-xs mt-1">Enter hourly rate for cost</p>
+                      <p className="text-2xl font-bold" style={{ color: 'var(--text-muted)' }}>--</p>
+                      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Enter hourly rate for cost</p>
                     </>
                   )}
                 </div>
               </div>
-              <p className="text-gray-500 text-xs mt-3">
+              <p className="text-xs mt-3" style={{ color: 'var(--text-muted)' }}>
                 Based on {results.deliverables.length} identified deliverable{results.deliverables.length !== 1 ? 's' : ''} for {serviceType}
               </p>
             </ResultCard>
@@ -362,12 +367,12 @@ export default function App() {
           <ResultCard title="Extracted Deliverables" icon="📦">
             <ul className="space-y-2">
               {results.deliverables.map((d, i) => (
-                <li key={i} className="flex items-center justify-between bg-dark-200/30 rounded-lg px-4 py-2.5">
+                <li key={i} className="flex items-center justify-between rounded-lg px-4 py-2.5" style={{ background: 'var(--bg-elevated)' }}>
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-white text-sm">{d.label}</span>
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--accent)' }} />
+                    <span className="text-sm" style={{ color: 'var(--text-heading)' }}>{d.label}</span>
                   </div>
-                  <span className="text-gray-400 text-sm font-mono">{d.hours} hrs</span>
+                  <span className="text-sm font-mono" style={{ color: 'var(--text-muted)' }}>{d.hours} hrs</span>
                 </li>
               ))}
             </ul>
@@ -378,8 +383,8 @@ export default function App() {
             <ul className="space-y-2">
               {results.scopeCreepRisks.map((risk, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
-                  <span className="text-red-400 mt-0.5 flex-shrink-0">&#9888;</span>
-                  <span className="text-red-300">{risk}</span>
+                  <span className="mt-0.5 flex-shrink-0" style={{ color: 'var(--danger)' }}>&#9888;</span>
+                  <span style={{ color: 'var(--danger)' }}>{risk}</span>
                 </li>
               ))}
             </ul>
@@ -390,7 +395,7 @@ export default function App() {
             <ResultCard title="Missing Information" icon="❓">
               <div className="flex flex-wrap gap-2">
                 {results.missingInfo.map((item, i) => (
-                  <span key={i} className="px-3 py-1.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded-lg text-xs font-medium">
+                  <span key={i} className="px-3 py-1.5 rounded-lg text-xs font-medium" style={{ background: 'var(--warning-soft)', color: 'var(--warning)', border: '1px solid color-mix(in srgb, var(--warning) 20%, transparent)' }}>
                     {item}
                   </span>
                 ))}
@@ -403,8 +408,8 @@ export default function App() {
             <ol className="space-y-2 mb-4">
               {results.questions.map((q, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
-                  <span className="text-primary font-mono flex-shrink-0 w-5 text-right">{i + 1}.</span>
-                  <span className="text-gray-300">{q}</span>
+                  <span className="font-mono flex-shrink-0 w-5 text-right" style={{ color: 'var(--accent)' }}>{i + 1}.</span>
+                  <span style={{ color: 'var(--text-body)' }}>{q}</span>
                 </li>
               ))}
             </ol>

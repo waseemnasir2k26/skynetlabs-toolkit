@@ -13,10 +13,10 @@ const daysBetween = (d1, d2) => Math.floor((d2 - d1) / (1000 * 60 * 60 * 24))
 
 const getSegment = (lastContactDate) => {
   const days = daysBetween(new Date(lastContactDate), new Date())
-  if (days <= 90) return { label: 'Recently Dormant', range: '1-3 months', color: '#13b973', order: 0 }
-  if (days <= 180) return { label: 'Medium Dormant', range: '3-6 months', color: '#3b82f6', order: 1 }
-  if (days <= 365) return { label: 'Long Dormant', range: '6-12 months', color: '#f59e0b', order: 2 }
-  return { label: 'Very Dormant', range: '12+ months', color: '#ef4444', order: 3 }
+  if (days <= 90) return { label: 'Recently Dormant', range: '1-3 months', color: 'var(--success)', order: 0 }
+  if (days <= 180) return { label: 'Medium Dormant', range: '3-6 months', color: 'var(--info)', order: 1 }
+  if (days <= 365) return { label: 'Long Dormant', range: '6-12 months', color: 'var(--warning)', order: 2 }
+  return { label: 'Very Dormant', range: '12+ months', color: 'var(--danger)', order: 3 }
 }
 
 const EMAIL_TEMPLATES = {
@@ -174,7 +174,7 @@ export default function App() {
     el.style.height = 'auto'
     el.style.maxHeight = 'none'
     try {
-      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: '#0a0a0f' })
+      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507' })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const pw = pdf.internal.pageSize.getWidth()
@@ -211,59 +211,59 @@ export default function App() {
       {/* Input Section */}
       <ResultCard title="Past Clients" icon="📋" className="mb-6">
         <div className="flex flex-wrap gap-3 mb-4">
-          <label className="inline-flex items-center gap-2 px-4 py-2 text-sm text-[#13b973] border border-[#13b973]/30 hover:bg-[#13b973]/10 rounded-lg transition-colors cursor-pointer">
+          <label className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors cursor-pointer" style={{ color: "var(--accent)", border: "1px solid var(--accent-soft)" }}>
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
             Upload CSV
             <input type="file" accept=".csv" onChange={handleCSVUpload} className="hidden" />
           </label>
-          {csvError && <p className="text-red-400 text-sm self-center">{csvError}</p>}
+          {csvError && <p className="text-sm self-center" style={{ color: "var(--danger)" }}>{csvError}</p>}
         </div>
 
         <div className="space-y-3 mb-4">
           {clients.map((client, idx) => (
-            <div key={client.id} className="bg-dark-200/30 rounded-lg p-3 border border-white/5">
+            <div key={client.id} className="rounded-lg p-3" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 <div>
-                  {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Client Name *</label>}
-                  <input type="text" value={client.name} onChange={(e) => updateClient(client.id, 'name', e.target.value)} placeholder="Client name" className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none" />
+                  {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Client Name *</label>}
+                  <input type="text" value={client.name} onChange={(e) => updateClient(client.id, 'name', e.target.value)} placeholder="Client name" className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
                 <div>
-                  {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Email</label>}
-                  <input type="email" value={client.email} onChange={(e) => updateClient(client.id, 'email', e.target.value)} placeholder="email@example.com" className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none" />
+                  {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Email</label>}
+                  <input type="email" value={client.email} onChange={(e) => updateClient(client.id, 'email', e.target.value)} placeholder="email@example.com" className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
                 <div>
-                  {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Last Project</label>}
-                  <input type="text" value={client.lastProject} onChange={(e) => updateClient(client.id, 'lastProject', e.target.value)} placeholder="Project name" className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none" />
+                  {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Last Project</label>}
+                  <input type="text" value={client.lastProject} onChange={(e) => updateClient(client.id, 'lastProject', e.target.value)} placeholder="Project name" className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
                 <div>
-                  {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Service Type</label>}
-                  <select value={client.serviceType} onChange={(e) => updateClient(client.id, 'serviceType', e.target.value)} className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none">
+                  {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Service Type</label>}
+                  <select value={client.serviceType} onChange={(e) => updateClient(client.id, 'serviceType', e.target.value)} className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}>
                     {SERVICE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
                 <div>
-                  {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Last Contact Date *</label>}
-                  <input type="date" value={client.lastContactDate} onChange={(e) => updateClient(client.id, 'lastContactDate', e.target.value)} className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none" />
+                  {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Last Contact Date *</label>}
+                  <input type="date" value={client.lastContactDate} onChange={(e) => updateClient(client.id, 'lastContactDate', e.target.value)} className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                 </div>
                 <div className="flex gap-2 items-end">
                   <div className="flex-1">
-                    {idx === 0 && <label className="text-xs text-gray-500 mb-1 block">Project Value ($)</label>}
-                    <input type="number" value={client.projectValue} onChange={(e) => updateClient(client.id, 'projectValue', e.target.value)} placeholder="0" className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none" />
+                    {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Project Value ($)</label>}
+                    <input type="number" value={client.projectValue} onChange={(e) => updateClient(client.id, 'projectValue', e.target.value)} placeholder="0" className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }} />
                   </div>
-                  <button onClick={() => removeClient(client.id)} className="py-2 px-3 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors text-lg" title="Remove">&times;</button>
+                  <button onClick={() => removeClient(client.id)} className="py-2 px-3 rounded-lg transition-colors text-lg" style={{ color: "var(--danger)" }} title="Remove">&times;</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
         <div className="flex flex-wrap gap-3">
-          <button onClick={addClient} className="inline-flex items-center gap-2 px-4 py-2 text-sm text-[#13b973] border border-[#13b973]/30 hover:bg-[#13b973]/10 rounded-lg transition-colors">+ Add Client</button>
+          <button onClick={addClient} className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors" style={{ color: "var(--accent)", border: "1px solid var(--accent-soft)" }}>+ Add Client</button>
           <button
             onClick={() => setGenerated(true)}
             disabled={validClients.length === 0}
-            className="inline-flex items-center gap-2 px-6 py-2 text-sm bg-[#13b973] hover:bg-[#0fa863] disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2 text-sm disabled:opacity-40 disabled:cursor-not-allowed font-medium rounded-lg transition-colors" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
           >
             Generate Win-Back Campaigns
           </button>
@@ -275,16 +275,16 @@ export default function App() {
           {/* Summary */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
             {segmented.map((seg) => (
-              <div key={seg.order} className="bg-dark-100/50 border border-white/5 rounded-xl p-4 text-center">
+              <div key={seg.order} className="rounded-xl p-4 text-center" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
                 <div className="text-2xl font-bold" style={{ color: seg.color }}>{seg.clients.length}</div>
-                <div className="text-xs text-gray-400 mt-1">{seg.label}</div>
-                <div className="text-xs text-gray-500">{seg.range}</div>
+                <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{seg.label}</div>
+                <div className="text-xs" style={{ color: "var(--text-muted)" }}>{seg.range}</div>
               </div>
             ))}
-            <div className="bg-dark-100/50 border border-[#13b973]/20 rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-[#13b973]">${totalPotentialRevenue.toLocaleString()}</div>
-              <div className="text-xs text-gray-400 mt-1">Potential Revenue</div>
-              <div className="text-xs text-gray-500">to recover</div>
+            <div className="rounded-xl p-4 text-center" style={{ background: "var(--bg-elevated)", border: "1px solid var(--accent-soft)" }}>
+              <div className="text-2xl font-bold" style={{ color: "var(--accent)" }}>${totalPotentialRevenue.toLocaleString()}</div>
+              <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>Potential Revenue</div>
+              <div className="text-xs" style={{ color: "var(--text-muted)" }}>to recover</div>
             </div>
           </div>
 
@@ -293,22 +293,22 @@ export default function App() {
             <ResultCard key={seg.order} title={`${seg.label} (${seg.range})`} icon="📧" className="mb-6">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: seg.color }} />
-                <span className="text-sm text-gray-400">{seg.clients.length} client{seg.clients.length !== 1 ? 's' : ''}</span>
-                <span className="text-sm text-gray-500">|</span>
-                <span className="text-sm text-gray-400">${seg.clients.reduce((s, c) => s + (Number(c.projectValue) || 0), 0).toLocaleString()} potential</span>
+                <span className="text-sm" style={{ color: "var(--text-muted)" }}>{seg.clients.length} client{seg.clients.length !== 1 ? 's' : ''}</span>
+                <span className="text-sm" style={{ color: "var(--text-muted)" }}>|</span>
+                <span className="text-sm" style={{ color: "var(--text-muted)" }}>${seg.clients.reduce((s, c) => s + (Number(c.projectValue) || 0), 0).toLocaleString()} potential</span>
               </div>
 
               {seg.clients.map((client) => (
-                <div key={client.id} className="mb-4 border border-white/5 rounded-lg overflow-hidden">
+                <div key={client.id} className="mb-4 rounded-lg overflow-hidden" style={{ border: "1px solid var(--border)" }}>
                   <button
                     onClick={() => toggleExpand(client.id)}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-dark-200/30 hover:bg-dark-200/50 transition-colors"
+                    className="w-full flex items-center justify-between px-4 py-3 transition-colors" style={{ background: "var(--bg-elevated)" }}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-white font-medium">{client.name}</span>
-                      {client.email && <span className="text-gray-500 text-sm">{client.email}</span>}
+                      <span className="font-medium" style={{ color: "var(--text-heading)" }}>{client.name}</span>
+                      {client.email && <span className="text-sm" style={{ color: "var(--text-muted)" }}>{client.email}</span>}
                     </div>
-                    <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedClients.has(client.id) ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className={`w-4 h-4 transition-transform ${expandedClients.has(client.id) ? 'rotate-180' : ''}`} style={{ color: 'var(--text-muted)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
@@ -323,27 +323,27 @@ export default function App() {
                         const displaySubject = editedSubject !== undefined ? editedSubject : email.subject
                         const displayBody = editedBody !== undefined ? editedBody : email.body
                         return (
-                          <div key={emailIdx} className="bg-dark-200/20 border border-white/5 rounded-lg p-4">
+                          <div key={emailIdx} className="rounded-lg p-4" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-xs font-medium text-[#13b973]">Email {emailIdx + 1} of 3</span>
+                              <span className="text-xs font-medium" style={{ color: "var(--accent)" }}>Email {emailIdx + 1} of 3</span>
                               <CopyButton text={`Subject: ${displaySubject}\n\n${displayBody}`} label="Copy" />
                             </div>
                             <div className="mb-2">
-                              <label className="text-xs text-gray-500 mb-1 block">Subject</label>
+                              <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Subject</label>
                               <input
                                 type="text"
                                 value={displaySubject}
                                 onChange={(e) => updateEmail(client.id, template.subject, 'subject', e.target.value)}
-                                className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+                                className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
                               />
                             </div>
                             <div>
-                              <label className="text-xs text-gray-500 mb-1 block">Body</label>
+                              <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Body</label>
                               <textarea
                                 value={displayBody}
                                 onChange={(e) => updateEmail(client.id, template.subject, 'body', e.target.value)}
                                 rows={8}
-                                className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none resize-y"
+                                className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none resize-y" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
                               />
                             </div>
                           </div>
@@ -359,7 +359,7 @@ export default function App() {
           <div className="flex justify-center">
             <button
               onClick={handleExportPDF}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#13b973] hover:bg-[#0fa863] text-white font-medium rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

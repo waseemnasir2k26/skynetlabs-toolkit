@@ -214,12 +214,12 @@ export default function App() {
           <ResultCard title="Business Details" icon="🎯">
             {/* Services */}
             <div className="mb-5">
-              <label className="block text-gray-300 text-sm font-medium mb-2">Services You Offer *</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Services You Offer *</label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {form.services.map(s => (
-                  <span key={s} className="inline-flex items-center gap-1 px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">
+                  <span key={s} className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>
                     {s}
-                    <button onClick={() => removeService(s)} className="ml-1 hover:text-white">&times;</button>
+                    <button onClick={() => removeService(s)} className="ml-1">&times;</button>
                   </span>
                 ))}
               </div>
@@ -230,36 +230,36 @@ export default function App() {
                   onChange={e => setServiceInput(e.target.value)}
                   onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addService(serviceInput.trim()) } }}
                   placeholder="Type a service or select below..."
-                  className="flex-1 bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50"
+                  className="flex-1 border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
-                <button onClick={() => addService(serviceInput.trim())} className="px-4 py-2.5 bg-dark-300 text-gray-300 rounded-lg text-sm hover:bg-dark-400 transition-colors">Add</button>
+                <button onClick={() => addService(serviceInput.trim())} className="px-4 py-2.5 rounded-lg text-sm transition-colors" style={{ background: 'var(--bg-page)', color: 'var(--text-body)' }}>Add</button>
               </div>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {SERVICE_OPTIONS.filter(s => !form.services.includes(s)).map(s => (
-                  <button key={s} onClick={() => addService(s)} className="px-2.5 py-1 bg-dark-300/50 text-gray-400 rounded-md text-xs hover:bg-dark-400 hover:text-white transition-colors">{s}</button>
+                  <button key={s} onClick={() => addService(s)} className="px-2.5 py-1 rounded-md text-xs transition-colors" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>{s}</button>
                 ))}
               </div>
             </div>
 
             {/* Target Niche */}
             <div className="mb-5">
-              <label className="block text-gray-300 text-sm font-medium mb-2">Target Niche / Industry *</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Target Niche / Industry *</label>
               <input
                 type="text"
                 value={form.niche}
                 onChange={e => updateForm('niche', e.target.value)}
                 placeholder="e.g., SaaS startups, local restaurants, real estate agents..."
-                className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50"
+                className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
               />
             </div>
 
             {/* Price Range */}
             <div className="mb-5">
-              <label className="block text-gray-300 text-sm font-medium mb-2">Price Range</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Price Range</label>
               <select
                 value={form.priceRange}
                 onChange={e => updateForm('priceRange', e.target.value)}
-                className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50"
+                className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
               >
                 {PRICE_RANGES.map(p => <option key={p} value={p}>{p}</option>)}
               </select>
@@ -267,19 +267,19 @@ export default function App() {
 
             {/* Unique Skills */}
             <div className="mb-5">
-              <label className="block text-gray-300 text-sm font-medium mb-2">Unique Skills / Experience</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Unique Skills / Experience</label>
               <textarea
                 value={form.skills}
                 onChange={e => updateForm('skills', e.target.value)}
                 rows={3}
                 placeholder="e.g., 10 years in fintech, Google certified, former CMO, proprietary AI tools..."
-                className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50 resize-none"
+                className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
               />
             </div>
 
             {/* Competitors */}
             <div className="mb-5">
-              <label className="block text-gray-300 text-sm font-medium mb-2">Competitor Names (optional, up to 3)</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Competitor Names (optional, up to 3)</label>
               <div className="space-y-2">
                 {form.competitors.map((c, i) => (
                   <input
@@ -292,7 +292,7 @@ export default function App() {
                       updateForm('competitors', updated)
                     }}
                     placeholder={`Competitor ${i + 1}`}
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50"
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                   />
                 ))}
               </div>
@@ -301,7 +301,7 @@ export default function App() {
             <button
               onClick={handleGenerate}
               disabled={form.services.length === 0 || !form.niche.trim()}
-              className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full py-3 font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}
             >
               Generate Positioning
             </button>
@@ -310,7 +310,7 @@ export default function App() {
       ) : (
         <div className="space-y-6">
           <div className="flex items-center justify-between flex-wrap gap-3">
-            <button onClick={handleReset} className="px-4 py-2 bg-dark-200/50 text-gray-300 rounded-lg text-sm hover:bg-dark-300 transition-colors">
+            <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: 'var(--bg-elevated)', color: 'var(--text-body)' }}>
               &larr; Start Over
             </button>
             <CopyButton text={getAllText()} label="Copy All" />
@@ -318,17 +318,17 @@ export default function App() {
 
           {/* Market Analysis */}
           <ResultCard title="Market Positioning Analysis" icon="🔍">
-            <div className="space-y-4 text-gray-300 text-sm leading-relaxed">
+            <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'var(--text-body)' }}>
               <div>
-                <h4 className="text-white font-medium mb-1">Overview</h4>
+                <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Overview</h4>
                 <p>{results.marketAnalysis.overview}</p>
               </div>
               <div>
-                <h4 className="text-white font-medium mb-1">Opportunity</h4>
+                <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Opportunity</h4>
                 <p>{results.marketAnalysis.opportunity}</p>
               </div>
               <div>
-                <h4 className="text-white font-medium mb-1">Competitive Landscape</h4>
+                <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Competitive Landscape</h4>
                 <p>{results.marketAnalysis.threat}</p>
               </div>
             </div>
@@ -338,11 +338,11 @@ export default function App() {
           <ResultCard title="Unique Differentiation Points" icon="💎">
             <div className="space-y-4">
               {results.diffPoints.map((d, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
+                <div key={i} className="rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h4 className="text-primary font-medium mb-1">{i + 1}. {d.title}</h4>
-                      <p className="text-gray-300 text-sm">{d.desc}</p>
+                      <h4 className="font-medium mb-1" style={{ color: 'var(--accent)' }}>{i + 1}. {d.title}</h4>
+                      <p className="text-sm" style={{ color: 'var(--text-body)' }}>{d.desc}</p>
                     </div>
                     <CopyButton text={`${d.title}\n${d.desc}`} label="" className="shrink-0" />
                   </div>
@@ -359,12 +359,12 @@ export default function App() {
                 { label: 'Elevator Pitch', text: results.messaging.elevatorPitch },
                 { label: 'Positioning Statement', text: results.messaging.positioningStatement },
               ].map((m, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
+                <div key={i} className="rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-white font-medium">{m.label}</h4>
+                    <h4 className="font-medium" style={{ color: 'var(--text-heading)' }}>{m.label}</h4>
                     <CopyButton text={m.text} />
                   </div>
-                  <p className="text-gray-300 text-sm leading-relaxed">{m.text}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-body)' }}>{m.text}</p>
                 </div>
               ))}
             </div>
@@ -374,9 +374,9 @@ export default function App() {
           <ResultCard title='"Why Choose Us" Copy' icon="🏆">
             <div className="space-y-3">
               {results.whyChooseUs.map((w, i) => (
-                <div key={i} className="flex items-start gap-3 bg-dark-200/30 rounded-lg p-4 border border-white/5">
-                  <span className="text-primary font-bold mt-0.5">{i + 1}.</span>
-                  <p className="text-gray-300 text-sm flex-1">{w}</p>
+                <div key={i} className="flex items-start gap-3 rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+                  <span className="font-bold mt-0.5" style={{ color: 'var(--accent)' }}>{i + 1}.</span>
+                  <p className="text-sm flex-1" style={{ color: 'var(--text-body)' }}>{w}</p>
                   <CopyButton text={w} label="" className="shrink-0" />
                 </div>
               ))}
@@ -387,9 +387,9 @@ export default function App() {
           <ResultCard title="Competitive Gaps to Exploit" icon="🎯">
             <div className="grid sm:grid-cols-2 gap-4">
               {results.gaps.map((g, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
-                  <h4 className="text-primary font-medium mb-2">{g.gap}</h4>
-                  <p className="text-gray-300 text-sm">{g.detail}</p>
+                <div key={i} className="rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+                  <h4 className="font-medium mb-2" style={{ color: 'var(--accent)' }}>{g.gap}</h4>
+                  <p className="text-sm" style={{ color: 'var(--text-body)' }}>{g.detail}</p>
                 </div>
               ))}
             </div>

@@ -41,10 +41,10 @@ const CONTENT_TYPES = {
 }
 
 const FUNNEL_STAGES = [
-  { stage: 'Awareness', icon: '👁️', color: 'text-blue-400', bg: 'bg-blue-400/10', border: 'border-blue-400/20' },
-  { stage: 'Interest', icon: '💡', color: 'text-yellow-400', bg: 'bg-yellow-400/10', border: 'border-yellow-400/20' },
-  { stage: 'Consideration', icon: '🤔', color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20' },
-  { stage: 'Conversion', icon: '🎯', color: 'text-primary', bg: 'bg-primary/10', border: 'border-primary/20' },
+  { stage: 'Awareness', icon: '👁️', color: 'var(--info)', bg: 'var(--info-soft)', borderColor: 'var(--info)' },
+  { stage: 'Interest', icon: '💡', color: 'var(--warning)', bg: 'var(--warning-soft)', borderColor: 'var(--warning)' },
+  { stage: 'Consideration', icon: '🤔', color: 'var(--text-muted)', bg: 'var(--bg-elevated)', borderColor: 'var(--border)' },
+  { stage: 'Conversion', icon: '🎯', color: 'var(--accent)', bg: 'var(--accent-soft)', borderColor: 'var(--accent)' },
 ]
 
 function generateStrategy(form) {
@@ -195,9 +195,9 @@ function generateStrategy(form) {
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-dark-100 border border-white/10 rounded-lg px-3 py-2 text-sm">
-        <p className="text-white font-medium">{payload[0].name}</p>
-        <p className="text-primary">{payload[0].value}%</p>
+      <div className="border rounded-lg px-3 py-2 text-sm" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+        <p className="font-medium" style={{ color: 'var(--text-heading)' }}>{payload[0].name}</p>
+        <p className="" style={{ color: 'var(--accent)' }}>{payload[0].value}%</p>
       </div>
     )
   }
@@ -268,62 +268,62 @@ export default function App() {
             <div className="space-y-5">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Service / Product Name *</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Service / Product Name *</label>
                   <input type="text" value={form.serviceName} onChange={e => updateForm('serviceName', e.target.value)}
                     placeholder="e.g., AI Automation Services"
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Campaign Goal</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Campaign Goal</label>
                   <select value={form.goal} onChange={e => updateForm('goal', e.target.value)}
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50">
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                     {CAMPAIGN_GOALS.map(g => <option key={g} value={g}>{g}</option>)}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Business Description</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Business Description</label>
                 <input type="text" value={form.businessDesc} onChange={e => updateForm('businessDesc', e.target.value)}
                   placeholder="Brief description of your business..."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Target Audience *</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Target Audience *</label>
                 <textarea value={form.audience} onChange={e => updateForm('audience', e.target.value)} rows={3}
                   placeholder="Describe your ideal customer: demographics, interests, pain points..."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50 resize-none" />
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
               </div>
 
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="sm:col-span-2">
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Monthly Budget *</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Monthly Budget *</label>
                   <div className="flex gap-2">
                     <select value={form.currency} onChange={e => updateForm('currency', e.target.value)}
-                      className="bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50 w-24">
+                      className="border rounded-lg px-3 py-2.5 text-sm focus:outline-none w-24" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                       {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                     <input type="number" value={form.budget} onChange={e => updateForm('budget', e.target.value)}
                       placeholder="5000" min="0" step="100"
-                      className="flex-1 bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                      className="flex-1 border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Duration</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Duration</label>
                   <select value={form.duration} onChange={e => updateForm('duration', e.target.value)}
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50">
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                     {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Current Online Presence * (select all that apply)</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Current Online Presence * (select all that apply)</label>
                 <div className="flex flex-wrap gap-2">
                   {PRESENCE_OPTIONS.map(p => (
                     <button key={p} onClick={() => togglePresence(p)}
-                      className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${form.presence.includes(p) ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-dark-300/50 text-gray-400 border border-white/5 hover:text-white'}`}>
+                      className="px-3 py-1.5 rounded-lg text-sm transition-colors border" style={form.presence.includes(p) ? { background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
                       {p}
                     </button>
                   ))}
@@ -331,7 +331,7 @@ export default function App() {
               </div>
 
               <button onClick={handleGenerate} disabled={!isValid}
-                className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                className="w-full py-3 font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
                 Build Strategy
               </button>
             </div>
@@ -340,13 +340,13 @@ export default function App() {
       ) : (
         <div className="space-y-6">
           <div className="flex items-center justify-between flex-wrap gap-3">
-            <button onClick={handleReset} className="px-4 py-2 bg-dark-200/50 text-gray-300 rounded-lg text-sm hover:bg-dark-300 transition-colors">&larr; Start Over</button>
+            <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: 'var(--bg-elevated)', color: 'var(--text-body)' }}>&larr; Start Over</button>
             <CopyButton text={getAllText()} label="Copy All" />
           </div>
 
           {/* Executive Summary */}
           <ResultCard title="Executive Summary" icon="📋">
-            <p className="text-gray-300 text-sm leading-relaxed">{results.executiveSummary}</p>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-body)' }}>{results.executiveSummary}</p>
           </ResultCard>
 
           {/* Channel Recommendation + Pie Chart */}
@@ -371,7 +371,7 @@ export default function App() {
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />
                     <Legend
-                      formatter={(value) => <span className="text-gray-300 text-xs">{value}</span>}
+                      formatter={(value) => <span className="text-xs" style={{ color: 'var(--text-body)' }}>{value}</span>}
                       iconType="circle"
                       iconSize={8}
                     />
@@ -380,14 +380,14 @@ export default function App() {
               </div>
               <div className="space-y-2">
                 {results.budgetAllocation.map((b, i) => (
-                  <div key={i} className="flex items-center justify-between bg-dark-200/30 rounded-lg px-4 py-2.5 border border-white/5">
+                  <div key={i} className="flex items-center justify-between rounded-lg px-4 py-2.5 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full" style={{ backgroundColor: b.color }} />
-                      <span className="text-gray-300 text-sm">{b.name}</span>
+                      <span className="text-sm" style={{ color: 'var(--text-body)' }}>{b.name}</span>
                     </div>
                     <div className="text-right">
-                      <span className="text-white font-medium text-sm">{form.currency} {b.amount.toLocaleString()}</span>
-                      <span className="text-gray-500 text-xs ml-2">({b.percentage}%)</span>
+                      <span className="font-medium text-sm" style={{ color: 'var(--text-heading)' }}>{form.currency} {b.amount.toLocaleString()}</span>
+                      <span className="text-xs ml-2" style={{ color: 'var(--text-muted)' }}>({b.percentage}%)</span>
                     </div>
                   </div>
                 ))}
@@ -399,16 +399,16 @@ export default function App() {
           <ResultCard title="Funnel Map" icon="🔻">
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {results.funnelMap.map((f, i) => (
-                <div key={i} className={`relative rounded-xl p-4 border ${f.bg} ${f.border}`}>
+                <div key={i} className="relative rounded-xl p-4 border" style={{ background: f.bg, borderColor: f.borderColor }}>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-lg">{f.icon}</span>
-                    <h4 className={`font-semibold text-sm ${f.color}`}>{f.stage}</h4>
+                    <h4 className="font-semibold text-sm" style={{ color: f.color }}>{f.stage}</h4>
                   </div>
-                  {i < 3 && <div className="hidden lg:block absolute right-0 top-1/2 text-gray-600">{'\u2192'}</div>}
+                  {i < 3 && <div className="hidden lg:block absolute right-0 top-1/2" style={{ color: 'var(--text-muted)' }}>{'\u2192'}</div>}
                   <ul className="space-y-1.5">
                     {f.tactics.map((t, j) => (
-                      <li key={j} className="text-gray-300 text-xs flex items-start gap-1.5">
-                        <span className={`${f.color} mt-0.5`}>{'\u2022'}</span>
+                      <li key={j} className="text-xs flex items-start gap-1.5" style={{ color: 'var(--text-body)' }}>
+                        <span className="mt-0.5" style={{ color: f.color }}>{'\u2022'}</span>
                         {t}
                       </li>
                     ))}
@@ -423,24 +423,24 @@ export default function App() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="py-2 px-3 text-gray-400 font-medium">Date</th>
-                    <th className="py-2 px-3 text-gray-400 font-medium">Channel</th>
-                    <th className="py-2 px-3 text-gray-400 font-medium">Content Type</th>
-                    <th className="py-2 px-3 text-gray-400 font-medium hidden sm:table-cell">Topic</th>
-                    <th className="py-2 px-3 text-gray-400 font-medium">Time</th>
+                  <tr className="border-b" style={{ borderColor: 'var(--border)' }}>
+                    <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Date</th>
+                    <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Channel</th>
+                    <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Content Type</th>
+                    <th className="py-2 px-3 font-medium hidden sm:table-cell" style={{ color: 'var(--text-muted)' }}>Topic</th>
+                    <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Time</th>
                   </tr>
                 </thead>
                 <tbody>
                   {results.calendar.map((c, i) => (
-                    <tr key={i} className="border-b border-white/5 hover:bg-dark-200/20">
-                      <td className="py-2 px-3 text-gray-300 whitespace-nowrap">{c.date}</td>
+                    <tr key={i} className="border-b" style={{ borderColor: 'var(--border)' }}>
+                      <td className="py-2 px-3 whitespace-nowrap" style={{ color: 'var(--text-body)' }}>{c.date}</td>
                       <td className="py-2 px-3">
-                        <span className="px-2 py-0.5 bg-primary/10 text-primary rounded text-xs">{c.channel}</span>
+                        <span className="px-2 py-0.5 rounded text-xs" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>{c.channel}</span>
                       </td>
-                      <td className="py-2 px-3 text-white">{c.type}</td>
-                      <td className="py-2 px-3 text-gray-400 text-xs hidden sm:table-cell max-w-xs truncate">{c.topic}</td>
-                      <td className="py-2 px-3 text-gray-300 whitespace-nowrap">{c.time}</td>
+                      <td className="py-2 px-3" style={{ color: 'var(--text-heading)' }}>{c.type}</td>
+                      <td className="py-2 px-3 text-xs hidden sm:table-cell max-w-xs truncate" style={{ color: 'var(--text-muted)' }}>{c.topic}</td>
+                      <td className="py-2 px-3 whitespace-nowrap" style={{ color: 'var(--text-body)' }}>{c.time}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -453,40 +453,40 @@ export default function App() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="py-2 px-3 text-gray-400 font-medium">Channel</th>
-                    <th className="py-2 px-3 text-gray-400 font-medium">Monthly</th>
-                    <th className="py-2 px-3 text-gray-400 font-medium">% of Budget</th>
-                    <th className="py-2 px-3 text-gray-400 font-medium hidden sm:table-cell">{form.duration} Total</th>
+                  <tr className="border-b" style={{ borderColor: 'var(--border)' }}>
+                    <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Channel</th>
+                    <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Monthly</th>
+                    <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>% of Budget</th>
+                    <th className="py-2 px-3 font-medium hidden sm:table-cell" style={{ color: 'var(--text-muted)' }}>{form.duration} Total</th>
                   </tr>
                 </thead>
                 <tbody>
                   {results.budgetAllocation.map((b, i) => {
                     const months = results.durationDays / 30
                     return (
-                      <tr key={i} className="border-b border-white/5">
-                        <td className="py-2 px-3 text-white flex items-center gap-2">
+                      <tr key={i} className="border-b" style={{ borderColor: 'var(--border)' }}>
+                        <td className="py-2 px-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
                           <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: b.color }} />
                           {b.name}
                         </td>
-                        <td className="py-2 px-3 text-gray-300">{form.currency} {b.amount.toLocaleString()}</td>
+                        <td className="py-2 px-3" style={{ color: 'var(--text-body)' }}>{form.currency} {b.amount.toLocaleString()}</td>
                         <td className="py-2 px-3">
                           <div className="flex items-center gap-2">
-                            <div className="flex-1 h-2 bg-dark-300/50 rounded-full max-w-24">
+                            <div className="flex-1 h-2 rounded-full max-w-24" style={{ background: 'var(--bg-elevated)' }}>
                               <div className="h-2 rounded-full" style={{ width: `${b.percentage}%`, backgroundColor: b.color }} />
                             </div>
-                            <span className="text-gray-300 text-xs">{b.percentage}%</span>
+                            <span className="text-xs" style={{ color: 'var(--text-body)' }}>{b.percentage}%</span>
                           </div>
                         </td>
-                        <td className="py-2 px-3 text-gray-300 hidden sm:table-cell">{form.currency} {Math.round(b.amount * months).toLocaleString()}</td>
+                        <td className="py-2 px-3 hidden sm:table-cell" style={{ color: 'var(--text-body)' }}>{form.currency} {Math.round(b.amount * months).toLocaleString()}</td>
                       </tr>
                     )
                   })}
-                  <tr className="border-t border-white/10">
-                    <td className="py-2 px-3 text-white font-medium">Total</td>
-                    <td className="py-2 px-3 text-primary font-medium">{form.currency} {parseFloat(form.budget).toLocaleString()}</td>
-                    <td className="py-2 px-3 text-primary font-medium">100%</td>
-                    <td className="py-2 px-3 text-primary font-medium hidden sm:table-cell">{form.currency} {Math.round(parseFloat(form.budget) * results.durationDays / 30).toLocaleString()}</td>
+                  <tr className="border-t" style={{ borderColor: 'var(--border)' }}>
+                    <td className="py-2 px-3 font-medium" style={{ color: 'var(--text-heading)' }}>Total</td>
+                    <td className="py-2 px-3 font-medium" style={{ color: 'var(--accent)' }}>{form.currency} {parseFloat(form.budget).toLocaleString()}</td>
+                    <td className="py-2 px-3 font-medium" style={{ color: 'var(--accent)' }}>100%</td>
+                    <td className="py-2 px-3 font-medium hidden sm:table-cell" style={{ color: 'var(--accent)' }}>{form.currency} {Math.round(parseFloat(form.budget) * results.durationDays / 30).toLocaleString()}</td>
                   </tr>
                 </tbody>
               </table>
@@ -497,10 +497,10 @@ export default function App() {
           <ResultCard title="KPI Dashboard Template" icon="📈">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {results.kpiData.map((k, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
-                  <p className="text-gray-400 text-xs mb-1">{k.frequency}</p>
-                  <h4 className="text-white font-medium text-sm mb-1">{k.metric}</h4>
-                  <p className="text-primary font-semibold">{k.target}</p>
+                <div key={i} className="rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+                  <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{k.frequency}</p>
+                  <h4 className="font-medium text-sm mb-1" style={{ color: 'var(--text-heading)' }}>{k.metric}</h4>
+                  <p className="font-semibold" style={{ color: 'var(--accent)' }}>{k.target}</p>
                 </div>
               ))}
             </div>
@@ -510,9 +510,9 @@ export default function App() {
           <ResultCard title="Week 1 Quick Wins" icon="🚀">
             <div className="space-y-2">
               {results.quickWins.map((w, i) => (
-                <div key={i} className="flex items-start gap-3 bg-dark-200/30 rounded-lg px-4 py-3 border border-white/5">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
-                  <p className="text-gray-300 text-sm">{w}</p>
+                <div key={i} className="flex items-start gap-3 rounded-lg px-4 py-3 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold shrink-0 mt-0.5" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>{i + 1}</span>
+                  <p className="text-sm" style={{ color: 'var(--text-body)' }}>{w}</p>
                 </div>
               ))}
             </div>

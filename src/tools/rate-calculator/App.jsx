@@ -84,10 +84,10 @@ function App() {
     <div className="py-6">
       <div className="text-center px-4 pt-4 pb-6 animate-fade-in">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
-          <span className="text-white">Freelance</span>{' '}
+          <span style={{ color: 'var(--text-heading)' }}>Freelance</span>{' '}
           <span className="text-gradient">Rate Calculator</span>
         </h1>
-        <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base max-w-2xl mx-auto" style={{ color: 'var(--text-muted)' }}>
           Calculate your perfect hourly rate based on your expenses, desired income, and market data.
         </p>
       </div>
@@ -117,10 +117,10 @@ function App() {
         {/* Divider */}
         <div className="relative py-4">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-white/5" />
+            <div className="w-full border-t" style={{ borderColor: 'var(--border)' }} />
           </div>
           <div className="relative flex justify-center">
-            <span className="bg-dark px-4 text-sm text-gray-500 uppercase tracking-wider">
+            <span className="px-4 text-sm uppercase tracking-wider" style={{ background: 'var(--bg-page)', color: 'var(--text-muted)' }}>
               Your Results
             </span>
           </div>

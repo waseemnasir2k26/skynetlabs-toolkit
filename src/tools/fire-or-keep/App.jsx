@@ -83,17 +83,17 @@ function analyzeClient(data) {
   let verdict, verdictColor, confidence
   if (compositeScore > 65) {
     verdict = 'KEEP'
-    verdictColor = 'text-green-400'
+    verdictColor = 'success'
     confidence = Math.min(99, 50 + (compositeScore - 65) * 1.4)
   } else if (compositeScore >= 35) {
     verdict = 'RENEGOTIATE'
-    verdictColor = 'text-yellow-400'
+    verdictColor = 'warning'
     // Confidence is higher when closer to boundaries
     const distanceFromCenter = Math.abs(compositeScore - 50)
     confidence = 50 + distanceFromCenter * 1.5
   } else {
     verdict = 'FIRE'
-    verdictColor = 'text-red-400'
+    verdictColor = 'danger'
     confidence = Math.min(99, 50 + (35 - compositeScore) * 2)
   }
   confidence = Math.round(Math.min(99, Math.max(51, confidence)))
@@ -248,9 +248,11 @@ export default function App() {
     setResults(null)
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 text-sm'
-  const selectClass = 'w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 text-sm appearance-none cursor-pointer'
-  const labelClass = 'block text-sm font-medium text-gray-300 mb-1.5'
+  const inputClass = 'w-full rounded-xl px-4 py-2.5 placeholder-gray-500 focus:outline-none focus:ring-2 text-sm'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }
+  const selectClass = 'w-full rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 text-sm appearance-none cursor-pointer'
+  const labelClass = 'block text-sm font-medium mb-1.5'
+  const labelStyle = { color: 'var(--text-body)' }
 
   return (
     <ToolLayout
@@ -262,19 +264,20 @@ export default function App() {
         <ResultCard title="Client Information" icon="👤">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className={labelClass}>Client Name</label>
+              <label className={labelClass} style={labelStyle}>Client Name</label>
               <input
                 type="text"
                 value={form.clientName}
                 onChange={(e) => updateField('clientName', e.target.value)}
                 placeholder="Acme Corp"
                 className={inputClass}
+                style={inputStyle}
               />
             </div>
             <div>
-              <label className={labelClass}>Monthly Revenue ($)</label>
+              <label className={labelClass} style={labelStyle}>Monthly Revenue ($)</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-muted)' }}>$</span>
                 <input
                   type="number"
                   value={form.monthlyRevenue}
@@ -282,11 +285,12 @@ export default function App() {
                   placeholder="3000"
                   min="0"
                   className={`${inputClass} pl-7`}
+                  style={inputStyle}
                 />
               </div>
             </div>
             <div>
-              <label className={labelClass}>Avg Hours / Month</label>
+              <label className={labelClass} style={labelStyle}>Avg Hours / Month</label>
               <input
                 type="number"
                 value={form.avgHours}
@@ -294,6 +298,7 @@ export default function App() {
                 placeholder="40"
                 min="0"
                 className={inputClass}
+                style={inputStyle}
               />
             </div>
           </div>
@@ -303,8 +308,8 @@ export default function App() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Communication Difficulty Slider */}
             <div>
-              <label className={labelClass}>
-                Communication Difficulty: <span className="text-primary font-mono">{form.communicationDifficulty}/10</span>
+              <label className={labelClass} style={labelStyle}>
+                Communication Difficulty: <span className="font-mono" style={{ color: 'var(--accent)' }}>{form.communicationDifficulty}/10</span>
               </label>
               <input
                 type="range"
@@ -312,9 +317,10 @@ export default function App() {
                 max="10"
                 value={form.communicationDifficulty}
                 onChange={(e) => updateField('communicationDifficulty', parseInt(e.target.value))}
-                className="w-full accent-primary h-2 bg-dark-200/50 rounded-lg appearance-none cursor-pointer"
+                className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+                style={{ accentColor: 'var(--accent)', background: 'var(--bg-elevated)' }}
               />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <div className="flex justify-between text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                 <span>Easy</span>
                 <span>Nightmare</span>
               </div>
@@ -322,8 +328,8 @@ export default function App() {
 
             {/* Stress Level Slider */}
             <div>
-              <label className={labelClass}>
-                Stress Level: <span className="text-primary font-mono">{form.stressLevel}/10</span>
+              <label className={labelClass} style={labelStyle}>
+                Stress Level: <span className="font-mono" style={{ color: 'var(--accent)' }}>{form.stressLevel}/10</span>
               </label>
               <input
                 type="range"
@@ -331,9 +337,10 @@ export default function App() {
                 max="10"
                 value={form.stressLevel}
                 onChange={(e) => updateField('stressLevel', parseInt(e.target.value))}
-                className="w-full accent-primary h-2 bg-dark-200/50 rounded-lg appearance-none cursor-pointer"
+                className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+                style={{ accentColor: 'var(--accent)', background: 'var(--bg-elevated)' }}
               />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <div className="flex justify-between text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                 <span>Zen</span>
                 <span>Burnout</span>
               </div>
@@ -341,56 +348,60 @@ export default function App() {
 
             {/* Payment Reliability */}
             <div>
-              <label className={labelClass}>Payment Reliability</label>
+              <label className={labelClass} style={labelStyle}>Payment Reliability</label>
               <select
                 value={form.paymentReliability}
                 onChange={(e) => updateField('paymentReliability', e.target.value)}
                 className={selectClass}
+                style={inputStyle}
               >
                 {PAYMENT_OPTIONS.map(o => (
-                  <option key={o.value} value={o.value} className="bg-dark-200">{o.label}</option>
+                  <option key={o.value} value={o.value} style={{ background: 'var(--bg-card)' }}>{o.label}</option>
                 ))}
               </select>
             </div>
 
             {/* Scope Creep */}
             <div>
-              <label className={labelClass}>Scope Creep Frequency</label>
+              <label className={labelClass} style={labelStyle}>Scope Creep Frequency</label>
               <select
                 value={form.scopeCreepFrequency}
                 onChange={(e) => updateField('scopeCreepFrequency', e.target.value)}
                 className={selectClass}
+                style={inputStyle}
               >
                 {SCOPE_CREEP_OPTIONS.map(o => (
-                  <option key={o.value} value={o.value} className="bg-dark-200">{o.label}</option>
+                  <option key={o.value} value={o.value} style={{ background: 'var(--bg-card)' }}>{o.label}</option>
                 ))}
               </select>
             </div>
 
             {/* Growth Potential */}
             <div>
-              <label className={labelClass}>Growth Potential</label>
+              <label className={labelClass} style={labelStyle}>Growth Potential</label>
               <select
                 value={form.growthPotential}
                 onChange={(e) => updateField('growthPotential', e.target.value)}
                 className={selectClass}
+                style={inputStyle}
               >
                 {GROWTH_OPTIONS.map(o => (
-                  <option key={o.value} value={o.value} className="bg-dark-200">{o.label}</option>
+                  <option key={o.value} value={o.value} style={{ background: 'var(--bg-card)' }}>{o.label}</option>
                 ))}
               </select>
             </div>
 
             {/* Referral Likelihood */}
             <div>
-              <label className={labelClass}>Referral Likelihood</label>
+              <label className={labelClass} style={labelStyle}>Referral Likelihood</label>
               <select
                 value={form.referralLikelihood}
                 onChange={(e) => updateField('referralLikelihood', e.target.value)}
                 className={selectClass}
+                style={inputStyle}
               >
                 {REFERRAL_OPTIONS.map(o => (
-                  <option key={o.value} value={o.value} className="bg-dark-200">{o.label}</option>
+                  <option key={o.value} value={o.value} style={{ background: 'var(--bg-card)' }}>{o.label}</option>
                 ))}
               </select>
             </div>
@@ -401,14 +412,16 @@ export default function App() {
           <button
             onClick={handleAnalyze}
             disabled={!form.monthlyRevenue || !form.avgHours}
-            className="px-6 py-3 bg-primary hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all text-sm"
+            className="px-6 py-3 disabled:opacity-40 disabled:cursor-not-allowed font-semibold rounded-xl transition-all text-sm"
+            style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
           >
             Analyze This Client
           </button>
           {results && (
             <button
               onClick={handleReset}
-              className="px-6 py-3 bg-dark-200/50 hover:bg-dark-200 text-gray-300 font-medium rounded-xl transition-all text-sm border border-white/5"
+              className="px-6 py-3 font-medium rounded-xl transition-all text-sm"
+              style={{ background: 'var(--bg-elevated)', color: 'var(--text-body)', border: '1px solid var(--border)' }}
             >
               Reset
             </button>
@@ -420,46 +433,45 @@ export default function App() {
       {results && (
         <div className="mt-8 space-y-6">
           {/* Verdict Banner */}
-          <div className={`relative overflow-hidden rounded-xl border p-8 text-center ${
-            results.verdict === 'KEEP'
-              ? 'bg-green-500/5 border-green-500/20'
-              : results.verdict === 'FIRE'
-              ? 'bg-red-500/5 border-red-500/20'
-              : 'bg-yellow-500/5 border-yellow-500/20'
-          }`}>
-            <p className="text-gray-400 text-sm uppercase tracking-wider mb-2">Verdict</p>
-            <h2 className={`text-5xl font-black ${results.verdictColor}`}>
+          <div className="relative overflow-hidden rounded-xl p-8 text-center" style={{
+            background: results.verdictColor === 'success' ? 'var(--success-soft)' : results.verdictColor === 'danger' ? 'var(--danger-soft)' : 'var(--warning-soft)',
+            border: `1px solid color-mix(in srgb, ${results.verdictColor === 'success' ? 'var(--success)' : results.verdictColor === 'danger' ? 'var(--danger)' : 'var(--warning)'} 20%, transparent)`,
+          }}>
+            <p className="text-sm uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)' }}>Verdict</p>
+            <h2 className="text-5xl font-black" style={{
+              color: results.verdictColor === 'success' ? 'var(--success)' : results.verdictColor === 'danger' ? 'var(--danger)' : 'var(--warning)',
+            }}>
               {results.verdict}
             </h2>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>
               {results.confidence}% confidence &middot; Composite Score: {results.compositeScore}/100
             </p>
             {form.clientName && (
-              <p className="text-gray-500 text-xs mt-1">Analysis for: {form.clientName}</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Analysis for: {form.clientName}</p>
             )}
           </div>
 
           {/* Key Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <ResultCard className="text-center">
-              <p className="text-2xl font-bold text-white">${results.effectiveRate.toFixed(0)}</p>
-              <p className="text-gray-400 text-xs mt-1">Effective $/hr</p>
+              <p className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>${results.effectiveRate.toFixed(0)}</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Effective $/hr</p>
             </ResultCard>
             <ResultCard className="text-center">
-              <p className="text-2xl font-bold text-primary">${results.stressAdjustedRate.toFixed(0)}</p>
-              <p className="text-gray-400 text-xs mt-1">Stress-Adjusted $/hr</p>
+              <p className="text-2xl font-bold" style={{ color: 'var(--accent)' }}>${results.stressAdjustedRate.toFixed(0)}</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Stress-Adjusted $/hr</p>
             </ResultCard>
             <ResultCard className="text-center">
-              <p className={`text-2xl font-bold ${results.opportunityCost > 0 ? 'text-red-400' : 'text-green-400'}`}>
+              <p className="text-2xl font-bold" style={{ color: results.opportunityCost > 0 ? 'var(--danger)' : 'var(--success)' }}>
                 {results.opportunityCost > 0 ? '-' : '+'}${Math.abs(results.opportunityCost).toLocaleString()}
               </p>
-              <p className="text-gray-400 text-xs mt-1">Monthly Opp. Cost</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Monthly Opp. Cost</p>
             </ResultCard>
             <ResultCard className="text-center">
-              <p className={`text-2xl font-bold ${results.riskScore > 60 ? 'text-red-400' : results.riskScore > 35 ? 'text-yellow-400' : 'text-green-400'}`}>
+              <p className="text-2xl font-bold" style={{ color: results.riskScore > 60 ? 'var(--danger)' : results.riskScore > 35 ? 'var(--warning)' : 'var(--success)' }}>
                 {results.riskScore}
               </p>
-              <p className="text-gray-400 text-xs mt-1">Risk Score /100</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Risk Score /100</p>
             </ResultCard>
           </div>
 
@@ -469,15 +481,15 @@ export default function App() {
               {results.dimensions.map((dim, i) => (
                 <div key={i}>
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm text-gray-300">{dim.label}</span>
-                    <span className="text-xs text-gray-500">{dim.detail}</span>
+                    <span className="text-sm" style={{ color: 'var(--text-body)' }}>{dim.label}</span>
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{dim.detail}</span>
                   </div>
-                  <div className="w-full bg-dark-200/50 rounded-full h-2">
+                  <div className="w-full rounded-full h-2" style={{ background: 'var(--bg-elevated)' }}>
                     <div
                       className="h-2 rounded-full transition-all duration-700"
                       style={{
                         width: `${dim.score}%`,
-                        backgroundColor: dim.score >= 70 ? '#13b973' : dim.score >= 40 ? '#f59e0b' : '#ef4444',
+                        backgroundColor: dim.score >= 70 ? 'var(--success)' : dim.score >= 40 ? 'var(--warning)' : 'var(--danger)',
                       }}
                     />
                   </div>
@@ -491,8 +503,8 @@ export default function App() {
             <ul className="space-y-2">
               {results.renegotiationPoints.map((point, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
-                  <span className="text-yellow-400 mt-0.5 flex-shrink-0">&#8226;</span>
-                  <span className="text-gray-300">{point}</span>
+                  <span className="mt-0.5 flex-shrink-0" style={{ color: 'var(--warning)' }}>&#8226;</span>
+                  <span style={{ color: 'var(--text-body)' }}>{point}</span>
                 </li>
               ))}
             </ul>
@@ -507,8 +519,8 @@ export default function App() {
           {/* Exit Script (for FIRE / RENEGOTIATE) */}
           {results.exitScript && (
             <ResultCard title="Graceful Exit Script" icon="🚪">
-              <div className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
-                <pre className="text-gray-300 text-sm whitespace-pre-wrap font-sans leading-relaxed">
+              <div className="rounded-lg p-4" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+                <pre className="text-sm whitespace-pre-wrap font-sans leading-relaxed" style={{ color: 'var(--text-body)' }}>
                   {results.exitScript}
                 </pre>
               </div>
@@ -521,20 +533,20 @@ export default function App() {
           {/* Annual Impact */}
           <ResultCard title="Annual Impact" icon="📅">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-dark-200/30 rounded-lg p-4 text-center">
-                <p className="text-2xl font-bold text-white">
+              <div className="rounded-lg p-4 text-center" style={{ background: 'var(--bg-elevated)' }}>
+                <p className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>
                   ${(parseFloat(form.monthlyRevenue) * 12).toLocaleString()}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">Annual Revenue from Client</p>
+                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Annual Revenue from Client</p>
               </div>
-              <div className="bg-dark-200/30 rounded-lg p-4 text-center">
-                <p className={`text-2xl font-bold ${results.annualOpportunityCost > 0 ? 'text-red-400' : 'text-green-400'}`}>
+              <div className="rounded-lg p-4 text-center" style={{ background: 'var(--bg-elevated)' }}>
+                <p className="text-2xl font-bold" style={{ color: results.annualOpportunityCost > 0 ? 'var(--danger)' : 'var(--success)' }}>
                   {results.annualOpportunityCost > 0 ? '-' : '+'}${Math.abs(results.annualOpportunityCost).toLocaleString()}
                 </p>
-                <p className="text-gray-400 text-xs mt-1">Annual Opportunity Cost</p>
+                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Annual Opportunity Cost</p>
               </div>
             </div>
-            <p className="text-gray-500 text-xs mt-3">
+            <p className="text-xs mt-3" style={{ color: 'var(--text-muted)' }}>
               Opportunity cost calculated against $125/hr market benchmark rate.
             </p>
           </ResultCard>

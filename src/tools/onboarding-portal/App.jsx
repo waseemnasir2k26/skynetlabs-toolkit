@@ -95,10 +95,10 @@ function Modal({ open, onClose, title, children }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-      <div className="relative bg-[#0f0f18] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6" onClick={(e) => e.stopPropagation()}>
+      <div className="relative rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }} onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-white text-xl font-bold">{title}</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors text-2xl leading-none">&times;</button>
+          <h2 className="text-xl font-bold" style={{ color: 'var(--text-heading)' }}>{title}</h2>
+          <button onClick={onClose} className="transition-colors text-2xl leading-none hover:opacity-80" style={{ color: 'var(--text-muted)' }}>&times;</button>
         </div>
         {children}
       </div>
@@ -107,14 +107,14 @@ function Modal({ open, onClose, title, children }) {
 }
 
 function FormField({ field, value, onChange }) {
-  const baseClass = "w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#13b973]/50"
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }
   return (
     <div>
-      <label className="block text-sm text-gray-400 mb-1.5">{field.label}</label>
+      <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>{field.label}</label>
       {field.type === 'textarea' ? (
-        <textarea value={value || ''} onChange={(e) => onChange(field.key, e.target.value)} rows={3} className={`${baseClass} resize-none`} placeholder={`Enter ${field.label.toLowerCase()}...`} />
+        <textarea value={value || ''} onChange={(e) => onChange(field.key, e.target.value)} rows={3} className="w-full rounded-xl px-4 py-3 placeholder-gray-500 focus:outline-none resize-none" style={inputStyle} placeholder={`Enter ${field.label.toLowerCase()}...`} />
       ) : (
-        <input type="text" value={value || ''} onChange={(e) => onChange(field.key, e.target.value)} className={baseClass} placeholder={`Enter ${field.label.toLowerCase()}...`} />
+        <input type="text" value={value || ''} onChange={(e) => onChange(field.key, e.target.value)} className="w-full rounded-xl px-4 py-3 placeholder-gray-500 focus:outline-none" style={inputStyle} placeholder={`Enter ${field.label.toLowerCase()}...`} />
       )}
     </div>
   )
@@ -210,67 +210,72 @@ export default function App() {
     return brief
   }
 
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }
+
   // Admin view
   if (view === 'admin') {
     return (
       <ToolLayout title="Client Onboarding Portal" description="Create and manage client onboarding forms, track completion, and generate project briefs.">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-white text-lg font-semibold">All Onboarding Sessions</h2>
-          <button onClick={() => setView('setup')} className="px-5 py-2 bg-[#13b973] hover:bg-[#13b973]/80 text-white rounded-xl font-medium transition-colors text-sm">
+          <h2 className="text-lg font-semibold" style={{ color: 'var(--text-heading)' }}>All Onboarding Sessions</h2>
+          <button onClick={() => setView('setup')} className="px-5 py-2 rounded-xl font-medium transition-colors text-sm hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
             + New Onboarding Form
           </button>
         </div>
 
         {sessions.length === 0 ? (
           <ResultCard>
-            <p className="text-gray-500 text-center py-12">No onboarding sessions yet. Create your first onboarding form to get started.</p>
+            <p className="text-center py-12" style={{ color: 'var(--text-muted)' }}>No onboarding sessions yet. Create your first onboarding form to get started.</p>
           </ResultCard>
         ) : (
           <div className="space-y-3">
             {sessions.map((session) => {
               const comp = getCompletion(session)
               return (
-                <div key={session.id} className="bg-dark-100/50 border border-white/5 rounded-xl p-5 hover:border-white/10 transition-all">
+                <div key={session.id} className="rounded-xl p-5 transition-all" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-white font-semibold text-lg">{session.name}</h3>
-                        <span className={`px-2.5 py-0.5 text-xs rounded-full font-medium ${session.status === 'completed' ? 'bg-[#13b973]/20 text-[#13b973]' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                        <h3 className="font-semibold text-lg" style={{ color: 'var(--text-heading)' }}>{session.name}</h3>
+                        <span className="px-2.5 py-0.5 text-xs rounded-full font-medium" style={session.status === 'completed' ? { background: 'var(--accent-soft)', color: 'var(--accent)' } : { background: 'var(--warning-soft)', color: 'var(--warning)' }}>
                           {session.status === 'completed' ? 'Completed' : 'In Progress'}
                         </span>
                       </div>
-                      <p className="text-gray-500 text-sm mb-3">Created: {new Date(session.createdAt).toLocaleDateString()} | Sections: {session.sections.length}</p>
+                      <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>Created: {new Date(session.createdAt).toLocaleDateString()} | Sections: {session.sections.length}</p>
 
                       {/* Progress bar */}
                       <div className="flex items-center gap-3">
-                        <div className="flex-1 h-2 bg-dark-200 rounded-full overflow-hidden">
-                          <div className="h-full bg-[#13b973] rounded-full transition-all" style={{ width: `${comp.percent}%` }} />
+                        <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-card)' }}>
+                          <div className="h-full rounded-full transition-all" style={{ width: `${comp.percent}%`, background: 'var(--accent)' }} />
                         </div>
-                        <span className="text-sm text-gray-400 font-medium">{comp.percent}%</span>
+                        <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{comp.percent}%</span>
                       </div>
                       {comp.missing.length > 0 && comp.missing.length <= 5 && (
-                        <p className="text-xs text-gray-600 mt-1">Missing: {comp.missing.join(', ')}</p>
+                        <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Missing: {comp.missing.join(', ')}</p>
                       )}
                       {comp.missing.length > 5 && (
-                        <p className="text-xs text-gray-600 mt-1">{comp.missing.length} fields remaining</p>
+                        <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{comp.missing.length} fields remaining</p>
                       )}
                     </div>
                     <div className="flex items-center gap-2 ml-4">
                       <button
                         onClick={() => { setCurrentSessionId(session.id); setView('fill') }}
-                        className="px-3 py-1.5 text-xs bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 rounded-lg transition-all"
+                        className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80"
+                        style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}
                       >Edit</button>
                       <button
                         onClick={() => { setCurrentSessionId(session.id); setView('preview') }}
-                        className="px-3 py-1.5 text-xs bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200 rounded-lg transition-all"
+                        className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80"
+                        style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}
                       >Preview</button>
                       {session.status === 'completed' && (
                         <button
                           onClick={() => { setCurrentSessionId(session.id); setView('brief') }}
-                          className="px-3 py-1.5 text-xs bg-[#13b973]/10 text-[#13b973] hover:bg-[#13b973]/20 rounded-lg transition-all"
+                          className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80"
+                          style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
                         >Brief</button>
                       )}
-                      <button onClick={() => deleteSession(session.id)} className="px-3 py-1.5 text-xs bg-red-500/10 text-red-400 hover:bg-red-500/20 rounded-lg transition-all">Delete</button>
+                      <button onClick={() => deleteSession(session.id)} className="px-3 py-1.5 text-xs rounded-lg transition-all hover:opacity-80" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>Delete</button>
                     </div>
                   </div>
                 </div>
@@ -286,23 +291,24 @@ export default function App() {
   if (view === 'setup') {
     return (
       <ToolLayout title="Client Onboarding Portal" description="Create a new onboarding form by selecting sections.">
-        <button onClick={() => setView('admin')} className="text-gray-400 hover:text-white text-sm mb-6 inline-flex items-center gap-1 transition-colors">
+        <button onClick={() => setView('admin')} className="text-sm mb-6 inline-flex items-center gap-1 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>
           &larr; Back to Sessions
         </button>
 
         <ResultCard title="Create Onboarding Form" icon="\uD83D\uDCCB">
           <div className="mb-6">
-            <label className="block text-sm text-gray-400 mb-1.5">Client / Session Name *</label>
+            <label className="block text-sm mb-1.5" style={{ color: 'var(--text-muted)' }}>Client / Session Name *</label>
             <input
               type="text"
               value={formName}
               onChange={(e) => setFormName(e.target.value)}
-              className="w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#13b973]/50"
+              className="w-full rounded-xl px-4 py-3 placeholder-gray-500 focus:outline-none"
+              style={inputStyle}
               placeholder="e.g., Acme Corp Onboarding"
             />
           </div>
 
-          <p className="text-sm text-gray-400 mb-4">Select sections to include in the onboarding form:</p>
+          <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>Select sections to include in the onboarding form:</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
             {ALL_SECTION_KEYS.map((key) => {
               const sec = SECTIONS[key]
@@ -311,25 +317,27 @@ export default function App() {
                 <button
                   key={key}
                   onClick={() => toggleSection(key)}
-                  className={`flex items-center gap-3 p-4 rounded-xl border transition-all text-left ${selected ? 'border-[#13b973]/50 bg-[#13b973]/10' : 'border-white/5 bg-dark-200/30 hover:border-white/10'}`}
+                  className="flex items-center gap-3 p-4 rounded-xl transition-all text-left"
+                  style={selected ? { border: '1px solid var(--accent)', background: 'var(--accent-soft)' } : { border: '1px solid var(--border)', background: 'var(--bg-elevated)' }}
                 >
                   <span className="text-xl">{sec.icon}</span>
                   <div>
-                    <p className={`font-medium ${selected ? 'text-white' : 'text-gray-400'}`}>{sec.label}</p>
-                    <p className="text-xs text-gray-600">{sec.fields.length} fields</p>
+                    <p className="font-medium" style={{ color: selected ? 'var(--text-heading)' : 'var(--text-muted)' }}>{sec.label}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{sec.fields.length} fields</p>
                   </div>
-                  {selected && <span className="ml-auto text-[#13b973]">\u2713</span>}
+                  {selected && <span className="ml-auto" style={{ color: 'var(--accent)' }}>{'\u2713'}</span>}
                 </button>
               )
             })}
           </div>
 
           <div className="flex justify-end gap-3">
-            <button onClick={() => setView('admin')} className="px-4 py-2 text-gray-400 hover:text-white transition-colors">Cancel</button>
+            <button onClick={() => setView('admin')} className="px-4 py-2 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Cancel</button>
             <button
               onClick={createSession}
               disabled={!formName.trim() || setupSections.length === 0}
-              className="px-6 py-2.5 bg-[#13b973] hover:bg-[#13b973]/80 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl font-medium transition-colors"
+              className="px-6 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl font-medium transition-colors hover:opacity-80"
+              style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}
             >Create Form</button>
           </div>
         </ResultCard>
@@ -343,17 +351,17 @@ export default function App() {
     return (
       <ToolLayout title="Client Onboarding Portal" description={`Filling: ${currentSession.name}`}>
         <div className="flex items-center justify-between mb-6">
-          <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="text-gray-400 hover:text-white text-sm inline-flex items-center gap-1 transition-colors">
+          <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="text-sm inline-flex items-center gap-1 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>
             &larr; Back to Sessions
           </button>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className="w-32 h-2 bg-dark-200 rounded-full overflow-hidden">
-                <div className="h-full bg-[#13b973] rounded-full transition-all" style={{ width: `${comp.percent}%` }} />
+              <div className="w-32 h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-card)' }}>
+                <div className="h-full rounded-full transition-all" style={{ width: `${comp.percent}%`, background: 'var(--accent)' }} />
               </div>
-              <span className="text-sm text-gray-400">{comp.percent}%</span>
+              <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{comp.percent}%</span>
             </div>
-            <button onClick={markComplete} className="px-4 py-2 bg-[#13b973] hover:bg-[#13b973]/80 text-white rounded-xl font-medium transition-colors text-sm">
+            <button onClick={markComplete} className="px-4 py-2 rounded-xl font-medium transition-colors text-sm hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
               Mark Complete & Generate Brief
             </button>
           </div>
@@ -387,14 +395,14 @@ export default function App() {
   if (view === 'preview' && currentSession) {
     return (
       <ToolLayout title="Client Onboarding Portal" description={`Preview: ${currentSession.name}`}>
-        <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="text-gray-400 hover:text-white text-sm mb-6 inline-flex items-center gap-1 transition-colors">
+        <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="text-sm mb-6 inline-flex items-center gap-1 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>
           &larr; Back to Sessions
         </button>
 
-        <div className="bg-dark-100/50 border border-white/10 rounded-2xl p-8 max-w-3xl mx-auto">
+        <div className="rounded-2xl p-8 max-w-3xl mx-auto" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-white mb-2">Client Onboarding Form</h2>
-            <p className="text-gray-400">Please fill in the information below to help us get started on your project.</p>
+            <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-heading)' }}>Client Onboarding Form</h2>
+            <p style={{ color: 'var(--text-muted)' }}>Please fill in the information below to help us get started on your project.</p>
           </div>
 
           {currentSession.sections.map((sk) => {
@@ -402,14 +410,14 @@ export default function App() {
             if (!sec) return null
             return (
               <div key={sk} className="mb-8">
-                <h3 className="text-white font-semibold text-lg mb-4 flex items-center gap-2">
+                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
                   <span>{sec.icon}</span> {sec.label}
                 </h3>
                 <div className="space-y-4">
                   {sec.fields.map((f) => (
                     <div key={f.key}>
-                      <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
-                      <div className="bg-dark-200/30 border border-white/5 rounded-lg px-4 py-2.5 text-gray-500 text-sm">
+                      <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>{f.label}</label>
+                      <div className="rounded-lg px-4 py-2.5 text-sm" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                         {currentSession.data[sk]?.[f.key] || 'Awaiting response...'}
                       </div>
                     </div>
@@ -429,14 +437,14 @@ export default function App() {
     return (
       <ToolLayout title="Client Onboarding Portal" description={`Project Brief: ${currentSession.name}`}>
         <div className="flex items-center justify-between mb-6">
-          <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="text-gray-400 hover:text-white text-sm inline-flex items-center gap-1 transition-colors">
+          <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="text-sm inline-flex items-center gap-1 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>
             &larr; Back to Sessions
           </button>
           <CopyButton text={briefText} label="Copy Brief" />
         </div>
 
         <ResultCard title="Project Brief" icon="\uD83D\uDCCB">
-          <pre className="text-gray-300 text-sm whitespace-pre-wrap font-mono leading-relaxed">{briefText}</pre>
+          <pre className="text-sm whitespace-pre-wrap font-mono leading-relaxed" style={{ color: 'var(--text-body)' }}>{briefText}</pre>
         </ResultCard>
       </ToolLayout>
     )
@@ -445,7 +453,7 @@ export default function App() {
   // Fallback
   return (
     <ToolLayout title="Client Onboarding Portal" description="Manage client onboarding forms.">
-      <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="px-4 py-2 bg-[#13b973] text-white rounded-xl">Go to Dashboard</button>
+      <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="px-4 py-2 rounded-xl" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>Go to Dashboard</button>
     </ToolLayout>
   )
 }

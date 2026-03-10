@@ -250,7 +250,7 @@ export default function App() {
           <ResultCard title="Service Details">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Service / Business Name *
                 </label>
                 <input
@@ -258,11 +258,11 @@ export default function App() {
                   value={form.serviceName}
                   onChange={e => update('serviceName', e.target.value)}
                   placeholder="e.g. SkynetLabs Automation"
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   What do you do? (one sentence) *
                 </label>
                 <input
@@ -270,11 +270,11 @@ export default function App() {
                   value={form.whatYouDo}
                   onChange={e => update('whatYouDo', e.target.value)}
                   placeholder="e.g. We build AI-powered automation systems that save businesses 20+ hours per week"
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Target client&apos;s biggest pain point *
                 </label>
                 <textarea
@@ -282,11 +282,11 @@ export default function App() {
                   onChange={e => update('painPoint', e.target.value)}
                   rows={3}
                   placeholder="Describe the main problems your target clients face. Use separate lines or sentences for multiple pain points."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 resize-none"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Your unique approach *
                 </label>
                 <textarea
@@ -294,11 +294,11 @@ export default function App() {
                   onChange={e => update('uniqueApproach', e.target.value)}
                   rows={3}
                   placeholder="What makes your solution different? Describe your methodology or unique angle."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 resize-none"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Key results / metrics (optional)
                 </label>
                 <textarea
@@ -306,7 +306,7 @@ export default function App() {
                   onChange={e => update('keyResults', e.target.value)}
                   rows={2}
                   placeholder="e.g. 300% increase in leads, 50% cost reduction, 20 hours saved per week"
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 resize-none"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 />
               </div>
             </div>
@@ -315,13 +315,13 @@ export default function App() {
           <ResultCard title="Tone & CTA">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Desired CTA
                 </label>
                 <select
                   value={form.cta}
                   onChange={e => update('cta', e.target.value)}
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary/50"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 >
                   {CTA_OPTIONS.map(o => (
                     <option key={o} value={o}>{o}</option>
@@ -329,13 +329,13 @@ export default function App() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>
                   Tone
                 </label>
                 <select
                   value={form.tone}
                   onChange={e => update('tone', e.target.value)}
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary/50"
+                  className="w-full border rounded-lg px-4 py-2.5 focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}
                 >
                   {TONE_OPTIONS.map(o => (
                     <option key={o} value={o}>{o}</option>
@@ -348,11 +348,7 @@ export default function App() {
           <button
             onClick={handleGenerate}
             disabled={!canGenerate}
-            className={`w-full py-3 rounded-xl font-semibold text-lg transition-all ${
-              canGenerate
-                ? 'bg-primary hover:bg-primary/90 text-white'
-                : 'bg-dark-200/50 text-gray-500 cursor-not-allowed'
-            }`}
+            className={`w-full py-3 rounded-xl font-semibold text-lg transition-all ${!canGenerate ? 'cursor-not-allowed' : ''}`} style={canGenerate ? { background: 'var(--accent)', color: 'var(--text-heading)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}
           >
             Generate Copy
           </button>
@@ -362,7 +358,7 @@ export default function App() {
           <div className="flex flex-wrap items-center gap-3 mb-2">
             <button
               onClick={handleReset}
-              className="px-4 py-2 bg-dark-200/50 border border-white/10 text-gray-300 hover:text-white rounded-lg transition-all text-sm"
+              className="px-4 py-2 border rounded-lg transition-all text-sm" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-body)' }}
             >
               &larr; Start Over
             </button>
@@ -380,11 +376,11 @@ export default function App() {
                   <div className="absolute top-0 right-0">
                     <CopyButton text={`## ${section.title}\n\n${section.content}`} label="Copy" />
                   </div>
-                  <div className="text-gray-300 whitespace-pre-wrap leading-relaxed pr-20 text-sm">
+                  <div className="whitespace-pre-wrap leading-relaxed pr-20 text-sm" style={{ color: 'var(--text-body)' }}>
                     {section.content.split(/(\*\*[^*]+\*\*)/).map((part, i) => {
                       if (part.startsWith('**') && part.endsWith('**')) {
                         return (
-                          <span key={i} className="font-semibold text-white">
+                          <span key={i} className="font-semibold" style={{ color: 'var(--text-heading)' }}>
                             {part.slice(2, -2)}
                           </span>
                         )

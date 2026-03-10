@@ -36,7 +36,8 @@ function StarRating({ value, onChange, readOnly = false }) {
           type="button"
           disabled={readOnly}
           onClick={() => !readOnly && onChange(s)}
-          className={`text-2xl transition-colors ${readOnly ? 'cursor-default' : 'cursor-pointer hover:scale-110'} ${s <= value ? 'text-yellow-400' : 'text-gray-600'}`}
+          className={`text-2xl transition-colors ${readOnly ? 'cursor-default' : 'cursor-pointer hover:scale-110'}`}
+          style={{ color: s <= value ? 'var(--warning)' : 'var(--text-muted)' }}
         >
           &#9733;
         </button>
@@ -246,9 +247,10 @@ export default function App() {
     }
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-colors'
-  const btnPrimary = 'px-4 py-2 bg-primary hover:bg-primary-light text-black font-medium rounded-lg transition-colors text-sm'
-  const btnSecondary = 'px-4 py-2 bg-dark-200/50 hover:bg-dark-200 text-gray-300 hover:text-white border border-white/10 rounded-lg transition-colors text-sm'
+  const inputClass = 'w-full rounded-lg px-3 py-2 text-sm placeholder-gray-500 focus:outline-none transition-colors'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }
+  const btnPrimary = { background: 'var(--accent)', color: 'var(--text-heading)' }
+  const btnSecondary = { background: 'var(--bg-elevated)', color: 'var(--text-body)', border: '1px solid var(--border)' }
 
   return (
     <ToolLayout
@@ -265,7 +267,8 @@ export default function App() {
           <button
             key={tab.key}
             onClick={() => { setView(tab.key); setSelectedEntry(null) }}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${view === tab.key ? 'bg-primary text-black' : 'bg-dark-100/50 text-gray-400 hover:text-white border border-white/10'}`}
+            className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            style={view === tab.key ? btnPrimary : { ...btnSecondary }}
           >
             {tab.label}
           </button>
@@ -278,23 +281,23 @@ export default function App() {
           <ResultCard title={editingId ? 'Edit Post-Mortem' : 'New Post-Mortem'} icon="&#128221;">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Project Name *</label>
-                <input className={inputClass} value={form.projectName} onChange={e => updateField('projectName', e.target.value)} placeholder="e.g. Website Redesign" required />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Project Name *</label>
+                <input className={inputClass} style={inputStyle} value={form.projectName} onChange={e => updateField('projectName', e.target.value)} placeholder="e.g. Website Redesign" required />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Client Name *</label>
-                <input className={inputClass} value={form.clientName} onChange={e => updateField('clientName', e.target.value)} placeholder="e.g. Acme Corp" required />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Client Name *</label>
+                <input className={inputClass} style={inputStyle} value={form.clientName} onChange={e => updateField('clientName', e.target.value)} placeholder="e.g. Acme Corp" required />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Service Type</label>
-                <select className={inputClass} value={form.serviceType} onChange={e => updateField('serviceType', e.target.value)}>
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Service Type</label>
+                <select className={inputClass} style={inputStyle} value={form.serviceType} onChange={e => updateField('serviceType', e.target.value)}>
                   <option value="">Select...</option>
                   {SERVICE_TYPES.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Completion Date</label>
-                <input type="date" className={inputClass} value={form.completionDate} onChange={e => updateField('completionDate', e.target.value)} />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Completion Date</label>
+                <input type="date" className={inputClass} style={inputStyle} value={form.completionDate} onChange={e => updateField('completionDate', e.target.value)} />
               </div>
             </div>
           </ResultCard>
@@ -302,20 +305,20 @@ export default function App() {
           <ResultCard title="Budget & Timeline" icon="&#128176;">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Original Budget ($)</label>
-                <input type="number" min="0" step="0.01" className={inputClass} value={form.originalBudget} onChange={e => updateField('originalBudget', e.target.value)} placeholder="5000" />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Original Budget ($)</label>
+                <input type="number" min="0" step="0.01" className={inputClass} style={inputStyle} value={form.originalBudget} onChange={e => updateField('originalBudget', e.target.value)} placeholder="5000" />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Actual Budget ($)</label>
-                <input type="number" min="0" step="0.01" className={inputClass} value={form.actualBudget} onChange={e => updateField('actualBudget', e.target.value)} placeholder="5500" />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Actual Budget ($)</label>
+                <input type="number" min="0" step="0.01" className={inputClass} style={inputStyle} value={form.actualBudget} onChange={e => updateField('actualBudget', e.target.value)} placeholder="5500" />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Original Timeline (days)</label>
-                <input type="number" min="0" className={inputClass} value={form.originalTimeline} onChange={e => updateField('originalTimeline', e.target.value)} placeholder="30" />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Original Timeline (days)</label>
+                <input type="number" min="0" className={inputClass} style={inputStyle} value={form.originalTimeline} onChange={e => updateField('originalTimeline', e.target.value)} placeholder="30" />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Actual Timeline (days)</label>
-                <input type="number" min="0" className={inputClass} value={form.actualTimeline} onChange={e => updateField('actualTimeline', e.target.value)} placeholder="38" />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Actual Timeline (days)</label>
+                <input type="number" min="0" className={inputClass} style={inputStyle} value={form.actualTimeline} onChange={e => updateField('actualTimeline', e.target.value)} placeholder="38" />
               </div>
             </div>
           </ResultCard>
@@ -323,30 +326,31 @@ export default function App() {
           <ResultCard title="Retrospective" icon="&#128269;">
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-400 text-sm mb-1">What Went Well</label>
-                <textarea className={inputClass + ' min-h-[80px]'} value={form.wentWell} onChange={e => updateField('wentWell', e.target.value)} placeholder="Communication was excellent, milestones hit on time..." />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>What Went Well</label>
+                <textarea className={inputClass + ' min-h-[80px]'} style={inputStyle} value={form.wentWell} onChange={e => updateField('wentWell', e.target.value)} placeholder="Communication was excellent, milestones hit on time..." />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">What Went Wrong</label>
-                <textarea className={inputClass + ' min-h-[80px]'} value={form.wentWrong} onChange={e => updateField('wentWrong', e.target.value)} placeholder="Scope creep in phase 2, unclear requirements..." />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>What Went Wrong</label>
+                <textarea className={inputClass + ' min-h-[80px]'} style={inputStyle} value={form.wentWrong} onChange={e => updateField('wentWrong', e.target.value)} placeholder="Scope creep in phase 2, unclear requirements..." />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Client Satisfaction (1-5)</label>
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Client Satisfaction (1-5)</label>
                 <StarRating value={form.satisfaction} onChange={v => updateField('satisfaction', v)} />
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Would You Work With This Client Again?</label>
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Would You Work With This Client Again?</label>
                 <div className="flex gap-3">
                   {['Yes', 'Maybe', 'No'].map(opt => (
                     <button
                       key={opt}
                       type="button"
                       onClick={() => updateField('workAgain', opt)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${form.workAgain === opt
-                        ? opt === 'Yes' ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                        : opt === 'Maybe' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-                        : 'bg-red-500/20 text-red-400 border border-red-500/30'
-                        : 'bg-dark-200/50 text-gray-400 border border-white/10 hover:text-white'}`}
+                      className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                      style={form.workAgain === opt
+                        ? opt === 'Yes' ? { background: 'var(--success-soft)', color: 'var(--success)', border: '1px solid var(--success)' }
+                        : opt === 'Maybe' ? { background: 'var(--warning-soft)', color: 'var(--warning)', border: '1px solid var(--warning)' }
+                        : { background: 'var(--danger-soft)', color: 'var(--danger)', border: '1px solid var(--danger)' }
+                        : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                     >
                       {opt}
                     </button>
@@ -354,16 +358,16 @@ export default function App() {
                 </div>
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-1">Key Lesson</label>
-                <textarea className={inputClass + ' min-h-[60px]'} value={form.keyLesson} onChange={e => updateField('keyLesson', e.target.value)} placeholder="Always get sign-off before starting the next phase..." />
+                <label className="block text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Key Lesson</label>
+                <textarea className={inputClass + ' min-h-[60px]'} style={inputStyle} value={form.keyLesson} onChange={e => updateField('keyLesson', e.target.value)} placeholder="Always get sign-off before starting the next phase..." />
               </div>
             </div>
           </ResultCard>
 
           <div className="flex gap-3">
-            <button type="submit" className={btnPrimary}>{editingId ? 'Update Post-Mortem' : 'Save Post-Mortem'}</button>
+            <button type="submit" className="px-4 py-2 font-medium rounded-lg transition-colors text-sm" style={btnPrimary}>{editingId ? 'Update Post-Mortem' : 'Save Post-Mortem'}</button>
             {editingId && (
-              <button type="button" className={btnSecondary} onClick={() => { setForm({ ...emptyForm }); setEditingId(null) }}>Cancel Edit</button>
+              <button type="button" className="px-4 py-2 rounded-lg transition-colors text-sm" style={btnSecondary} onClick={() => { setForm({ ...emptyForm }); setEditingId(null) }}>Cancel Edit</button>
             )}
           </div>
         </form>
@@ -373,8 +377,8 @@ export default function App() {
       {view === 'history' && (
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-3">
-            <input className={inputClass + ' flex-1'} placeholder="Search projects or clients..." value={search} onChange={e => setSearch(e.target.value)} />
-            <select className={inputClass + ' sm:w-48'} value={filterService} onChange={e => setFilterService(e.target.value)}>
+            <input className={inputClass + ' flex-1'} style={inputStyle} placeholder="Search projects or clients..." value={search} onChange={e => setSearch(e.target.value)} />
+            <select className={inputClass + ' sm:w-48'} style={inputStyle} value={filterService} onChange={e => setFilterService(e.target.value)}>
               <option value="">All Services</option>
               {SERVICE_TYPES.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
@@ -382,28 +386,28 @@ export default function App() {
 
           {filtered.length === 0 ? (
             <ResultCard>
-              <p className="text-gray-400 text-center py-8">No post-mortems yet. Create your first one!</p>
+              <p className="text-center py-8" style={{ color: 'var(--text-muted)' }}>No post-mortems yet. Create your first one!</p>
             </ResultCard>
           ) : (
             <div className="grid gap-3">
               {filtered.map(entry => (
-                <ResultCard key={entry.id} className="cursor-pointer hover:border-primary/30 transition-colors">
+                <ResultCard key={entry.id} className="cursor-pointer transition-colors">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3" onClick={() => setSelectedEntry(selectedEntry?.id === entry.id ? null : entry)}>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="text-white font-medium">{entry.projectName}</h4>
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">{entry.serviceType}</span>
+                        <h4 className="font-medium" style={{ color: 'var(--text-heading)' }}>{entry.projectName}</h4>
+                        <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>{entry.serviceType}</span>
                       </div>
-                      <p className="text-gray-400 text-sm mt-1">{entry.clientName} &middot; {entry.completionDate || 'No date'}</p>
+                      <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{entry.clientName} &middot; {entry.completionDate || 'No date'}</p>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
                         <StarRating value={entry.satisfaction} readOnly />
-                        <span className={`text-xs font-medium ${entry.workAgain === 'Yes' ? 'text-green-400' : entry.workAgain === 'Maybe' ? 'text-yellow-400' : 'text-red-400'}`}>{entry.workAgain}</span>
+                        <span className="text-xs font-medium" style={{ color: entry.workAgain === 'Yes' ? 'var(--success)' : entry.workAgain === 'Maybe' ? 'var(--warning)' : 'var(--danger)' }}>{entry.workAgain}</span>
                       </div>
                       <div className="text-right text-sm">
-                        <p className="text-white">${(entry.actualBudget || 0).toLocaleString()}</p>
-                        <p className={`text-xs ${entry.actualBudget > entry.originalBudget ? 'text-red-400' : 'text-green-400'}`}>
+                        <p style={{ color: 'var(--text-heading)' }}>${(entry.actualBudget || 0).toLocaleString()}</p>
+                        <p className="text-xs" style={{ color: entry.actualBudget > entry.originalBudget ? 'var(--danger)' : 'var(--success)' }}>
                           {entry.originalBudget > 0 ? `${((entry.actualBudget / entry.originalBudget) * 100).toFixed(0)}% of budget` : ''}
                         </p>
                       </div>
@@ -411,33 +415,33 @@ export default function App() {
                   </div>
 
                   {selectedEntry?.id === entry.id && (
-                    <div className="mt-4 pt-4 border-t border-white/10 space-y-3">
+                    <div className="mt-4 pt-4 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
-                          <p className="text-gray-500 mb-1">Budget</p>
-                          <p className="text-gray-300">Original: ${entry.originalBudget.toLocaleString()} &rarr; Actual: ${entry.actualBudget.toLocaleString()}</p>
+                          <p className="mb-1" style={{ color: 'var(--text-muted)' }}>Budget</p>
+                          <p style={{ color: 'var(--text-body)' }}>Original: ${entry.originalBudget.toLocaleString()} &rarr; Actual: ${entry.actualBudget.toLocaleString()}</p>
                         </div>
                         <div>
-                          <p className="text-gray-500 mb-1">Timeline</p>
-                          <p className="text-gray-300">Original: {entry.originalTimeline}d &rarr; Actual: {entry.actualTimeline}d</p>
+                          <p className="mb-1" style={{ color: 'var(--text-muted)' }}>Timeline</p>
+                          <p style={{ color: 'var(--text-body)' }}>Original: {entry.originalTimeline}d &rarr; Actual: {entry.actualTimeline}d</p>
                         </div>
                       </div>
                       <div>
-                        <p className="text-gray-500 text-sm mb-1">What Went Well</p>
-                        <p className="text-gray-300 text-sm whitespace-pre-wrap">{entry.wentWell || 'N/A'}</p>
+                        <p className="text-sm mb-1" style={{ color: 'var(--text-muted)' }}>What Went Well</p>
+                        <p className="text-sm whitespace-pre-wrap" style={{ color: 'var(--text-body)' }}>{entry.wentWell || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-gray-500 text-sm mb-1">What Went Wrong</p>
-                        <p className="text-gray-300 text-sm whitespace-pre-wrap">{entry.wentWrong || 'N/A'}</p>
+                        <p className="text-sm mb-1" style={{ color: 'var(--text-muted)' }}>What Went Wrong</p>
+                        <p className="text-sm whitespace-pre-wrap" style={{ color: 'var(--text-body)' }}>{entry.wentWrong || 'N/A'}</p>
                       </div>
                       <div>
-                        <p className="text-gray-500 text-sm mb-1">Key Lesson</p>
-                        <p className="text-gray-300 text-sm whitespace-pre-wrap">{entry.keyLesson || 'N/A'}</p>
+                        <p className="text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Key Lesson</p>
+                        <p className="text-sm whitespace-pre-wrap" style={{ color: 'var(--text-body)' }}>{entry.keyLesson || 'N/A'}</p>
                       </div>
                       <div className="flex gap-2 pt-2">
-                        <button className={btnPrimary} onClick={(e) => { e.stopPropagation(); exportPDF(entry) }}>Export PDF</button>
-                        <button className={btnSecondary} onClick={(e) => { e.stopPropagation(); handleEdit(entry) }}>Edit</button>
-                        <button className="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg transition-colors text-sm" onClick={(e) => { e.stopPropagation(); handleDelete(entry.id) }}>Delete</button>
+                        <button className="px-4 py-2 font-medium rounded-lg transition-colors text-sm" style={btnPrimary} onClick={(e) => { e.stopPropagation(); exportPDF(entry) }}>Export PDF</button>
+                        <button className="px-4 py-2 rounded-lg transition-colors text-sm" style={btnSecondary} onClick={(e) => { e.stopPropagation(); handleEdit(entry) }}>Edit</button>
+                        <button className="px-4 py-2 rounded-lg transition-colors text-sm" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }} onClick={(e) => { e.stopPropagation(); handleDelete(entry.id) }}>Delete</button>
                         <CopyButton text={JSON.stringify(entry, null, 2)} label="Copy JSON" />
                       </div>
                     </div>
@@ -454,21 +458,21 @@ export default function App() {
         <div className="space-y-6">
           {entries.length < 3 ? (
             <ResultCard>
-              <p className="text-gray-400 text-center py-8">Add at least 3 post-mortems to unlock pattern analysis. You have {entries.length} so far.</p>
+              <p className="text-center py-8" style={{ color: 'var(--text-muted)' }}>Add at least 3 post-mortems to unlock pattern analysis. You have {entries.length} so far.</p>
             </ResultCard>
           ) : analysis && (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {[
-                  { label: 'Avg Budget Accuracy', value: `${analysis.avgBudgetAccuracy}%`, sub: parseFloat(analysis.avgBudgetAccuracy) > 100 ? 'Over budget trend' : 'Under budget trend', color: parseFloat(analysis.avgBudgetAccuracy) > 110 ? 'text-red-400' : 'text-green-400' },
-                  { label: 'Avg Timeline Overrun', value: `${analysis.avgTimelineOverrun}%`, sub: parseFloat(analysis.avgTimelineOverrun) > 0 ? 'Projects run late' : 'On time or early', color: parseFloat(analysis.avgTimelineOverrun) > 10 ? 'text-red-400' : 'text-green-400' },
-                  { label: 'Avg Satisfaction', value: `${analysis.avgSatisfaction}/5`, sub: `${analysis.totalProjects} projects`, color: parseFloat(analysis.avgSatisfaction) >= 4 ? 'text-green-400' : parseFloat(analysis.avgSatisfaction) >= 3 ? 'text-yellow-400' : 'text-red-400' },
-                  { label: 'Most Profitable', value: analysis.mostProfitable ? analysis.mostProfitable[0] : 'N/A', sub: analysis.mostProfitable ? `$${analysis.mostProfitable[1].revenue.toLocaleString()} total` : '', color: 'text-primary' }
+                  { label: 'Avg Budget Accuracy', value: `${analysis.avgBudgetAccuracy}%`, sub: parseFloat(analysis.avgBudgetAccuracy) > 100 ? 'Over budget trend' : 'Under budget trend', colorVar: parseFloat(analysis.avgBudgetAccuracy) > 110 ? 'var(--danger)' : 'var(--success)' },
+                  { label: 'Avg Timeline Overrun', value: `${analysis.avgTimelineOverrun}%`, sub: parseFloat(analysis.avgTimelineOverrun) > 0 ? 'Projects run late' : 'On time or early', colorVar: parseFloat(analysis.avgTimelineOverrun) > 10 ? 'var(--danger)' : 'var(--success)' },
+                  { label: 'Avg Satisfaction', value: `${analysis.avgSatisfaction}/5`, sub: `${analysis.totalProjects} projects`, colorVar: parseFloat(analysis.avgSatisfaction) >= 4 ? 'var(--success)' : parseFloat(analysis.avgSatisfaction) >= 3 ? 'var(--warning)' : 'var(--danger)' },
+                  { label: 'Most Profitable', value: analysis.mostProfitable ? analysis.mostProfitable[0] : 'N/A', sub: analysis.mostProfitable ? `$${analysis.mostProfitable[1].revenue.toLocaleString()} total` : '', colorVar: 'var(--accent)' }
                 ].map((stat, i) => (
                   <ResultCard key={i}>
-                    <p className="text-gray-400 text-xs uppercase tracking-wide">{stat.label}</p>
-                    <p className={`text-2xl font-bold mt-1 ${stat.color}`}>{stat.value}</p>
-                    <p className="text-gray-500 text-xs mt-1">{stat.sub}</p>
+                    <p className="text-xs uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{stat.label}</p>
+                    <p className="text-2xl font-bold mt-1" style={{ color: stat.colorVar }}>{stat.value}</p>
+                    <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{stat.sub}</p>
                   </ResultCard>
                 ))}
               </div>
@@ -477,12 +481,12 @@ export default function App() {
                 <div className="flex gap-4">
                   {Object.entries(analysis.workAgainStats).map(([key, count]) => (
                     <div key={key} className="flex-1 text-center">
-                      <div className={`text-3xl font-bold ${key === 'Yes' ? 'text-green-400' : key === 'Maybe' ? 'text-yellow-400' : 'text-red-400'}`}>{count}</div>
-                      <p className="text-gray-400 text-sm mt-1">{key}</p>
-                      <div className="w-full bg-dark-200/50 rounded-full h-2 mt-2">
+                      <div className="text-3xl font-bold" style={{ color: key === 'Yes' ? 'var(--success)' : key === 'Maybe' ? 'var(--warning)' : 'var(--danger)' }}>{count}</div>
+                      <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{key}</p>
+                      <div className="w-full rounded-full h-2 mt-2" style={{ background: 'var(--bg-elevated)' }}>
                         <div
-                          className={`h-2 rounded-full ${key === 'Yes' ? 'bg-green-400' : key === 'Maybe' ? 'bg-yellow-400' : 'bg-red-400'}`}
-                          style={{ width: `${entries.length > 0 ? (count / entries.length) * 100 : 0}%` }}
+                          className="h-2 rounded-full"
+                          style={{ width: `${entries.length > 0 ? (count / entries.length) * 100 : 0}%`, background: key === 'Yes' ? 'var(--success)' : key === 'Maybe' ? 'var(--warning)' : 'var(--danger)' }}
                         />
                       </div>
                     </div>
@@ -494,13 +498,13 @@ export default function App() {
                 {analysis.commonIssues.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
                     {analysis.commonIssues.map(([word, count]) => (
-                      <span key={word} className="px-3 py-1.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-full text-sm">
+                      <span key={word} className="px-3 py-1.5 rounded-full text-sm" style={{ background: 'var(--danger-soft)', color: 'var(--danger)', border: '1px solid var(--danger)' }}>
                         {word} ({count}x)
                       </span>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-400 text-sm">No common issues found yet.</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>No common issues found yet.</p>
                 )}
               </ResultCard>
 
@@ -510,21 +514,21 @@ export default function App() {
                     const pct = (e.actualBudget / e.originalBudget) * 100
                     return (
                       <div key={e.id} className="flex items-center gap-3">
-                        <span className="text-gray-300 text-sm w-40 truncate">{e.projectName}</span>
-                        <div className="flex-1 bg-dark-200/50 rounded-full h-3 relative">
+                        <span className="text-sm w-40 truncate" style={{ color: 'var(--text-body)' }}>{e.projectName}</span>
+                        <div className="flex-1 rounded-full h-3 relative" style={{ background: 'var(--bg-elevated)' }}>
                           <div
-                            className={`h-3 rounded-full ${pct > 110 ? 'bg-red-400' : pct > 100 ? 'bg-yellow-400' : 'bg-green-400'}`}
-                            style={{ width: `${Math.min(pct, 150) / 1.5}%` }}
+                            className="h-3 rounded-full"
+                            style={{ width: `${Math.min(pct, 150) / 1.5}%`, background: pct > 110 ? 'var(--danger)' : pct > 100 ? 'var(--warning)' : 'var(--success)' }}
                           />
                         </div>
-                        <span className={`text-sm font-medium w-16 text-right ${pct > 110 ? 'text-red-400' : pct > 100 ? 'text-yellow-400' : 'text-green-400'}`}>{pct.toFixed(0)}%</span>
+                        <span className="text-sm font-medium w-16 text-right" style={{ color: pct > 110 ? 'var(--danger)' : pct > 100 ? 'var(--warning)' : 'var(--success)' }}>{pct.toFixed(0)}%</span>
                       </div>
                     )
                   })}
                 </div>
               </ResultCard>
 
-              <button className={btnPrimary} onClick={() => exportPDF(null)}>Export Aggregate Report (PDF)</button>
+              <button className="px-4 py-2 font-medium rounded-lg transition-colors text-sm" style={btnPrimary} onClick={() => exportPDF(null)}>Export Aggregate Report (PDF)</button>
             </>
           )}
         </div>

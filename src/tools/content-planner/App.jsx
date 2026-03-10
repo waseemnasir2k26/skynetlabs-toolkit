@@ -7,9 +7,9 @@ import { jsPDF } from 'jspdf'
 const PLATFORMS = ['LinkedIn', 'Instagram', 'Twitter', 'Blog', 'YouTube', 'Newsletter']
 
 const FUNNEL_STAGES = {
-  TOFU: { label: 'Top of Funnel', color: '#3b82f6', short: 'TOFU' },
-  MOFU: { label: 'Middle of Funnel', color: '#f59e0b', short: 'MOFU' },
-  BOFU: { label: 'Bottom of Funnel', color: '#13b973', short: 'BOFU' },
+  TOFU: { label: 'Top of Funnel', color: 'var(--info)', short: 'TOFU' },
+  MOFU: { label: 'Middle of Funnel', color: 'var(--warning)', short: 'MOFU' },
+  BOFU: { label: 'Bottom of Funnel', color: 'var(--accent)', short: 'BOFU' },
 }
 
 const CONTENT_TYPES = {
@@ -207,7 +207,7 @@ export default function App() {
     el.style.height = 'auto'
     el.style.maxHeight = 'none'
     try {
-      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: '#0a0a0f' })
+      const canvas = await html2canvas(el, { scale: 2, useCORS: true, logging: false, backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507' })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const pw = pdf.internal.pageSize.getWidth()
@@ -239,30 +239,30 @@ export default function App() {
       <ResultCard title="Strategy Setup" icon="🎯" className="mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="text-sm text-gray-400 mb-2 block">Your Niche / Industry *</label>
+            <label className="text-sm mb-2 block" style={{ color: "var(--text-muted)" }}>Your Niche / Industry *</label>
             <input
               type="text"
               value={niche}
               onChange={(e) => setNiche(e.target.value)}
               placeholder="e.g., Digital Marketing, SaaS, Real Estate"
-              className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
             />
           </div>
           <div>
-            <label className="text-sm text-gray-400 mb-2 block">Target Client Type *</label>
+            <label className="text-sm mb-2 block" style={{ color: "var(--text-muted)" }}>Target Client Type *</label>
             <input
               type="text"
               value={targetClient}
               onChange={(e) => setTargetClient(e.target.value)}
               placeholder="e.g., Small business owners, Startup founders"
-              className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
             />
           </div>
         </div>
 
         {/* Topics */}
         <div className="mt-4">
-          <label className="text-sm text-gray-400 mb-2 block">Expertise Topics (3-5) *</label>
+          <label className="text-sm mb-2 block" style={{ color: "var(--text-muted)" }}>Expertise Topics (3-5) *</label>
           <div className="flex gap-2 mb-2">
             <input
               type="text"
@@ -270,15 +270,15 @@ export default function App() {
               onChange={(e) => setTopicInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTopic())}
               placeholder="Type a topic and press Enter"
-              className="flex-1 px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+              className="flex-1 px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
             />
-            <button onClick={addTopic} disabled={topics.length >= 5} className="px-4 py-2 text-sm bg-[#13b973] hover:bg-[#0fa863] disabled:opacity-40 text-white rounded-lg transition-colors">Add</button>
+            <button onClick={addTopic} disabled={topics.length >= 5} className="px-4 py-2 text-sm disabled:opacity-40 rounded-lg transition-colors" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>Add</button>
           </div>
           <div className="flex flex-wrap gap-2">
             {topics.map((t) => (
-              <span key={t} className="inline-flex items-center gap-1 px-3 py-1 bg-[#13b973]/10 border border-[#13b973]/30 text-[#13b973] text-sm rounded-full">
+              <span key={t} className="inline-flex items-center gap-1 px-3 py-1 text-sm rounded-full" style={{ background: "var(--accent-soft)", border: "1px solid var(--accent-soft)", color: "var(--accent)" }}>
                 {t}
-                <button onClick={() => removeTopic(t)} className="text-[#13b973] hover:text-white ml-1">&times;</button>
+                <button onClick={() => removeTopic(t)} className="ml-1" style={{ color: "var(--accent)" }}>&times;</button>
               </span>
             ))}
           </div>
@@ -286,17 +286,17 @@ export default function App() {
 
         {/* Platforms */}
         <div className="mt-4">
-          <label className="text-sm text-gray-400 mb-2 block">Platforms *</label>
+          <label className="text-sm mb-2 block" style={{ color: "var(--text-muted)" }}>Platforms *</label>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
             {PLATFORMS.map((p) => (
               <button
                 key={p}
                 onClick={() => togglePlatform(p)}
-                className={`px-3 py-2 text-sm rounded-lg border transition-all ${
-                  selectedPlatforms.includes(p)
-                    ? 'border-[#13b973] bg-[#13b973]/10 text-[#13b973]'
-                    : 'border-white/10 text-gray-400 hover:border-white/20'
-                }`}
+                className="px-3 py-2 text-sm rounded-lg transition-all"
+                style={selectedPlatforms.includes(p)
+                  ? { border: '1px solid var(--accent)', background: 'var(--accent-soft)', color: 'var(--accent)' }
+                  : { border: '1px solid var(--border)', color: 'var(--text-muted)' }
+                }
               >
                 {p}
               </button>
@@ -307,15 +307,15 @@ export default function App() {
         {/* Frequency */}
         {selectedPlatforms.length > 0 && (
           <div className="mt-4">
-            <label className="text-sm text-gray-400 mb-2 block">Posts per Week</label>
+            <label className="text-sm mb-2 block" style={{ color: "var(--text-muted)" }}>Posts per Week</label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
               {selectedPlatforms.map((p) => (
                 <div key={p}>
-                  <label className="text-xs text-gray-500 mb-1 block">{p}</label>
+                  <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>{p}</label>
                   <select
                     value={frequency[p] || 2}
                     onChange={(e) => updateFrequency(p, e.target.value)}
-                    className="w-full px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
                   >
                     {[1, 2, 3, 4, 5, 7].map((n) => <option key={n} value={n}>{n}x/week</option>)}
                   </select>
@@ -329,7 +329,7 @@ export default function App() {
           <button
             onClick={handleGenerate}
             disabled={!canGenerate}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#13b973] hover:bg-[#0fa863] disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 disabled:opacity-40 disabled:cursor-not-allowed font-medium rounded-lg transition-colors" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
           >
             Generate 90-Day Strategy
           </button>
@@ -341,21 +341,21 @@ export default function App() {
           {/* Strategy Overview */}
           <ResultCard title="Strategy Overview" icon="📋" className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-              <div className="bg-dark-200/30 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-[#13b973]">{calendar.length}</div>
-                <div className="text-xs text-gray-400">Total Content Pieces</div>
+              <div className="rounded-lg p-4 text-center" style={{ background: "var(--bg-elevated)" }}>
+                <div className="text-2xl font-bold" style={{ color: "var(--accent)" }}>{calendar.length}</div>
+                <div className="text-xs" style={{ color: "var(--text-muted)" }}>Total Content Pieces</div>
               </div>
-              <div className="bg-dark-200/30 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-[#3b82f6]">{selectedPlatforms.length}</div>
-                <div className="text-xs text-gray-400">Platforms</div>
+              <div className="rounded-lg p-4 text-center" style={{ background: "var(--bg-elevated)" }}>
+                <div className="text-2xl font-bold" style={{ color: "var(--info)" }}>{selectedPlatforms.length}</div>
+                <div className="text-xs" style={{ color: "var(--text-muted)" }}>Platforms</div>
               </div>
-              <div className="bg-dark-200/30 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-[#f59e0b]">{pillars.length}</div>
-                <div className="text-xs text-gray-400">Content Pillars</div>
+              <div className="rounded-lg p-4 text-center" style={{ background: "var(--bg-elevated)" }}>
+                <div className="text-2xl font-bold" style={{ color: "var(--warning)" }}>{pillars.length}</div>
+                <div className="text-xs" style={{ color: "var(--text-muted)" }}>Content Pillars</div>
               </div>
             </div>
-            <p className="text-sm text-gray-400">
-              Your {niche} content strategy targets <span className="text-white">{targetClient}</span> across {selectedPlatforms.length} platform{selectedPlatforms.length !== 1 ? 's' : ''} with {calendar.length} pieces of content over 13 weeks. Content is distributed across funnel stages to attract, nurture, and convert.
+            <p className="text-sm" style={{ color: "var(--text-muted)" }}>
+              Your {niche} content strategy targets <span style={{ color: "var(--text-heading)" }}>{targetClient}</span> across {selectedPlatforms.length} platform{selectedPlatforms.length !== 1 ? 's' : ''} with {calendar.length} pieces of content over 13 weeks. Content is distributed across funnel stages to attract, nurture, and convert.
             </p>
           </ResultCard>
 
@@ -363,12 +363,12 @@ export default function App() {
           <ResultCard title="Content Pillars" icon="🏛" className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {pillars.map((pillar, i) => (
-                <div key={i} className="bg-dark-200/30 border border-white/5 rounded-lg p-4">
-                  <h4 className="text-white font-semibold text-sm mb-2">{pillar.name}</h4>
-                  <p className="text-gray-400 text-xs mb-3">{pillar.description}</p>
+                <div key={i} className="rounded-lg p-4" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+                  <h4 className="font-semibold text-sm mb-2" style={{ color: "var(--text-heading)" }}>{pillar.name}</h4>
+                  <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>{pillar.description}</p>
                   <div className="flex flex-wrap gap-1">
                     {pillar.topics.map((t) => (
-                      <span key={t} className="text-xs px-2 py-0.5 bg-[#13b973]/10 text-[#13b973] rounded">{t}</span>
+                      <span key={t} className="text-xs px-2 py-0.5 rounded" style={{ background: "var(--accent-soft)", color: "var(--accent)" }}>{t}</span>
                     ))}
                   </div>
                 </div>
@@ -380,22 +380,22 @@ export default function App() {
           <ResultCard title="90-Day Calendar" icon="📅" className="mb-6">
             <div className="flex flex-wrap gap-3 mb-4">
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Platform</label>
-                <select value={filterPlatform} onChange={(e) => setFilterPlatform(e.target.value)} className="px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none">
+                <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Platform</label>
+                <select value={filterPlatform} onChange={(e) => setFilterPlatform(e.target.value)} className="px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}>
                   <option value="All">All Platforms</option>
                   {selectedPlatforms.map((p) => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Week</label>
-                <select value={filterWeek} onChange={(e) => setFilterWeek(e.target.value)} className="px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none">
+                <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Week</label>
+                <select value={filterWeek} onChange={(e) => setFilterWeek(e.target.value)} className="px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}>
                   <option value="All">All Weeks</option>
                   {Array.from({ length: 13 }, (_, i) => <option key={i + 1} value={i + 1}>Week {i + 1}</option>)}
                 </select>
               </div>
               <div>
-                <label className="text-xs text-gray-500 mb-1 block">Funnel Stage</label>
-                <select value={filterFunnel} onChange={(e) => setFilterFunnel(e.target.value)} className="px-3 py-2 bg-dark-200/50 border border-white/10 rounded-lg text-white text-sm focus:border-[#13b973] focus:outline-none">
+                <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Funnel Stage</label>
+                <select value={filterFunnel} onChange={(e) => setFilterFunnel(e.target.value)} className="px-3 py-2 rounded-lg text-sm focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}>
                   <option value="All">All Stages</option>
                   {Object.entries(FUNNEL_STAGES).map(([key, val]) => <option key={key} value={key}>{val.label}</option>)}
                 </select>
@@ -406,24 +406,24 @@ export default function App() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left py-2 px-3 text-gray-400 font-medium">Week</th>
-                    <th className="text-left py-2 px-3 text-gray-400 font-medium">Platform</th>
-                    <th className="text-left py-2 px-3 text-gray-400 font-medium">Type</th>
-                    <th className="text-left py-2 px-3 text-gray-400 font-medium">Topic</th>
-                    <th className="text-left py-2 px-3 text-gray-400 font-medium">Hook / Headline</th>
-                    <th className="text-left py-2 px-3 text-gray-400 font-medium">Funnel</th>
-                    <th className="text-left py-2 px-3 text-gray-400 font-medium">Status</th>
+                  <tr style={{ borderBottom: "1px solid var(--border)" }}>
+                    <th className="text-left py-2 px-3 font-medium" style={{ color: "var(--text-muted)" }}>Week</th>
+                    <th className="text-left py-2 px-3 font-medium" style={{ color: "var(--text-muted)" }}>Platform</th>
+                    <th className="text-left py-2 px-3 font-medium" style={{ color: "var(--text-muted)" }}>Type</th>
+                    <th className="text-left py-2 px-3 font-medium" style={{ color: "var(--text-muted)" }}>Topic</th>
+                    <th className="text-left py-2 px-3 font-medium" style={{ color: "var(--text-muted)" }}>Hook / Headline</th>
+                    <th className="text-left py-2 px-3 font-medium" style={{ color: "var(--text-muted)" }}>Funnel</th>
+                    <th className="text-left py-2 px-3 font-medium" style={{ color: "var(--text-muted)" }}>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredCalendar.slice(0, 100).map((item) => (
-                    <tr key={item.id} className="border-b border-white/5 hover:bg-white/[0.02]">
-                      <td className="py-2 px-3 text-gray-300">{item.week}</td>
-                      <td className="py-2 px-3 text-gray-300">{item.platform}</td>
-                      <td className="py-2 px-3 text-gray-300">{item.contentType}</td>
-                      <td className="py-2 px-3 text-white">{item.topic}</td>
-                      <td className="py-2 px-3 text-gray-300 max-w-xs truncate" title={item.hook}>{item.hook}</td>
+                    <tr key={item.id} style={{ borderBottom: "1px solid var(--border)" }}>
+                      <td className="py-2 px-3" style={{ color: "var(--text-body)" }}>{item.week}</td>
+                      <td className="py-2 px-3" style={{ color: "var(--text-body)" }}>{item.platform}</td>
+                      <td className="py-2 px-3" style={{ color: "var(--text-body)" }}>{item.contentType}</td>
+                      <td className="py-2 px-3" style={{ color: "var(--text-heading)" }}>{item.topic}</td>
+                      <td className="py-2 px-3 max-w-xs truncate" style={{ color: "var(--text-body)" }} title={item.hook}>{item.hook}</td>
                       <td className="py-2 px-3">
                         <span className="inline-block px-2 py-0.5 text-xs rounded-full" style={{ backgroundColor: `${FUNNEL_STAGES[item.funnelStage].color}20`, color: FUNNEL_STAGES[item.funnelStage].color }}>
                           {FUNNEL_STAGES[item.funnelStage].short}
@@ -433,7 +433,7 @@ export default function App() {
                         <select
                           value={getStatus(item.id)}
                           onChange={(e) => updateStatus(item.id, e.target.value)}
-                          className="px-2 py-1 bg-dark-200/50 border border-white/10 rounded text-xs text-white focus:border-[#13b973] focus:outline-none"
+                          className="px-2 py-1 rounded text-xs focus:outline-none" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
                         >
                           <option value="Planned">Planned</option>
                           <option value="In Progress">In Progress</option>
@@ -446,7 +446,7 @@ export default function App() {
                 </tbody>
               </table>
               {filteredCalendar.length > 100 && (
-                <p className="text-xs text-gray-500 mt-2 text-center">Showing first 100 of {filteredCalendar.length} entries. Use filters to narrow down.</p>
+                <p className="text-xs mt-2 text-center" style={{ color: "var(--text-muted)" }}>Showing first 100 of {filteredCalendar.length} entries. Use filters to narrow down.</p>
               )}
             </div>
           </ResultCard>
@@ -455,14 +455,14 @@ export default function App() {
           <ResultCard title="Weekly Breakdown" icon="📆" className="mb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
               {weeklyBreakdown.map((w) => (
-                <div key={w.week} className="bg-dark-200/30 border border-white/5 rounded-lg p-3">
+                <div key={w.week} className="rounded-lg p-3" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white font-semibold text-sm">Week {w.week}</span>
-                    <span className="text-xs text-gray-500">{w.items.length} posts</span>
+                    <span className="font-semibold text-sm" style={{ color: "var(--text-heading)" }}>Week {w.week}</span>
+                    <span className="text-xs" style={{ color: "var(--text-muted)" }}>{w.items.length} posts</span>
                   </div>
                   <div className="flex flex-wrap gap-1">
                     {[...w.platforms].map((p) => (
-                      <span key={p} className="text-xs px-2 py-0.5 bg-white/5 text-gray-400 rounded">{p}</span>
+                      <span key={p} className="text-xs px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.05)", color: "var(--text-muted)" }}>{p}</span>
                     ))}
                   </div>
                 </div>
@@ -472,15 +472,15 @@ export default function App() {
 
           {/* Repurposing Map */}
           <ResultCard title="Repurposing Map" icon="🔄" className="mb-8">
-            <p className="text-sm text-gray-400 mb-4">Maximize each piece of content by repurposing across platforms.</p>
+            <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>Maximize each piece of content by repurposing across platforms.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {selectedPlatforms.map((platform) => (
-                <div key={platform} className="bg-dark-200/30 border border-white/5 rounded-lg p-4">
-                  <h4 className="text-white font-semibold text-sm mb-2">{platform} Content</h4>
+                <div key={platform} className="rounded-lg p-4" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+                  <h4 className="font-semibold text-sm mb-2" style={{ color: "var(--text-heading)" }}>{platform} Content</h4>
                   <div className="space-y-1">
                     {(REPURPOSE_MAP[platform] || []).map((target, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-gray-400">
-                        <span className="text-[#13b973]">&#8594;</span>
+                      <div key={i} className="flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
+                        <span style={{ color: "var(--accent)" }}>&#8594;</span>
                         <span>{target}</span>
                       </div>
                     ))}
@@ -494,7 +494,7 @@ export default function App() {
           <div className="flex flex-wrap justify-center gap-3">
             <button
               onClick={handleExportCSV}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-dark-200/50 border border-white/10 hover:border-[#13b973]/30 text-white font-medium rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-heading)" }}
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -503,7 +503,7 @@ export default function App() {
             </button>
             <button
               onClick={handleExportPDF}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#13b973] hover:bg-[#0fa863] text-white font-medium rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

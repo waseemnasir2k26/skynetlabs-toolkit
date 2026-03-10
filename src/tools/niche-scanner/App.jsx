@@ -216,13 +216,13 @@ function analyzeNiche(description, location, experienceLevel) {
   let verdict, verdictColor
   if (nicheScore >= 70) {
     verdict = 'Go'
-    verdictColor = 'text-green-400'
+    verdictColor = 'success'
   } else if (nicheScore >= 45) {
     verdict = 'Go with Caution'
-    verdictColor = 'text-yellow-400'
+    verdictColor = 'warning'
   } else {
     verdict = 'Pivot'
-    verdictColor = 'text-red-400'
+    verdictColor = 'danger'
   }
 
   // Ideal client profile
@@ -334,9 +334,11 @@ export default function App() {
     setResults(null)
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 text-sm'
-  const selectClass = 'w-full bg-dark-200/50 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 text-sm appearance-none cursor-pointer'
-  const labelClass = 'block text-sm font-medium text-gray-300 mb-1.5'
+  const inputClass = 'w-full rounded-xl px-4 py-2.5 placeholder-gray-500 focus:outline-none focus:ring-2 text-sm'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }
+  const selectClass = 'w-full rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 text-sm appearance-none cursor-pointer'
+  const labelClass = 'block text-sm font-medium mb-1.5'
+  const labelStyle = { color: 'var(--text-body)' }
 
   return (
     <ToolLayout
@@ -348,35 +350,38 @@ export default function App() {
         <ResultCard title="Niche Details" icon="🔍">
           <div className="space-y-4">
             <div>
-              <label className={labelClass}>Niche Description</label>
+              <label className={labelClass} style={labelStyle}>Niche Description</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe your niche... e.g., 'AI automation for e-commerce SaaS companies' or 'web design for health tech startups'"
                 rows={4}
                 className={`${inputClass} resize-y leading-relaxed`}
+                style={inputStyle}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Location (optional)</label>
+                <label className={labelClass} style={labelStyle}>Location (optional)</label>
                 <input
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="e.g., United States, London, Remote"
                   className={inputClass}
+                  style={inputStyle}
                 />
               </div>
               <div>
-                <label className={labelClass}>Experience Level</label>
+                <label className={labelClass} style={labelStyle}>Experience Level</label>
                 <select
                   value={experience}
                   onChange={(e) => setExperience(e.target.value)}
                   className={selectClass}
+                  style={inputStyle}
                 >
                   {EXPERIENCE_LEVELS.map(e => (
-                    <option key={e.value} value={e.value} className="bg-dark-200">{e.label}</option>
+                    <option key={e.value} value={e.value} style={{ background: 'var(--bg-card)' }}>{e.label}</option>
                   ))}
                 </select>
               </div>
@@ -388,14 +393,16 @@ export default function App() {
           <button
             onClick={handleAnalyze}
             disabled={!description.trim()}
-            className="px-6 py-3 bg-primary hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all text-sm"
+            className="px-6 py-3 disabled:opacity-40 disabled:cursor-not-allowed font-semibold rounded-xl transition-all text-sm"
+            style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
           >
             Scan This Niche
           </button>
           {results && (
             <button
               onClick={handleReset}
-              className="px-6 py-3 bg-dark-200/50 hover:bg-dark-200 text-gray-300 font-medium rounded-xl transition-all text-sm border border-white/5"
+              className="px-6 py-3 font-medium rounded-xl transition-all text-sm"
+              style={{ background: 'var(--bg-elevated)', color: 'var(--text-body)', border: '1px solid var(--border)' }}
             >
               Reset
             </button>
@@ -414,22 +421,19 @@ export default function App() {
 
             <ResultCard className="md:col-span-2">
               {/* Verdict Banner */}
-              <div className={`rounded-lg p-6 text-center mb-4 ${
-                results.verdict === 'Go'
-                  ? 'bg-green-500/5 border border-green-500/20'
-                  : results.verdict === 'Pivot'
-                  ? 'bg-red-500/5 border border-red-500/20'
-                  : 'bg-yellow-500/5 border border-yellow-500/20'
-              }`}>
-                <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">Verdict</p>
-                <h2 className={`text-3xl font-black ${results.verdictColor}`}>{results.verdict}</h2>
+              <div className="rounded-lg p-6 text-center mb-4" style={{
+                background: results.verdictColor === 'success' ? 'var(--success-soft)' : results.verdictColor === 'danger' ? 'var(--danger-soft)' : 'var(--warning-soft)',
+                border: `1px solid color-mix(in srgb, ${results.verdictColor === 'success' ? 'var(--success)' : results.verdictColor === 'danger' ? 'var(--danger)' : 'var(--warning)'} 20%, transparent)`,
+              }}>
+                <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>Verdict</p>
+                <h2 className="text-3xl font-black" style={{ color: results.verdictColor === 'success' ? 'var(--success)' : results.verdictColor === 'danger' ? 'var(--danger)' : 'var(--warning)' }}>{results.verdict}</h2>
               </div>
 
               {results.matchedKeywords.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-gray-500 text-xs mt-1">Matched:</span>
+                  <span className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Matched:</span>
                   {results.matchedKeywords.map((kw, i) => (
-                    <span key={i} className="px-2 py-1 bg-primary/10 text-primary border border-primary/20 rounded-md text-xs font-medium">
+                    <span key={i} className="px-2 py-1 rounded-md text-xs font-medium" style={{ background: 'var(--accent-soft)', color: 'var(--accent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)' }}>
                       {kw}
                     </span>
                   ))}
@@ -441,48 +445,48 @@ export default function App() {
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <ResultCard className="text-center">
-              <p className={`text-xl font-bold ${
-                results.demandLevel >= 70 ? 'text-green-400' : results.demandLevel >= 50 ? 'text-yellow-400' : 'text-red-400'
-              }`}>
+              <p className="text-xl font-bold" style={{
+                color: results.demandLevel >= 70 ? 'var(--success)' : results.demandLevel >= 50 ? 'var(--warning)' : 'var(--danger)',
+              }}>
                 {results.demandLabel}
               </p>
-              <p className="text-gray-400 text-xs mt-1">Demand Level</p>
-              <div className="w-full bg-dark-200/50 rounded-full h-1.5 mt-2">
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Demand Level</p>
+              <div className="w-full rounded-full h-1.5 mt-2" style={{ background: 'var(--bg-elevated)' }}>
                 <div
-                  className="h-1.5 rounded-full bg-primary transition-all duration-700"
-                  style={{ width: `${results.demandLevel}%` }}
+                  className="h-1.5 rounded-full transition-all duration-700"
+                  style={{ width: `${results.demandLevel}%`, background: 'var(--accent)' }}
                 />
               </div>
             </ResultCard>
 
             <ResultCard className="text-center">
-              <p className="text-xl font-bold text-primary">
+              <p className="text-xl font-bold" style={{ color: 'var(--accent)' }}>
                 ${results.rateRange.low} - ${results.rateRange.high}
               </p>
-              <p className="text-gray-400 text-xs mt-1">Rate Range /hr</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Rate Range /hr</p>
             </ResultCard>
 
             <ResultCard className="text-center">
-              <p className={`text-xl font-bold ${
-                results.competitionDensity <= 40 ? 'text-green-400' : results.competitionDensity <= 65 ? 'text-yellow-400' : 'text-red-400'
-              }`}>
+              <p className="text-xl font-bold" style={{
+                color: results.competitionDensity <= 40 ? 'var(--success)' : results.competitionDensity <= 65 ? 'var(--warning)' : 'var(--danger)',
+              }}>
                 {results.competitionDensity}%
               </p>
-              <p className="text-gray-400 text-xs mt-1">Competition</p>
-              <p className="text-gray-500 text-[10px] mt-0.5">{results.competitionLabel}</p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Competition</p>
+              <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{results.competitionLabel}</p>
             </ResultCard>
 
             <ResultCard className="text-center">
-              <p className={`text-xl font-bold ${
-                results.growthTrajectory >= 70 ? 'text-green-400' : results.growthTrajectory >= 45 ? 'text-yellow-400' : 'text-red-400'
-              }`}>
+              <p className="text-xl font-bold" style={{
+                color: results.growthTrajectory >= 70 ? 'var(--success)' : results.growthTrajectory >= 45 ? 'var(--warning)' : 'var(--danger)',
+              }}>
                 {results.growthLabel}
               </p>
-              <p className="text-gray-400 text-xs mt-1">Growth Trajectory</p>
-              <div className="w-full bg-dark-200/50 rounded-full h-1.5 mt-2">
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Growth Trajectory</p>
+              <div className="w-full rounded-full h-1.5 mt-2" style={{ background: 'var(--bg-elevated)' }}>
                 <div
-                  className="h-1.5 rounded-full bg-blue-500 transition-all duration-700"
-                  style={{ width: `${results.growthTrajectory}%` }}
+                  className="h-1.5 rounded-full transition-all duration-700"
+                  style={{ width: `${results.growthTrajectory}%`, background: 'var(--info)' }}
                 />
               </div>
             </ResultCard>
@@ -492,12 +496,12 @@ export default function App() {
           <ResultCard title="Ideal Client Profile" icon="🎯">
             <div className="space-y-4">
               {results.allProfiles.map((profile, i) => (
-                <div key={i} className={`bg-dark-200/30 rounded-lg p-4 border ${i === 0 ? 'border-primary/20' : 'border-white/5'}`}>
+                <div key={i} className="rounded-lg p-4" style={{ background: 'var(--bg-elevated)', border: i === 0 ? '1px solid color-mix(in srgb, var(--accent) 20%, transparent)' : '1px solid var(--border)' }}>
                   <div className="flex items-center gap-2 mb-1">
-                    {i === 0 && <span className="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] font-bold rounded uppercase">Best Fit</span>}
-                    <h4 className="text-white font-semibold text-sm">{profile.title}</h4>
+                    {i === 0 && <span className="px-1.5 py-0.5 text-[10px] font-bold rounded uppercase" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>Best Fit</span>}
+                    <h4 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{profile.title}</h4>
                   </div>
-                  <p className="text-gray-400 text-sm">{profile.desc}</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{profile.desc}</p>
                 </div>
               ))}
             </div>
@@ -507,14 +511,14 @@ export default function App() {
           <ResultCard title="Positioning Angles" icon="🧭">
             <div className="space-y-4">
               {results.positioningAngles.map((angle, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
+                <div key={i} className="rounded-lg p-4" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="w-6 h-6 rounded-full bg-primary/20 text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">
+                    <span className="w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>
                       {i + 1}
                     </span>
-                    <h4 className="text-white font-semibold text-sm">{angle.title}</h4>
+                    <h4 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{angle.title}</h4>
                   </div>
-                  <p className="text-gray-400 text-sm leading-relaxed">{angle.description}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{angle.description}</p>
                 </div>
               ))}
             </div>

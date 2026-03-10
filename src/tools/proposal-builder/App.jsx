@@ -75,14 +75,15 @@ function AppContent() {
   return (
     <div className="flex flex-col" style={{ minHeight: 'calc(100vh - 12rem)' }}>
       {/* Tool sub-header */}
-      <div className="border-b border-dark-border bg-dark-surface/80 px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div className="border-b px-4 sm:px-6 py-3 flex items-center justify-between" style={{ borderColor: 'var(--border)', background: 'var(--bg-card)' }}>
         <div className="flex items-center gap-3">
-          <span className="text-gray-400 text-sm">Proposal Builder</span>
+          <span className="text-sm" style={{ color: 'var(--text-muted)' }}>Proposal Builder</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setShowHistory(true)}
-            className="p-2 text-gray-500 hover:text-white transition rounded-lg hover:bg-dark-200"
+            className="p-2 transition rounded-lg"
+            style={{ color: 'var(--text-muted)' }}
             title="Saved Proposals"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -91,7 +92,8 @@ function AppContent() {
           </button>
           <button
             onClick={handleNewProposal}
-            className="p-2 text-gray-500 hover:text-white transition rounded-lg hover:bg-dark-200"
+            className="p-2 transition rounded-lg"
+            style={{ color: 'var(--text-muted)' }}
             title="New Proposal"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -101,10 +103,11 @@ function AppContent() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-dark-200 border border-dark-400 rounded-lg text-sm text-gray-400 hover:text-white hover:border-primary transition"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-sm transition"
+            style={{ background: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}
           >
             {saveMsg ? (
-              <span className="text-primary font-medium">{saveMsg}</span>
+              <span className="font-medium" style={{ color: 'var(--accent)' }}>{saveMsg}</span>
             ) : (
               <>
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,7 +120,8 @@ function AppContent() {
           <button
             onClick={handleExport}
             disabled={exporting}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium transition disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition disabled:opacity-50"
+            style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}
           >
             {exporting ? (
               <span>Exporting...</span>
@@ -137,19 +141,20 @@ function AppContent() {
       {/* Main content */}
       <div className="flex-1 flex flex-col lg:flex-row max-w-[1600px] mx-auto w-full">
         {/* Form Panel */}
-        <div className="w-full lg:w-1/2 xl:w-[45%] flex flex-col border-r-0 lg:border-r border-dark-border">
-          <div className="p-4 sm:p-6 border-b border-dark-border">
+        <div className="w-full lg:w-1/2 xl:w-[45%] flex flex-col border-r-0 lg:border-r" style={{ borderColor: 'var(--border)' }}>
+          <div className="p-4 sm:p-6 border-b" style={{ borderColor: 'var(--border)' }}>
             <ProgressBar currentStep={currentStep} onStepClick={setStep} />
           </div>
           <div className="flex-1 overflow-y-auto p-4 sm:p-6">
             <StepComponent />
           </div>
-          <div className="p-4 sm:p-6 border-t border-dark-border">
+          <div className="p-4 sm:p-6 border-t" style={{ borderColor: 'var(--border)' }}>
             <div className="flex items-center justify-between gap-3">
               <button
                 onClick={handlePrev}
                 disabled={currentStep === 0}
-                className="flex items-center gap-2 px-4 py-2.5 bg-dark-200 border border-dark-400 rounded-lg text-sm text-gray-400 hover:text-white hover:border-primary disabled:opacity-30 disabled:cursor-not-allowed transition"
+                className="flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm disabled:opacity-30 disabled:cursor-not-allowed transition"
+                style={{ background: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -158,7 +163,8 @@ function AppContent() {
               </button>
               <button
                 onClick={() => setShowPreviewMobile(!showPreviewMobile)}
-                className="lg:hidden flex items-center gap-2 px-4 py-2.5 bg-dark-200 border border-dark-400 rounded-lg text-sm text-gray-400 hover:text-white transition"
+                className="lg:hidden flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm transition"
+                style={{ background: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -168,10 +174,11 @@ function AppContent() {
               </button>
               <button
                 onClick={handleSave}
-                className="sm:hidden flex items-center gap-1.5 px-3 py-2.5 bg-dark-200 border border-dark-400 rounded-lg text-sm text-gray-400 hover:text-white transition"
+                className="sm:hidden flex items-center gap-1.5 px-3 py-2.5 border rounded-lg text-sm transition"
+                style={{ background: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}
               >
                 {saveMsg ? (
-                  <span className="text-primary text-xs">{saveMsg}</span>
+                  <span className="text-xs" style={{ color: 'var(--accent)' }}>{saveMsg}</span>
                 ) : (
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -181,7 +188,8 @@ function AppContent() {
               <button
                 onClick={handleNext}
                 disabled={currentStep === TOTAL_STEPS - 1}
-                className="flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium disabled:opacity-30 disabled:cursor-not-allowed transition"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium disabled:opacity-30 disabled:cursor-not-allowed transition"
+                style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}
               >
                 Next
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -193,16 +201,16 @@ function AppContent() {
         </div>
 
         {/* Preview Panel */}
-        <div className={`w-full lg:w-1/2 xl:w-[55%] flex flex-col bg-dark-surface ${showPreviewMobile ? 'block' : 'hidden lg:flex'}`}>
-          <div className="p-4 sm:p-5 border-b border-dark-border flex items-center justify-between">
+        <div className={`w-full lg:w-1/2 xl:w-[55%] flex flex-col ${showPreviewMobile ? 'block' : 'hidden lg:flex'}`} style={{ background: 'var(--bg-card)' }}>
+          <div className="p-4 sm:p-5 border-b flex items-center justify-between" style={{ borderColor: 'var(--border)' }}>
             <div className="flex items-center gap-3">
-              <h3 className="text-white font-semibold text-sm">Live Preview</h3>
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <h3 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>Live Preview</h3>
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent)' }} />
             </div>
             <TemplateSelector />
           </div>
           <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-            <div className="max-w-[700px] mx-auto rounded-lg overflow-hidden shadow-2xl border border-dark-border">
+            <div className="max-w-[700px] mx-auto rounded-lg overflow-hidden shadow-2xl border" style={{ borderColor: 'var(--border)' }}>
               <ProposalPreview />
             </div>
           </div>

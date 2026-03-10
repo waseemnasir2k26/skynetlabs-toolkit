@@ -257,29 +257,29 @@ export default function App() {
         <div className="max-w-2xl mx-auto">
           <ResultCard>
             <div className="text-center py-8 space-y-6">
-              <div className="w-20 h-20 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center">
-                <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center" style={{ background: "var(--accent-soft)" }}>
+                <svg className="w-10 h-10" style={{ color: "var(--accent)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-white">Evaluate Your Business Health</h2>
-              <p className="text-gray-400 max-w-lg mx-auto">Answer {TOTAL_QUESTIONS} questions across {CATEGORIES.length} categories to get your personalized Business Health Score with actionable recommendations.</p>
+              <h2 className="text-2xl font-bold" style={{ color: "var(--text-heading)" }}>Evaluate Your Business Health</h2>
+              <p className="max-w-lg mx-auto" style={{ color: "var(--text-muted)" }}>Answer {TOTAL_QUESTIONS} questions across {CATEGORIES.length} categories to get your personalized Business Health Score with actionable recommendations.</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
                 {CATEGORIES.map((cat, i) => (
-                  <div key={i} className="bg-dark-200/30 rounded-lg p-3 border border-white/5">
-                    <svg className="w-5 h-5 text-primary mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div key={i} className="rounded-lg p-3" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+                    <svg className="w-5 h-5 mb-1" style={{ color: "var(--accent)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={cat.icon} />
                     </svg>
-                    <p className="text-white text-xs font-medium">{cat.name}</p>
-                    <p className="text-gray-500 text-xs">{cat.questions.length} questions</p>
+                    <p className="text-xs font-medium" style={{ color: "var(--text-heading)" }}>{cat.name}</p>
+                    <p className="text-xs" style={{ color: "var(--text-muted)" }}>{cat.questions.length} questions</p>
                   </div>
                 ))}
               </div>
-              <button onClick={() => setStarted(true)} className="px-8 py-3 bg-primary hover:bg-primary/80 text-white font-semibold rounded-xl transition-colors text-lg">
+              <button onClick={() => setStarted(true)} className="px-8 py-3 font-semibold rounded-xl transition-colors text-lg" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
                 Start Assessment
               </button>
               {answeredCount > 0 && (
-                <p className="text-gray-500 text-sm">You have {answeredCount} saved answers. <button onClick={() => setStarted(true)} className="text-primary hover:underline">Continue</button> or <button onClick={handleReset} className="text-red-400 hover:underline">Reset</button></p>
+                <p className="text-sm" style={{ color: "var(--text-muted)" }}>You have {answeredCount} saved answers. <button onClick={() => setStarted(true)} style={{ color: "var(--accent)" }}>Continue</button> or <button onClick={handleReset} style={{ color: "var(--danger)" }}>Reset</button></p>
               )}
             </div>
           </ResultCard>
@@ -294,13 +294,13 @@ export default function App() {
       <ToolLayout title="Freelance Business Health Scorecard" description="Your personalized business health results and recommendations.">
         <div id="scorecard-results" className="space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
-            <button onClick={() => { setShowResults(false); setStarted(true) }} className="text-gray-400 hover:text-white text-sm flex items-center gap-1 transition-colors">
+            <button onClick={() => { setShowResults(false); setStarted(true) }} className="text-sm flex items-center gap-1 transition-colors" style={{ color: "var(--text-muted)" }}>
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               Back to Questions
             </button>
             <div className="flex gap-3">
               <ExportButton elementId="scorecard-results" filename="business-scorecard.pdf" label="Export PDF" />
-              <button onClick={handleReset} className="px-4 py-2 bg-dark-200/50 text-gray-400 hover:text-white rounded-lg text-sm transition-colors">Reset</button>
+              <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }}>Reset</button>
             </div>
           </div>
 
@@ -309,11 +309,11 @@ export default function App() {
             <div className="flex flex-col sm:flex-row items-center gap-8 py-4">
               <ScoreGauge score={overallScore} label={getLabel(overallScore)} size={180} />
               <div className="flex-1 text-center sm:text-left">
-                <h2 className="text-2xl font-bold text-white mb-2">Your Business Health Score</h2>
-                <p className="text-gray-400 mb-3">Based on {answeredCount} of {TOTAL_QUESTIONS} questions answered</p>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-dark-200/50 rounded-lg">
-                  <span className="text-gray-400 text-sm">Estimated Percentile:</span>
-                  <span className="text-primary font-bold">Top {100 - getPercentile(overallScore)}%</span>
+                <h2 className="text-2xl font-bold mb-2" style={{ color: "var(--text-heading)" }}>Your Business Health Score</h2>
+                <p className="mb-3" style={{ color: "var(--text-muted)" }}>Based on {answeredCount} of {TOTAL_QUESTIONS} questions answered</p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg" style={{ background: "var(--bg-elevated)" }}>
+                  <span className="text-sm" style={{ color: "var(--text-muted)" }}>Estimated Percentile:</span>
+                  <span className="font-bold" style={{ color: "var(--accent)" }}>Top {100 - getPercentile(overallScore)}%</span>
                 </div>
               </div>
             </div>
@@ -325,9 +325,9 @@ export default function App() {
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart data={radarData}>
                   <PolarGrid stroke="rgba(255,255,255,0.1)" />
-                  <PolarAngleAxis dataKey="category" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-                  <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: '#6b7280', fontSize: 10 }} />
-                  <Radar name="Score" dataKey="score" stroke="#13b973" fill="#13b973" fillOpacity={0.2} strokeWidth={2} />
+                  <PolarAngleAxis dataKey="category" tick={{ fill: 'var(--text-muted)', fontSize: 12 }} />
+                  <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: 'var(--text-muted)', fontSize: 10 }} />
+                  <Radar name="Score" dataKey="score" stroke="var(--accent)" fill="var(--accent)" fillOpacity={0.2} strokeWidth={2} />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
@@ -338,26 +338,26 @@ export default function App() {
             {categoryScores.map((cat, i) => (
               <ResultCard key={i}>
                 <div className="flex items-center gap-3 mb-3">
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5" style={{ color: "var(--accent)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={CATEGORIES[i].icon} />
                   </svg>
-                  <h3 className="text-white font-semibold">{cat.name}</h3>
-                  <span className="ml-auto text-2xl font-bold" style={{ color: cat.score >= 75 ? '#13b973' : cat.score >= 50 ? '#3b82f6' : cat.score >= 30 ? '#f59e0b' : '#ef4444' }}>
+                  <h3 className="font-semibold" style={{ color: "var(--text-heading)" }}>{cat.name}</h3>
+                  <span className="ml-auto text-2xl font-bold" style={{ color: cat.score >= 75 ? 'var(--success)' : cat.score >= 50 ? 'var(--info)' : cat.score >= 30 ? 'var(--warning)' : 'var(--danger)' }}>
                     {cat.score}
                   </span>
                 </div>
-                <div className="w-full bg-dark-200/50 rounded-full h-2 mb-3">
-                  <div className="h-full rounded-full transition-all" style={{ width: `${cat.score}%`, backgroundColor: cat.score >= 75 ? '#13b973' : cat.score >= 50 ? '#3b82f6' : cat.score >= 30 ? '#f59e0b' : '#ef4444' }} />
+                <div className="w-full rounded-full h-2 mb-3" style={{ background: "var(--bg-elevated)" }}>
+                  <div className="h-full rounded-full transition-all" style={{ width: `${cat.score}%`, backgroundColor: cat.score >= 75 ? 'var(--success)' : cat.score >= 50 ? 'var(--info)' : cat.score >= 30 ? 'var(--warning)' : 'var(--danger)' }} />
                 </div>
-                <p className="text-gray-400 text-sm">{getLabel(cat.score)} - {cat.answered}/{cat.total} answered</p>
+                <p className="text-sm" style={{ color: "var(--text-muted)" }}>{getLabel(cat.score)} - {cat.answered}/{cat.total} answered</p>
                 {cat.score < 60 && (
-                  <div className="mt-3 p-3 bg-yellow-500/5 border border-yellow-500/10 rounded-lg">
-                    <p className="text-yellow-400/80 text-xs font-medium mb-1">Recommendations:</p>
+                  <div className="mt-3 p-3 rounded-lg" style={{ background: "var(--warning-soft)", border: "1px solid var(--warning-soft)" }}>
+                    <p className="text-xs font-medium mb-1" style={{ color: "var(--warning)" }}>Recommendations:</p>
                     {CATEGORIES[i].questions.filter((_, qi) => {
                       const val = answers[`${i}-${qi}`]
                       return val !== undefined && val <= 2
                     }).slice(0, 2).map((q, idx) => (
-                      <p key={idx} className="text-gray-400 text-xs mt-1">- {q.tips}</p>
+                      <p key={idx} className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>- {q.tips}</p>
                     ))}
                   </div>
                 )}
@@ -370,14 +370,14 @@ export default function App() {
             <ResultCard title="Top Priority Actions">
               <div className="space-y-3">
                 {priorityActions.map((action, i) => (
-                  <div key={i} className="flex gap-3 p-3 bg-dark-200/30 rounded-lg border border-white/5">
-                    <div className="w-8 h-8 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center flex-shrink-0 font-bold text-sm">
+                  <div key={i} className="flex gap-3 p-3 rounded-lg" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm" style={{ background: "var(--danger-soft)", color: "var(--danger)" }}>
                       {i + 1}
                     </div>
                     <div>
-                      <p className="text-white text-sm font-medium">{action.category}</p>
-                      <p className="text-gray-400 text-xs mt-0.5">{action.question}</p>
-                      <p className="text-primary/80 text-xs mt-1">{action.tip}</p>
+                      <p className="text-sm font-medium" style={{ color: "var(--text-heading)" }}>{action.category}</p>
+                      <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{action.question}</p>
+                      <p className="text-xs mt-1" style={{ color: "var(--accent)" }}>{action.tip}</p>
                     </div>
                   </div>
                 ))}
@@ -388,10 +388,10 @@ export default function App() {
           {/* CTA */}
           <ResultCard>
             <div className="text-center py-6">
-              <h3 className="text-xl font-bold text-white mb-2">Want Help Improving Your Score?</h3>
-              <p className="text-gray-400 mb-4">SkynetLabs can help you build systems, automate processes, and grow your freelance business.</p>
+              <h3 className="text-xl font-bold mb-2" style={{ color: "var(--text-heading)" }}>Want Help Improving Your Score?</h3>
+              <p className="mb-4" style={{ color: "var(--text-muted)" }}>SkynetLabs can help you build systems, automate processes, and grow your freelance business.</p>
               <a href="https://www.skynetjoe.com" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/80 text-white font-semibold rounded-xl transition-colors">
+                className="inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-xl transition-colors" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
                 Book a Free Call with SkynetLabs
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </a>
@@ -414,11 +414,11 @@ export default function App() {
         {/* Progress */}
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-400">Question {currentFlat + 1} of {TOTAL_QUESTIONS}</span>
-            <span className="text-primary font-medium">{Math.round(progress)}% complete</span>
+            <span style={{ color: "var(--text-muted)" }}>Question {currentFlat + 1} of {TOTAL_QUESTIONS}</span>
+            <span className="font-medium" style={{ color: "var(--accent)" }}>{Math.round(progress)}% complete</span>
           </div>
-          <div className="w-full bg-dark-200/50 rounded-full h-2">
-            <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${progress}%` }} />
+          <div className="w-full rounded-full h-2" style={{ background: "var(--bg-elevated)" }}>
+            <div className="h-full rounded-full transition-all duration-500" style={{ background: "var(--accent)", width: `${progress}%` }} />
           </div>
         </div>
 
@@ -429,14 +429,18 @@ export default function App() {
             const isComplete = catAnswered === c.questions.length
             return (
               <button key={i} onClick={() => { setCurrentCategory(i); setCurrentQuestion(0) }}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
-                  i === currentCategory ? 'bg-primary text-white' : isComplete ? 'bg-primary/10 text-primary' : 'bg-dark-100/50 text-gray-400 hover:text-white'
-                }`}>
+                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all"
+                style={i === currentCategory
+                  ? { background: 'var(--accent)', color: 'var(--text-on-accent)' }
+                  : isComplete
+                    ? { background: 'var(--accent-soft)', color: 'var(--accent)' }
+                    : { background: 'var(--bg-elevated)', color: 'var(--text-muted)' }
+                }>
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={c.icon} />
                 </svg>
                 {c.name.split(' ')[0]}
-                {isComplete && <span className="text-primary">&#10003;</span>}
+                {isComplete && <span style={{ color: "var(--accent)" }}>&#10003;</span>}
               </button>
             )
           })}
@@ -446,28 +450,28 @@ export default function App() {
         <ResultCard>
           <div className="py-4">
             <div className="flex items-center gap-2 mb-6">
-              <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5" style={{ color: "var(--accent)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={cat.icon} />
               </svg>
-              <span className="text-primary text-sm font-medium">{cat.name}</span>
-              <span className="text-gray-600 text-sm">({currentQuestion + 1}/{cat.questions.length})</span>
+              <span className="text-sm font-medium" style={{ color: "var(--accent)" }}>{cat.name}</span>
+              <span className="text-sm" style={{ color: "var(--text-muted)" }}>({currentQuestion + 1}/{cat.questions.length})</span>
             </div>
-            <h3 className="text-xl text-white font-semibold mb-8">{q.q}</h3>
+            <h3 className="text-xl font-semibold mb-8" style={{ color: "var(--text-heading)" }}>{q.q}</h3>
 
             {/* Rating Buttons */}
             <div className="flex justify-center gap-3 mb-6">
               {[1, 2, 3, 4, 5].map(val => (
                 <button key={val} onClick={() => setAnswer(val)}
-                  className={`w-14 h-14 rounded-xl text-lg font-bold transition-all ${
-                    currentAnswer === val
-                      ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-110'
-                      : 'bg-dark-200/50 text-gray-400 hover:bg-dark-200 hover:text-white hover:scale-105 border border-white/5'
-                  }`}>
+                  className="w-14 h-14 rounded-xl text-lg font-bold transition-all"
+                  style={currentAnswer === val
+                    ? { background: 'var(--accent)', color: 'var(--text-on-accent)' }
+                    : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }
+                  }>
                   {val}
                 </button>
               ))}
             </div>
-            <div className="flex justify-between text-xs text-gray-500 px-2">
+            <div className="flex justify-between text-xs px-2" style={{ color: "var(--text-muted)" }}>
               <span>Strongly Disagree</span>
               <span>Strongly Agree</span>
             </div>
@@ -477,16 +481,16 @@ export default function App() {
         {/* Navigation */}
         <div className="flex justify-between items-center">
           <button onClick={goPrev} disabled={currentFlat === 0}
-            className="flex items-center gap-1 px-4 py-2 bg-dark-100/50 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 rounded-lg text-sm transition-colors">
+            className="flex items-center gap-1 px-4 py-2 disabled:opacity-30 rounded-lg text-sm transition-colors" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }}>
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             Previous
           </button>
           <button onClick={handleFinish}
-            className="px-6 py-2.5 bg-primary hover:bg-primary/80 text-white font-medium rounded-xl transition-colors text-sm">
+            className="px-6 py-2.5 font-medium rounded-xl transition-colors text-sm" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}>
             {answeredCount >= TOTAL_QUESTIONS ? 'View Results' : 'Finish Early'}
           </button>
           <button onClick={goNext} disabled={currentFlat >= TOTAL_QUESTIONS - 1}
-            className="flex items-center gap-1 px-4 py-2 bg-dark-100/50 text-gray-400 hover:text-white disabled:opacity-30 disabled:hover:text-gray-400 rounded-lg text-sm transition-colors">
+            className="flex items-center gap-1 px-4 py-2 disabled:opacity-30 rounded-lg text-sm transition-colors" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }}>
             Next
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>
@@ -499,9 +503,13 @@ export default function App() {
             const answered = answers[key] !== undefined
             return (
               <button key={qi} onClick={() => setCurrentQuestion(qi)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  qi === currentQuestion ? 'bg-primary scale-125' : answered ? 'bg-primary/40' : 'bg-dark-200/50'
-                }`} />
+                className="w-3 h-3 rounded-full transition-all"
+                style={qi === currentQuestion
+                  ? { background: 'var(--accent)', transform: 'scale(1.25)' }
+                  : answered
+                    ? { background: 'var(--accent)', opacity: 0.4 }
+                    : { background: 'var(--bg-elevated)' }
+                } />
             )
           })}
         </div>

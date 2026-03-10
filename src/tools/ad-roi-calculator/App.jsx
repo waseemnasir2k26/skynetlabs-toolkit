@@ -15,10 +15,10 @@ const pct = (n) => `${n.toFixed(1)}%`
 function NumberInput({ label, value, onChange, prefix = '', suffix = '', min = 0, step = 1 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-300 mb-1">{label}</label>
+      <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-body)' }}>{label}</label>
       <div className="relative">
         {prefix && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">{prefix}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style={{ color: 'var(--text-muted)' }}>{prefix}</span>
         )}
         <input
           type="number"
@@ -26,12 +26,10 @@ function NumberInput({ label, value, onChange, prefix = '', suffix = '', min = 0
           onChange={e => onChange(parseFloat(e.target.value) || 0)}
           min={min}
           step={step}
-          className={`w-full bg-dark-200/50 border border-white/10 rounded-lg py-2.5 text-white focus:outline-none focus:border-primary/50 ${
-            prefix ? 'pl-7 pr-4' : suffix ? 'pl-4 pr-8' : 'px-4'
-          }`}
+          className={`w-full rounded-lg py-2.5 focus:outline-none ${prefix ? 'pl-7 pr-4' : suffix ? 'pl-4 pr-8' : 'px-4'}`} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }}
         />
         {suffix && (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">{suffix}</span>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm" style={{ color: 'var(--text-muted)' }}>{suffix}</span>
         )}
       </div>
     </div>
@@ -42,8 +40,8 @@ function Slider({ label, value, onChange, min = 0, max = 100, suffix = '%' }) {
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
-        <label className="text-sm font-medium text-gray-300">{label}</label>
-        <span className="text-primary font-semibold text-sm">{value}{suffix}</span>
+        <label className="text-sm font-medium" style={{ color: 'var(--text-body)' }}>{label}</label>
+        <span className="font-semibold text-sm" style={{ color: 'var(--accent)' }}>{value}{suffix}</span>
       </div>
       <input
         type="range"
@@ -51,7 +49,7 @@ function Slider({ label, value, onChange, min = 0, max = 100, suffix = '%' }) {
         onChange={e => onChange(parseInt(e.target.value))}
         min={min}
         max={max}
-        className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-primary bg-dark-200"
+        className="w-full h-2 rounded-lg appearance-none cursor-pointer" style={{ accentColor: 'var(--accent)', background: 'var(--bg-card)' }}
       />
     </div>
   )
@@ -59,10 +57,10 @@ function Slider({ label, value, onChange, min = 0, max = 100, suffix = '%' }) {
 
 function MetricBox({ label, value, sub, highlight = false }) {
   return (
-    <div className={`p-4 rounded-lg ${highlight ? 'bg-primary/10 border border-primary/30' : 'bg-dark-200/30 border border-white/5'}`}>
-      <p className="text-xs text-gray-400 mb-1">{label}</p>
-      <p className={`text-xl font-bold ${highlight ? 'text-primary' : 'text-white'}`}>{value}</p>
-      {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
+    <div className="p-4 rounded-lg border" style={highlight ? { background: 'var(--accent-soft)', borderColor: 'var(--accent)' } : { background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+      <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{label}</p>
+      <p className="text-xl font-bold" style={{ color: highlight ? 'var(--accent)' : 'var(--text-heading)' }}>{value}</p>
+      {sub && <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{sub}</p>}
     </div>
   )
 }
@@ -193,9 +191,9 @@ export default function App() {
 
             <ResultCard title="The Gap">
               <div className="text-center py-4">
-                <p className="text-gray-400 text-sm mb-1">You&apos;re leaving on the table every month:</p>
-                <p className="text-4xl font-bold text-primary">{fmt(calc.gap)}</p>
-                <p className="text-gray-500 text-xs mt-2">
+                <p className="text-sm mb-1" style={{ color: 'var(--text-muted)' }}>You&apos;re leaving on the table every month:</p>
+                <p className="text-4xl font-bold" style={{ color: 'var(--accent)' }}>{fmt(calc.gap)}</p>
+                <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
                   Lifetime value gap: {fmt(calc.gapLtv)} / month
                 </p>
               </div>
@@ -203,11 +201,11 @@ export default function App() {
 
             <ResultCard title="Breakeven Analysis">
               <div className="text-center py-3">
-                <p className="text-gray-400 text-sm mb-1">Months to break even on ad spend:</p>
-                <p className="text-3xl font-bold text-white">
+                <p className="text-sm mb-1" style={{ color: 'var(--text-muted)' }}>Months to break even on ad spend:</p>
+                <p className="text-3xl font-bold" style={{ color: 'var(--text-heading)' }}>
                   {calc.breakeven === Infinity ? 'N/A' : calc.breakeven.toFixed(1)}
                 </p>
-                <p className="text-gray-500 text-xs mt-1">
+                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                   {calc.roi > 0 ? 'You are profitable from month 1!' : 'Optimize your funnel to become profitable faster.'}
                 </p>
               </div>
@@ -221,20 +219,20 @@ export default function App() {
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                  <XAxis dataKey="name" tick={{ fill: '#9ca3af', fontSize: 12 }} />
-                  <YAxis tick={{ fill: '#9ca3af', fontSize: 12 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                  <XAxis dataKey="name" tick={{ fill: 'var(--text-muted)', fontSize: 12 }} />
+                  <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 12 }} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#1a1a2e',
-                      border: '1px solid rgba(255,255,255,0.1)',
+                      backgroundColor: 'var(--bg-elevated)',
+                      border: '1px solid var(--border)',
                       borderRadius: '8px',
-                      color: '#fff',
+                      color: 'var(--text-heading)',
                     }}
                   />
-                  <Legend wrapperStyle={{ color: '#9ca3af' }} />
-                  <Bar dataKey="Current" fill="#6b7280" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="Optimized" fill="#13b973" radius={[4, 4, 0, 0]} />
+                  <Legend wrapperStyle={{ color: 'var(--text-muted)' }} />
+                  <Bar dataKey="Current" fill="var(--text-muted)" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="Optimized" fill="var(--accent)" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

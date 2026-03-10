@@ -8,7 +8,7 @@ export async function generatePDF(elementId, filename = 'onboarding-package.pdf'
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
-    backgroundColor: '#0a0a0f',
+    backgroundColor: document.documentElement.getAttribute('data-theme') === 'light' ? '#f4f5f7' : '#050507',
     logging: false,
   });
 

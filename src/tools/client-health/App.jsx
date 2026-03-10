@@ -83,20 +83,20 @@ function formatCurrency(num) {
 }
 
 function TrendArrow({ trend }) {
-  if (trend === 'up') return <span className="text-green-400 text-lg" title="Improving">&#9650;</span>
-  if (trend === 'down') return <span className="text-red-400 text-lg" title="Declining">&#9660;</span>
-  return <span className="text-gray-500 text-lg" title="Stable">&#9654;</span>
+  if (trend === 'up') return <span className="text-lg" style={{ color: 'var(--success)' }} title="Improving">&#9650;</span>
+  if (trend === 'down') return <span className="text-lg" style={{ color: 'var(--danger)' }} title="Declining">&#9660;</span>
+  return <span className="text-lg" style={{ color: 'var(--text-muted)' }} title="Stable">&#9654;</span>
 }
 
 function HealthBadge({ score, label, color }) {
-  const colorClasses = {
-    green: 'bg-green-500/20 text-green-400 border-green-500/30',
-    yellow: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    red: 'bg-red-500/20 text-red-400 border-red-500/30',
-    gray: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+  const colorStyles = {
+    green: { background: 'var(--success-soft)', color: 'var(--success)', border: '1px solid color-mix(in srgb, var(--success) 30%, transparent)' },
+    yellow: { background: 'var(--warning-soft)', color: 'var(--warning)', border: '1px solid color-mix(in srgb, var(--warning) 30%, transparent)' },
+    red: { background: 'var(--danger-soft)', color: 'var(--danger)', border: '1px solid color-mix(in srgb, var(--danger) 30%, transparent)' },
+    gray: { background: 'color-mix(in srgb, var(--text-muted) 20%, transparent)', color: 'var(--text-muted)', border: '1px solid color-mix(in srgb, var(--text-muted) 30%, transparent)' },
   }
   return (
-    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-semibold ${colorClasses[color]}`}>
+    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold" style={colorStyles[color]}>
       <span className="text-lg">{score}</span>
       <span className="text-xs font-medium">{label}</span>
     </div>
@@ -123,37 +123,39 @@ function AddClientModal({ onClose, onAdd }) {
     onClose()
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition text-sm'
-  const labelClass = 'block text-sm font-medium text-gray-300 mb-1.5'
+  const inputClass = 'w-full rounded-lg px-4 py-2.5 placeholder-gray-500 focus:outline-none focus:ring-1 transition text-sm'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }
+  const labelClass = 'block text-sm font-medium mb-1.5'
+  const labelStyle = { color: 'var(--text-body)' }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-dark-100 border border-white/10 rounded-xl p-6 w-full max-w-md">
-        <h3 className="text-white font-bold text-lg mb-4">Add New Client</h3>
+      <div className="rounded-xl p-6 w-full max-w-md" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+        <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--text-heading)' }}>Add New Client</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className={labelClass}>Client Name *</label>
-            <input type="text" className={inputClass} placeholder="e.g., Acme Corp" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+            <label className={labelClass} style={labelStyle}>Client Name *</label>
+            <input type="text" className={inputClass} style={inputStyle} placeholder="e.g., Acme Corp" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
           </div>
           <div>
-            <label className={labelClass}>Monthly Revenue ($) *</label>
-            <input type="number" className={inputClass} placeholder="e.g., 3000" min="0" value={revenue} onChange={(e) => setRevenue(e.target.value)} />
+            <label className={labelClass} style={labelStyle}>Monthly Revenue ($) *</label>
+            <input type="number" className={inputClass} style={inputStyle} placeholder="e.g., 3000" min="0" value={revenue} onChange={(e) => setRevenue(e.target.value)} />
           </div>
           <div>
-            <label className={labelClass}>Start Date</label>
-            <input type="date" className={inputClass} value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+            <label className={labelClass} style={labelStyle}>Start Date</label>
+            <input type="date" className={inputClass} style={inputStyle} value={startDate} onChange={(e) => setStartDate(e.target.value)} />
           </div>
           <div>
-            <label className={labelClass}>Service Type</label>
-            <select className={inputClass} value={serviceType} onChange={(e) => setServiceType(e.target.value)}>
+            <label className={labelClass} style={labelStyle}>Service Type</label>
+            <select className={inputClass} style={inputStyle} value={serviceType} onChange={(e) => setServiceType(e.target.value)}>
               {SERVICE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div className="flex gap-3 pt-2">
-            <button type="submit" disabled={!name.trim() || !revenue} className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed">
+            <button type="submit" disabled={!name.trim() || !revenue} className="flex-1 py-2.5 font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed" style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}>
               Add Client
             </button>
-            <button type="button" onClick={onClose} className="px-4 py-2.5 bg-dark-200/50 border border-white/10 text-gray-400 hover:text-white rounded-lg transition">
+            <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-lg transition" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
               Cancel
             </button>
           </div>
@@ -185,51 +187,53 @@ function UpdateModal({ client, onClose, onSave }) {
     onClose()
   }
 
-  const labelClass = 'block text-sm font-medium text-gray-300 mb-1.5'
-  const selectClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary/50 transition text-sm'
+  const labelClass = 'block text-sm font-medium mb-1.5'
+  const labelStyle = { color: 'var(--text-body)' }
+  const selectClass = 'w-full rounded-lg px-4 py-2.5 focus:outline-none transition text-sm'
+  const selectStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-dark-100 border border-white/10 rounded-xl p-6 w-full max-w-md">
-        <h3 className="text-white font-bold text-lg mb-1">Monthly Update</h3>
-        <p className="text-gray-400 text-sm mb-4">{client.name}</p>
+      <div className="rounded-xl p-6 w-full max-w-md" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+        <h3 className="font-bold text-lg mb-1" style={{ color: 'var(--text-heading)' }}>Monthly Update</h3>
+        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>{client.name}</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className={labelClass}>Response Time</label>
-            <select className={selectClass} value={responseTime} onChange={(e) => setResponseTime(e.target.value)}>
+            <label className={labelClass} style={labelStyle}>Response Time</label>
+            <select className={selectClass} style={selectStyle} value={responseTime} onChange={(e) => setResponseTime(e.target.value)}>
               {RESPONSE_TIMES.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
-            <label className={labelClass}>Payment Speed</label>
-            <select className={selectClass} value={paymentSpeed} onChange={(e) => setPaymentSpeed(e.target.value)}>
+            <label className={labelClass} style={labelStyle}>Payment Speed</label>
+            <select className={selectClass} style={selectStyle} value={paymentSpeed} onChange={(e) => setPaymentSpeed(e.target.value)}>
               {PAYMENT_SPEEDS.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
-            <label className={labelClass}>Scope Changes</label>
-            <select className={selectClass} value={scopeChanges} onChange={(e) => setScopeChanges(e.target.value)}>
+            <label className={labelClass} style={labelStyle}>Scope Changes</label>
+            <select className={selectClass} style={selectStyle} value={scopeChanges} onChange={(e) => setScopeChanges(e.target.value)}>
               {SCOPE_CHANGES.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
-            <label className={labelClass}>Satisfaction Signals</label>
-            <select className={selectClass} value={satisfaction} onChange={(e) => setSatisfaction(e.target.value)}>
+            <label className={labelClass} style={labelStyle}>Satisfaction Signals</label>
+            <select className={selectClass} style={selectStyle} value={satisfaction} onChange={(e) => setSatisfaction(e.target.value)}>
               {SATISFACTION_SIGNALS.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
           <div>
-            <label className={labelClass}>Referral Given?</label>
-            <select className={selectClass} value={referral} onChange={(e) => setReferral(e.target.value)}>
+            <label className={labelClass} style={labelStyle}>Referral Given?</label>
+            <select className={selectClass} style={selectStyle} value={referral} onChange={(e) => setReferral(e.target.value)}>
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
           </div>
           <div className="flex gap-3 pt-2">
-            <button type="submit" className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition">
+            <button type="submit" className="flex-1 py-2.5 font-medium rounded-lg transition" style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}>
               Save Update
             </button>
-            <button type="button" onClick={onClose} className="px-4 py-2.5 bg-dark-200/50 border border-white/10 text-gray-400 hover:text-white rounded-lg transition">
+            <button type="button" onClick={onClose} className="px-4 py-2.5 rounded-lg transition" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
               Cancel
             </button>
           </div>
@@ -246,11 +250,11 @@ function ClientCard({ client, totalMRR, onUpdate, onDelete }) {
   const revenuePercent = totalMRR > 0 ? Math.round((client.monthlyRevenue / totalMRR) * 100) : 0
 
   return (
-    <div className="bg-dark-100/50 border border-white/5 rounded-xl p-5 hover:border-white/10 transition">
+    <div className="rounded-xl p-5 transition" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
       <div className="flex items-start justify-between mb-3">
         <div>
-          <h4 className="text-white font-semibold">{client.name}</h4>
-          <p className="text-gray-500 text-xs">{client.serviceType}</p>
+          <h4 className="font-semibold" style={{ color: 'var(--text-heading)' }}>{client.name}</h4>
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{client.serviceType}</p>
         </div>
         <div className="flex items-center gap-2">
           <TrendArrow trend={trend} />
@@ -259,22 +263,22 @@ function ClientCard({ client, totalMRR, onUpdate, onDelete }) {
       </div>
 
       <div className="grid grid-cols-3 gap-3 mb-4">
-        <div className="bg-dark-200/30 rounded-lg p-2.5 text-center">
-          <p className="text-xs text-gray-500 mb-0.5">Revenue</p>
-          <p className="text-white font-semibold text-sm">{formatCurrency(client.monthlyRevenue)}<span className="text-gray-500 text-xs">/mo</span></p>
+        <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--bg-card)' }}>
+          <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Revenue</p>
+          <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{formatCurrency(client.monthlyRevenue)}<span className="text-xs" style={{ color: 'var(--text-muted)' }}>/mo</span></p>
         </div>
-        <div className="bg-dark-200/30 rounded-lg p-2.5 text-center">
-          <p className="text-xs text-gray-500 mb-0.5">Revenue %</p>
-          <p className="text-white font-semibold text-sm">{revenuePercent}%</p>
+        <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--bg-card)' }}>
+          <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Revenue %</p>
+          <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{revenuePercent}%</p>
         </div>
-        <div className="bg-dark-200/30 rounded-lg p-2.5 text-center">
-          <p className="text-xs text-gray-500 mb-0.5">Months</p>
-          <p className="text-white font-semibold text-sm">{months}</p>
+        <div className="rounded-lg p-2.5 text-center" style={{ background: 'var(--bg-card)' }}>
+          <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)' }}>Months</p>
+          <p className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>{months}</p>
         </div>
       </div>
 
       {client.updates.length > 0 && (
-        <div className="mb-3 text-xs text-gray-500">
+        <div className="mb-3 text-xs" style={{ color: 'var(--text-muted)' }}>
           Last update: {client.updates[client.updates.length - 1].date}
           {' | '}
           {client.updates.length} update(s)
@@ -284,7 +288,8 @@ function ClientCard({ client, totalMRR, onUpdate, onDelete }) {
       <div className="flex gap-2">
         <button
           onClick={() => onUpdate(client)}
-          className="flex-1 py-2 bg-primary/10 text-primary hover:bg-primary/20 text-sm font-medium rounded-lg transition"
+          className="flex-1 py-2 text-sm font-medium rounded-lg transition"
+          style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
         >
           Add Update
         </button>
@@ -292,7 +297,8 @@ function ClientCard({ client, totalMRR, onUpdate, onDelete }) {
           onClick={() => {
             if (confirm(`Remove ${client.name}?`)) onDelete(client.id)
           }}
-          className="px-3 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 text-sm rounded-lg transition"
+          className="px-3 py-2 text-sm rounded-lg transition"
+          style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}
           title="Remove client"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -342,38 +348,39 @@ export default function App() {
       {/* Dashboard Totals */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         <ResultCard>
-          <p className="text-xs text-gray-500 mb-1">Total MRR</p>
-          <p className="text-2xl font-bold text-white">{formatCurrency(totalMRR)}</p>
+          <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Total MRR</p>
+          <p className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>{formatCurrency(totalMRR)}</p>
         </ResultCard>
         <ResultCard>
-          <p className="text-xs text-gray-500 mb-1">Avg Health</p>
-          <p className={`text-2xl font-bold ${avgHealth >= 75 ? 'text-green-400' : avgHealth >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+          <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Avg Health</p>
+          <p className="text-2xl font-bold" style={{ color: avgHealth >= 75 ? 'var(--success)' : avgHealth >= 50 ? 'var(--warning)' : 'var(--danger)' }}>
             {avgHealth || '--'}
           </p>
         </ResultCard>
         <ResultCard>
-          <p className="text-xs text-gray-500 mb-1">At-Risk Clients</p>
-          <p className={`text-2xl font-bold ${atRiskCount > 0 ? 'text-red-400' : 'text-green-400'}`}>
+          <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>At-Risk Clients</p>
+          <p className="text-2xl font-bold" style={{ color: atRiskCount > 0 ? 'var(--danger)' : 'var(--success)' }}>
             {atRiskCount}
           </p>
         </ResultCard>
         <ResultCard>
-          <p className="text-xs text-gray-500 mb-1">Revenue Concentration</p>
-          <p className={`text-2xl font-bold ${maxRevPercent > 50 ? 'text-yellow-400' : 'text-white'}`}>
+          <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Revenue Concentration</p>
+          <p className="text-2xl font-bold" style={{ color: maxRevPercent > 50 ? 'var(--warning)' : 'var(--text-heading)' }}>
             {clients.length > 0 ? `${maxRevPercent}%` : '--'}
           </p>
-          <p className="text-xs text-gray-600">Largest client</p>
+          <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Largest client</p>
         </ResultCard>
       </div>
 
       {/* Add Client Button */}
       <div className="flex justify-between items-center mb-6">
-        <p className="text-gray-400 text-sm">
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           {clients.length} client{clients.length !== 1 ? 's' : ''} tracked
         </p>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition"
+          className="flex items-center gap-2 px-4 py-2.5 font-medium rounded-lg transition"
+          style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -398,11 +405,12 @@ export default function App() {
       ) : (
         <ResultCard>
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg mb-2">No clients yet</p>
-            <p className="text-gray-600 text-sm mb-4">Add your first client to start tracking health scores.</p>
+            <p className="text-lg mb-2" style={{ color: 'var(--text-muted)' }}>No clients yet</p>
+            <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>Add your first client to start tracking health scores.</p>
             <button
               onClick={() => setShowAddModal(true)}
-              className="px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg transition text-sm font-medium"
+              className="px-4 py-2 rounded-lg transition text-sm font-medium"
+              style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}
             >
               Add Your First Client
             </button>

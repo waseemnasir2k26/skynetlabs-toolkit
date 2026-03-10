@@ -66,10 +66,10 @@ export default function App() {
       {currentStep === 1 && (
         <div className="text-center px-4 pt-4 pb-2 animate-fade-in">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
-            <span className="text-white">AI Automation</span>{' '}
+            <span style={{ color: 'var(--text-heading)' }}>AI Automation</span>{' '}
             <span className="text-gradient">ROI Calculator</span>
           </h1>
-          <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base max-w-2xl mx-auto" style={{ color: 'var(--text-muted)' }}>
             Discover how much time and money your business can save by implementing
             AI-powered automation. Get your personalized ROI analysis in minutes.
           </p>

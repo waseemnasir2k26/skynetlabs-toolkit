@@ -190,56 +190,56 @@ function formatCurrency(num) {
 
 function SOWDocument({ sow }) {
   return (
-    <div id="sow-document" className="space-y-8 text-gray-300">
+    <div id="sow-document" className="space-y-8" style={{ color: 'var(--text-body)' }}>
       {/* Header */}
-      <div className="text-center border-b border-white/10 pb-6">
-        <h2 className="text-2xl font-bold text-white mb-1">Statement of Work</h2>
-        <p className="text-primary font-semibold text-lg">{sow.projectName}</p>
-        <p className="text-gray-400 text-sm mt-2">Prepared for: {sow.clientName} | Date: {sow.dateStr}</p>
+      <div className="text-center pb-6" style={{ borderBottom: '1px solid var(--border)' }}>
+        <h2 className="text-2xl font-bold mb-1" style={{ color: 'var(--text-heading)' }}>Statement of Work</h2>
+        <p className="font-semibold text-lg" style={{ color: 'var(--accent)' }}>{sow.projectName}</p>
+        <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>Prepared for: {sow.clientName} | Date: {sow.dateStr}</p>
       </div>
 
       {/* 1. Project Overview */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">1.</span> Project Overview
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>1.</span> Project Overview
         </h3>
         <p className="leading-relaxed">
-          This Statement of Work outlines the scope, timeline, deliverables, and terms for the <strong className="text-white">{sow.projectName}</strong> project.
-          The service provider will deliver <strong className="text-white">{sow.serviceType}</strong> services to <strong className="text-white">{sow.clientName}</strong> over
-          a period of <strong className="text-white">{sow.duration} weeks</strong> for a total investment of <strong className="text-white">{formatCurrency(sow.budget)}</strong>.
+          This Statement of Work outlines the scope, timeline, deliverables, and terms for the <strong style={{ color: 'var(--text-heading)' }}>{sow.projectName}</strong> project.
+          The service provider will deliver <strong style={{ color: 'var(--text-heading)' }}>{sow.serviceType}</strong> services to <strong style={{ color: 'var(--text-heading)' }}>{sow.clientName}</strong> over
+          a period of <strong style={{ color: 'var(--text-heading)' }}>{sow.duration} weeks</strong> for a total investment of <strong style={{ color: 'var(--text-heading)' }}>{formatCurrency(sow.budget)}</strong>.
         </p>
         <p className="mt-3 leading-relaxed">{sow.description}</p>
       </div>
 
       {/* 2. Scope of Work */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">2.</span> Scope of Work
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>2.</span> Scope of Work
         </h3>
         <p className="mb-4">The project is divided into {sow.phases.length} phase(s), each with specific deliverables and milestones:</p>
         {sow.phases.map((phase) => (
-          <div key={phase.number} className="mb-4 bg-dark-200/30 rounded-lg p-4 border border-white/5">
-            <h4 className="text-white font-semibold mb-2">
+          <div key={phase.number} className="mb-4 rounded-lg p-4" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+            <h4 className="font-semibold mb-2" style={{ color: 'var(--text-heading)' }}>
               Phase {phase.number}: {phase.name}
-              <span className="text-gray-500 font-normal text-sm ml-2">(Weeks {phase.weekStart}-{phase.weekEnd})</span>
+              <span className="font-normal text-sm ml-2" style={{ color: 'var(--text-muted)' }}>(Weeks {phase.weekStart}-{phase.weekEnd})</span>
             </h4>
             <ul className="space-y-1">
               {phase.deliverables.map((d, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
-                  <span className="text-primary mt-0.5">&#10003;</span>
+                  <span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#10003;</span>
                   <span>{d}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-sm text-gray-400 mt-2">Phase Budget: {formatCurrency(phase.budget)}</p>
+            <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>Phase Budget: {formatCurrency(phase.budget)}</p>
           </div>
         ))}
       </div>
 
       {/* 3. Out of Scope */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">3.</span> Out of Scope
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>3.</span> Out of Scope
         </h3>
         <p className="mb-2">The following items are explicitly excluded from this engagement unless agreed upon in a separate change order:</p>
         <ul className="space-y-1 text-sm">
@@ -252,7 +252,7 @@ function SOWDocument({ sow }) {
             'Training beyond what is specified in the deliverables',
           ].map((item, i) => (
             <li key={i} className="flex items-start gap-2">
-              <span className="text-red-400 mt-0.5">&#10007;</span>
+              <span className="mt-0.5" style={{ color: 'var(--danger)' }}>&#10007;</span>
               <span>{item}</span>
             </li>
           ))}
@@ -261,34 +261,34 @@ function SOWDocument({ sow }) {
 
       {/* 4. Timeline & Milestones */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">4.</span> Timeline & Milestones
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>4.</span> Timeline & Milestones
         </h3>
-        <p className="mb-3">Total project duration: <strong className="text-white">{sow.duration} weeks</strong></p>
+        <p className="mb-3">Total project duration: <strong style={{ color: 'var(--text-heading)' }}>{sow.duration} weeks</strong></p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="border-b border-white/10">
-                <th className="text-left py-2 pr-4 text-gray-400 font-medium">Milestone</th>
-                <th className="text-left py-2 pr-4 text-gray-400 font-medium">Timeline</th>
-                <th className="text-left py-2 text-gray-400 font-medium">Key Deliverable</th>
+              <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                <th className="text-left py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Milestone</th>
+                <th className="text-left py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Timeline</th>
+                <th className="text-left py-2 font-medium" style={{ color: 'var(--text-muted)' }}>Key Deliverable</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-white/5">
-                <td className="py-2 pr-4 text-white">Project Kickoff</td>
+              <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                <td className="py-2 pr-4" style={{ color: 'var(--text-heading)' }}>Project Kickoff</td>
                 <td className="py-2 pr-4">Week 1</td>
                 <td className="py-2">Kickoff meeting & project plan</td>
               </tr>
               {sow.phases.map((phase) => (
-                <tr key={phase.number} className="border-b border-white/5">
-                  <td className="py-2 pr-4 text-white">{phase.name} Complete</td>
+                <tr key={phase.number} style={{ borderBottom: '1px solid var(--border)' }}>
+                  <td className="py-2 pr-4" style={{ color: 'var(--text-heading)' }}>{phase.name} Complete</td>
                   <td className="py-2 pr-4">Week {phase.weekEnd}</td>
                   <td className="py-2">{phase.deliverables[0]}</td>
                 </tr>
               ))}
               <tr>
-                <td className="py-2 pr-4 text-white">Final Delivery</td>
+                <td className="py-2 pr-4" style={{ color: 'var(--text-heading)' }}>Final Delivery</td>
                 <td className="py-2 pr-4">Week {sow.duration}</td>
                 <td className="py-2">All deliverables complete & handoff</td>
               </tr>
@@ -299,88 +299,88 @@ function SOWDocument({ sow }) {
 
       {/* 5. Payment Schedule */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">5.</span> Payment Schedule
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>5.</span> Payment Schedule
         </h3>
-        <p className="mb-3">Total project investment: <strong className="text-white">{formatCurrency(sow.budget)}</strong></p>
+        <p className="mb-3">Total project investment: <strong style={{ color: 'var(--text-heading)' }}>{formatCurrency(sow.budget)}</strong></p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="border-b border-white/10">
-                <th className="text-left py-2 pr-4 text-gray-400 font-medium">Milestone</th>
-                <th className="text-right py-2 pr-4 text-gray-400 font-medium">Amount</th>
-                <th className="text-right py-2 text-gray-400 font-medium">%</th>
+              <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                <th className="text-left py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Milestone</th>
+                <th className="text-right py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Amount</th>
+                <th className="text-right py-2 font-medium" style={{ color: 'var(--text-muted)' }}>%</th>
               </tr>
             </thead>
             <tbody>
               {sow.paymentSchedule.map((p, i) => (
-                <tr key={i} className="border-b border-white/5">
+                <tr key={i} style={{ borderBottom: '1px solid var(--border)' }}>
                   <td className="py-2 pr-4">{p.milestone}</td>
-                  <td className="py-2 pr-4 text-right text-white font-medium">{formatCurrency(p.amount)}</td>
+                  <td className="py-2 pr-4 text-right font-medium" style={{ color: 'var(--text-heading)' }}>{formatCurrency(p.amount)}</td>
                   <td className="py-2 text-right">{p.percent}%</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-sm text-gray-400 mt-3">
+        <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>
           Payment is due within 14 days of invoice date. Late payments may incur a 1.5% monthly fee.
         </p>
       </div>
 
       {/* 6. Revision Policy */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">6.</span> Revision Policy
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>6.</span> Revision Policy
         </h3>
         <p className="leading-relaxed">{sow.revisionPolicyText}</p>
       </div>
 
       {/* 7. Acceptance Criteria */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">7.</span> Acceptance Criteria
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>7.</span> Acceptance Criteria
         </h3>
         <ul className="space-y-2 text-sm">
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>Each phase deliverable will be submitted for Client review upon completion.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>The Client has 5 business days to review and provide feedback on each deliverable.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>If no feedback is received within 5 business days, the deliverable is considered accepted.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>Written sign-off (email confirmation is acceptable) is required to proceed to the next phase.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>Final project acceptance will be confirmed in writing by the Client upon completion of all deliverables.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>Each phase deliverable will be submitted for Client review upon completion.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>The Client has 5 business days to review and provide feedback on each deliverable.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>If no feedback is received within 5 business days, the deliverable is considered accepted.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>Written sign-off (email confirmation is acceptable) is required to proceed to the next phase.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>Final project acceptance will be confirmed in writing by the Client upon completion of all deliverables.</li>
         </ul>
       </div>
 
       {/* 8. Termination Clause */}
       <div>
-        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-          <span className="text-primary">8.</span> Termination Clause
+        <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>8.</span> Termination Clause
         </h3>
         <ul className="space-y-2 text-sm">
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>Either party may terminate this agreement with 14 days written notice.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>Upon termination, the Client will pay for all work completed up to the termination date.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>All completed deliverables and work-in-progress will be transferred to the Client upon final payment.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>Deposits and payments for completed phases are non-refundable.</li>
-          <li className="flex items-start gap-2"><span className="text-primary mt-0.5">&#8226;</span>If the project is paused for more than 30 days without written agreement, the service provider reserves the right to re-scope the remaining work.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>Either party may terminate this agreement with 14 days written notice.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>Upon termination, the Client will pay for all work completed up to the termination date.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>All completed deliverables and work-in-progress will be transferred to the Client upon final payment.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>Deposits and payments for completed phases are non-refundable.</li>
+          <li className="flex items-start gap-2"><span className="mt-0.5" style={{ color: 'var(--accent)' }}>&#8226;</span>If the project is paused for more than 30 days without written agreement, the service provider reserves the right to re-scope the remaining work.</li>
         </ul>
       </div>
 
       {/* 9. Signatures */}
-      <div className="border-t border-white/10 pt-6">
-        <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-          <span className="text-primary">9.</span> Signatures
+      <div className="pt-6" style={{ borderTop: '1px solid var(--border)' }}>
+        <h3 className="text-lg font-bold mb-6 flex items-center gap-2" style={{ color: 'var(--text-heading)' }}>
+          <span style={{ color: 'var(--accent)' }}>9.</span> Signatures
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           <div>
-            <p className="text-sm text-gray-400 mb-8">Service Provider</p>
-            <div className="border-b border-white/20 mb-2"></div>
-            <p className="text-sm text-gray-400">Name: _________________________</p>
-            <p className="text-sm text-gray-400 mt-1">Date: _________________________</p>
+            <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>Service Provider</p>
+            <div className="mb-2" style={{ borderBottom: '1px solid var(--border)' }}></div>
+            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Name: _________________________</p>
+            <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Date: _________________________</p>
           </div>
           <div>
-            <p className="text-sm text-gray-400 mb-8">Client ({sow.clientName})</p>
-            <div className="border-b border-white/20 mb-2"></div>
-            <p className="text-sm text-gray-400">Name: _________________________</p>
-            <p className="text-sm text-gray-400 mt-1">Date: _________________________</p>
+            <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>Client ({sow.clientName})</p>
+            <div className="mb-2" style={{ borderBottom: '1px solid var(--border)' }}></div>
+            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Name: _________________________</p>
+            <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Date: _________________________</p>
           </div>
         </div>
       </div>
@@ -488,9 +488,11 @@ export default function App() {
     setSOW(null)
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition text-sm'
-  const labelClass = 'block text-sm font-medium text-gray-300 mb-1.5'
-  const selectClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition text-sm appearance-none'
+  const inputClass = 'w-full rounded-lg px-4 py-2.5 placeholder-gray-500 focus:outline-none focus:ring-1 transition text-sm'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)', '--tw-ring-color': 'var(--accent-soft)' }
+  const labelClass = 'block text-sm font-medium mb-1.5'
+  const labelStyle = { color: 'var(--text-body)' }
+  const selectClass = 'w-full rounded-lg px-4 py-2.5 focus:outline-none focus:ring-1 transition text-sm appearance-none'
 
   return (
     <ToolLayout
@@ -503,20 +505,22 @@ export default function App() {
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Project Name *</label>
+                <label className={labelClass} style={labelStyle}>Project Name *</label>
                 <input
                   type="text"
                   className={inputClass}
+                  style={inputStyle}
                   placeholder="e.g., Website Redesign"
                   value={form.projectName}
                   onChange={(e) => updateField('projectName', e.target.value)}
                 />
               </div>
               <div>
-                <label className={labelClass}>Client Name *</label>
+                <label className={labelClass} style={labelStyle}>Client Name *</label>
                 <input
                   type="text"
                   className={inputClass}
+                  style={inputStyle}
                   placeholder="e.g., Acme Corp"
                   value={form.clientName}
                   onChange={(e) => updateField('clientName', e.target.value)}
@@ -526,9 +530,10 @@ export default function App() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>Service Type</label>
+                <label className={labelClass} style={labelStyle}>Service Type</label>
                 <select
                   className={selectClass}
+                  style={inputStyle}
                   value={form.serviceType}
                   onChange={(e) => updateField('serviceType', e.target.value)}
                 >
@@ -538,9 +543,10 @@ export default function App() {
                 </select>
               </div>
               <div>
-                <label className={labelClass}>Revision Policy</label>
+                <label className={labelClass} style={labelStyle}>Revision Policy</label>
                 <select
                   className={selectClass}
+                  style={inputStyle}
                   value={form.revisionPolicy}
                   onChange={(e) => updateField('revisionPolicy', e.target.value)}
                 >
@@ -552,9 +558,10 @@ export default function App() {
             </div>
 
             <div>
-              <label className={labelClass}>Project Description *</label>
+              <label className={labelClass} style={labelStyle}>Project Description *</label>
               <textarea
                 className={`${inputClass} min-h-[100px] resize-y`}
+                style={inputStyle}
                 placeholder="Describe the project goals, key features, and expected outcomes..."
                 value={form.description}
                 onChange={(e) => updateField('description', e.target.value)}
@@ -564,10 +571,11 @@ export default function App() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className={labelClass}>Duration (weeks)</label>
+                <label className={labelClass} style={labelStyle}>Duration (weeks)</label>
                 <input
                   type="number"
                   className={inputClass}
+                  style={inputStyle}
                   min="1"
                   max="52"
                   value={form.duration}
@@ -575,10 +583,11 @@ export default function App() {
                 />
               </div>
               <div>
-                <label className={labelClass}>Total Budget ($) *</label>
+                <label className={labelClass} style={labelStyle}>Total Budget ($) *</label>
                 <input
                   type="number"
                   className={inputClass}
+                  style={inputStyle}
                   placeholder="e.g., 15000"
                   min="0"
                   value={form.budget}
@@ -586,9 +595,10 @@ export default function App() {
                 />
               </div>
               <div>
-                <label className={labelClass}>Number of Phases</label>
+                <label className={labelClass} style={labelStyle}>Number of Phases</label>
                 <select
                   className={selectClass}
+                  style={inputStyle}
                   value={form.phases}
                   onChange={(e) => updateField('phases', e.target.value)}
                 >
@@ -603,13 +613,15 @@ export default function App() {
               <button
                 onClick={handleGenerate}
                 disabled={!canGenerate}
-                className="flex-1 py-2.5 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex-1 py-2.5 font-medium rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
               >
                 Generate SOW
               </button>
               <button
                 onClick={handleReset}
-                className="px-4 py-2.5 bg-dark-200/50 border border-white/10 text-gray-400 hover:text-white rounded-lg transition"
+                className="px-4 py-2.5 rounded-lg transition"
+                style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
               >
                 Reset
               </button>
@@ -632,8 +644,8 @@ export default function App() {
           ) : (
             <ResultCard title="SOW Preview" icon="📄">
               <div className="text-center py-16">
-                <p className="text-gray-500 text-lg mb-2">No SOW generated yet</p>
-                <p className="text-gray-600 text-sm">Fill in the project details and click "Generate SOW" to create your document.</p>
+                <p className="text-lg mb-2" style={{ color: 'var(--text-muted)' }}>No SOW generated yet</p>
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Fill in the project details and click "Generate SOW" to create your document.</p>
               </div>
             </ResultCard>
           )}

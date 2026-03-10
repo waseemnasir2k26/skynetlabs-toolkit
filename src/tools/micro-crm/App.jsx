@@ -15,9 +15,9 @@ const COLUMNS = [
 ]
 
 const TEMPS = [
-  { value: 'hot', label: 'Hot', color: 'bg-red-500', textColor: 'text-red-400' },
-  { value: 'warm', label: 'Warm', color: 'bg-yellow-500', textColor: 'text-yellow-400' },
-  { value: 'cold', label: 'Cold', color: 'bg-blue-400', textColor: 'text-blue-400' }
+  { value: 'hot', label: 'Hot', color: 'bg-red-500', colorVar: 'var(--danger)' },
+  { value: 'warm', label: 'Warm', color: 'bg-yellow-500', colorVar: 'var(--warning)' },
+  { value: 'cold', label: 'Cold', color: 'bg-blue-400', colorVar: 'var(--info)' }
 ]
 
 function emptyCard(stage = 'lead') {
@@ -150,9 +150,10 @@ export default function App() {
     e.target.value = ''
   }
 
-  const inputClass = 'w-full bg-dark-200/50 border border-white/10 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-primary/50 transition-colors'
-  const btnPrimary = 'px-4 py-2 bg-primary hover:bg-primary-light text-black font-medium rounded-lg transition-colors text-sm'
-  const btnSecondary = 'px-3 py-1.5 bg-dark-200/50 hover:bg-dark-200 text-gray-300 hover:text-white border border-white/10 rounded-lg transition-colors text-sm'
+  const inputClass = 'w-full rounded-lg px-3 py-2 text-sm placeholder-gray-500 focus:outline-none transition-colors'
+  const inputStyle = { background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }
+  const btnPrimaryStyle = { background: 'var(--accent)', color: 'var(--text-heading)' }
+  const btnSecondaryStyle = { background: 'var(--bg-elevated)', color: 'var(--text-body)', border: '1px solid var(--border)' }
 
   const tempInfo = (t) => TEMPS.find(x => x.value === t) || TEMPS[1]
 
@@ -164,17 +165,17 @@ export default function App() {
       {/* Top Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
         {[
-          { label: 'Pipeline Value', value: `$${stats.pipelineValue.toLocaleString()}`, color: 'text-primary' },
-          { label: 'Proposals Pending', value: stats.proposalsPending, color: 'text-purple-400' },
-          { label: 'Win Rate', value: `${stats.winRate}%`, color: 'text-green-400' },
-          { label: 'Revenue (Month)', value: `$${stats.revenueThisMonth.toLocaleString()}`, color: 'text-blue-400' },
-          { label: 'Overdue Follow-ups', value: stats.overdueFollowUps, color: stats.overdueFollowUps > 0 ? 'text-red-400' : 'text-gray-400' }
+          { label: 'Pipeline Value', value: `$${stats.pipelineValue.toLocaleString()}`, colorVar: 'var(--accent)' },
+          { label: 'Proposals Pending', value: stats.proposalsPending, colorVar: 'var(--info)' },
+          { label: 'Win Rate', value: `${stats.winRate}%`, colorVar: 'var(--success)' },
+          { label: 'Revenue (Month)', value: `$${stats.revenueThisMonth.toLocaleString()}`, colorVar: 'var(--info)' },
+          { label: 'Overdue Follow-ups', value: stats.overdueFollowUps, colorVar: stats.overdueFollowUps > 0 ? 'var(--danger)' : 'var(--text-muted)' }
         ].map((s, i) => (
           <ResultCard key={i}>
-            <p className="text-gray-400 text-xs uppercase tracking-wide">{s.label}</p>
-            <p className={`text-xl font-bold mt-1 ${s.color}`}>{s.value}</p>
+            <p className="text-xs uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{s.label}</p>
+            <p className="text-xl font-bold mt-1" style={{ color: s.colorVar }}>{s.value}</p>
             {s.label === 'Overdue Follow-ups' && stats.overdueFollowUps > 0 && (
-              <span className="inline-block mt-1 text-xs px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 animate-pulse">Action needed</span>
+              <span className="inline-block mt-1 text-xs px-2 py-0.5 rounded-full animate-pulse" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>Action needed</span>
             )}
           </ResultCard>
         ))}
@@ -182,8 +183,8 @@ export default function App() {
 
       {/* Import/Export */}
       <div className="flex gap-2 mb-4 flex-wrap">
-        <button onClick={exportJSON} className={btnSecondary}>Export JSON</button>
-        <button onClick={() => fileInputRef.current?.click()} className={btnSecondary}>Import JSON</button>
+        <button onClick={exportJSON} className="px-3 py-1.5 rounded-lg transition-colors text-sm" style={btnSecondaryStyle}>Export JSON</button>
+        <button onClick={() => fileInputRef.current?.click()} className="px-3 py-1.5 rounded-lg transition-colors text-sm" style={btnSecondaryStyle}>Import JSON</button>
         <input ref={fileInputRef} type="file" accept=".json" onChange={importJSON} className="hidden" />
       </div>
 
@@ -196,37 +197,38 @@ export default function App() {
             return (
               <div
                 key={col.id}
-                className={`flex-1 min-w-[190px] rounded-xl border transition-colors ${dragOver === col.id ? 'border-primary/50 bg-primary/5' : 'border-white/5 bg-dark-100/30'}`}
+                className="flex-1 min-w-[190px] rounded-xl transition-colors"
+                style={{ border: dragOver === col.id ? '1px solid var(--accent)' : '1px solid var(--border)', background: dragOver === col.id ? 'var(--accent-soft)' : 'var(--bg-elevated)' }}
                 onDragOver={(e) => handleDragOver(e, col.id)}
                 onDragLeave={() => setDragOver(null)}
                 onDrop={(e) => handleDrop(e, col.id)}
               >
                 {/* Column Header */}
-                <div className="p-3 border-b border-white/5">
+                <div className="p-3" style={{ borderBottom: '1px solid var(--border)' }}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className={`w-2.5 h-2.5 rounded-full ${col.color}`} />
-                      <span className="text-white font-medium text-sm">{col.label}</span>
-                      <span className="text-gray-500 text-xs">({colCards.length})</span>
+                      <span className="font-medium text-sm" style={{ color: 'var(--text-heading)' }}>{col.label}</span>
+                      <span className="text-xs" style={{ color: 'var(--text-muted)' }}>({colCards.length})</span>
                     </div>
-                    <button onClick={() => { setQuickAddCol(quickAddCol === col.id ? null : col.id); setQuickForm(emptyCard(col.id)) }} className="text-gray-500 hover:text-primary text-lg leading-none" title="Quick add">+</button>
+                    <button onClick={() => { setQuickAddCol(quickAddCol === col.id ? null : col.id); setQuickForm(emptyCard(col.id)) }} className="text-lg leading-none hover:opacity-80" style={{ color: 'var(--accent)' }} title="Quick add">+</button>
                   </div>
-                  {colValue > 0 && <p className="text-gray-500 text-xs mt-1">${colValue.toLocaleString()}</p>}
+                  {colValue > 0 && <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>${colValue.toLocaleString()}</p>}
                 </div>
 
                 {/* Quick Add Form */}
                 {quickAddCol === col.id && (
-                  <div className="p-3 border-b border-white/5 bg-dark-200/20 space-y-2">
-                    <input className={inputClass} value={quickForm.name} onChange={e => setQuickForm(p => ({ ...p, name: e.target.value }))} placeholder="Contact name *" autoFocus />
-                    <input className={inputClass} value={quickForm.company} onChange={e => setQuickForm(p => ({ ...p, company: e.target.value }))} placeholder="Company" />
-                    <input className={inputClass} value={quickForm.service} onChange={e => setQuickForm(p => ({ ...p, service: e.target.value }))} placeholder="Service" />
-                    <input type="number" className={inputClass} value={quickForm.value} onChange={e => setQuickForm(p => ({ ...p, value: e.target.value }))} placeholder="Value ($)" />
-                    <select className={inputClass} value={quickForm.temperature} onChange={e => setQuickForm(p => ({ ...p, temperature: e.target.value }))}>
+                  <div className="p-3 space-y-2" style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-card)' }}>
+                    <input className={inputClass} style={inputStyle} value={quickForm.name} onChange={e => setQuickForm(p => ({ ...p, name: e.target.value }))} placeholder="Contact name *" autoFocus />
+                    <input className={inputClass} style={inputStyle} value={quickForm.company} onChange={e => setQuickForm(p => ({ ...p, company: e.target.value }))} placeholder="Company" />
+                    <input className={inputClass} style={inputStyle} value={quickForm.service} onChange={e => setQuickForm(p => ({ ...p, service: e.target.value }))} placeholder="Service" />
+                    <input type="number" className={inputClass} style={inputStyle} value={quickForm.value} onChange={e => setQuickForm(p => ({ ...p, value: e.target.value }))} placeholder="Value ($)" />
+                    <select className={inputClass} style={inputStyle} value={quickForm.temperature} onChange={e => setQuickForm(p => ({ ...p, temperature: e.target.value }))}>
                       {TEMPS.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                     </select>
                     <div className="flex gap-2">
-                      <button onClick={() => addCard(col.id)} className={btnPrimary + ' flex-1 text-xs py-1.5'}>Add</button>
-                      <button onClick={() => setQuickAddCol(null)} className={btnSecondary + ' text-xs py-1.5'}>Cancel</button>
+                      <button onClick={() => addCard(col.id)} className="flex-1 text-xs py-1.5 px-4 font-medium rounded-lg transition-colors" style={btnPrimaryStyle}>Add</button>
+                      <button onClick={() => setQuickAddCol(null)} className="text-xs py-1.5 px-3 rounded-lg transition-colors" style={btnSecondaryStyle}>Cancel</button>
                     </div>
                   </div>
                 )}
@@ -244,22 +246,23 @@ export default function App() {
                         onDragStart={(e) => handleDragStart(e, card.id)}
                         onDragEnd={handleDragEnd}
                         onClick={() => setSelectedCard(card)}
-                        className={`bg-dark-200/50 border rounded-lg p-3 cursor-pointer hover:border-primary/30 transition-all ${dragId === card.id ? 'opacity-40' : ''} ${overdue ? 'border-red-500/30' : 'border-white/10'}`}
+                        className="rounded-lg p-3 cursor-pointer transition-all"
+                        style={{ background: 'var(--bg-card)', border: overdue ? '1px solid var(--danger)' : '1px solid var(--border)', opacity: dragId === card.id ? 0.4 : 1 }}
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0 flex-1">
-                            <p className="text-white text-sm font-medium truncate">{card.name}</p>
-                            {card.company && <p className="text-gray-400 text-xs truncate">{card.company}</p>}
+                            <p className="text-sm font-medium truncate" style={{ color: 'var(--text-heading)' }}>{card.name}</p>
+                            {card.company && <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>{card.company}</p>}
                           </div>
                           <div className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${ti.color}`} title={ti.label} />
                         </div>
-                        {card.service && <p className="text-gray-500 text-xs mt-1 truncate">{card.service}</p>}
+                        {card.service && <p className="text-xs mt-1 truncate" style={{ color: 'var(--text-muted)' }}>{card.service}</p>}
                         <div className="flex items-center justify-between mt-2">
-                          {card.value ? <span className="text-primary text-sm font-medium">${parseFloat(card.value).toLocaleString()}</span> : <span />}
-                          {overdue && <span className="text-xs px-1.5 py-0.5 rounded bg-red-500/20 text-red-400">Overdue</span>}
+                          {card.value ? <span className="text-sm font-medium" style={{ color: 'var(--accent)' }}>${parseFloat(card.value).toLocaleString()}</span> : <span />}
+                          {overdue && <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>Overdue</span>}
                         </div>
                         {card.nextFollowUp && !overdue && (
-                          <p className="text-gray-500 text-xs mt-1">Follow-up: {card.nextFollowUp}</p>
+                          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Follow-up: {card.nextFollowUp}</p>
                         )}
                       </div>
                     )
@@ -275,52 +278,55 @@ export default function App() {
       {selectedCard && (
         <div className="fixed inset-0 z-50 flex justify-end" onClick={() => setSelectedCard(null)}>
           <div className="absolute inset-0 bg-black/50" />
-          <div className="relative w-full max-w-md bg-[#0a0a0f] border-l border-white/10 h-full overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="relative w-full max-w-md h-full overflow-y-auto" style={{ background: 'var(--bg-page)', borderLeft: '1px solid var(--border)' }} onClick={e => e.stopPropagation()}>
             <div className="p-6 space-y-5">
               {/* Header */}
               <div className="flex items-center justify-between">
-                <h3 className="text-white font-semibold text-lg">Deal Details</h3>
-                <button onClick={() => setSelectedCard(null)} className="text-gray-400 hover:text-white text-xl">&times;</button>
+                <h3 className="font-semibold text-lg" style={{ color: 'var(--text-heading)' }}>Deal Details</h3>
+                <button onClick={() => setSelectedCard(null)} className="text-xl hover:opacity-80" style={{ color: 'var(--text-muted)' }}>&times;</button>
               </div>
 
               {/* Editable Fields */}
               <div className="space-y-3">
                 <div>
-                  <label className="block text-gray-400 text-xs mb-1">Name</label>
-                  <input className={inputClass} value={selectedCard.name} onChange={e => updateCard(selectedCard.id, { name: e.target.value })} />
+                  <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Name</label>
+                  <input className={inputClass} style={inputStyle} value={selectedCard.name} onChange={e => updateCard(selectedCard.id, { name: e.target.value })} />
                 </div>
                 <div>
-                  <label className="block text-gray-400 text-xs mb-1">Company</label>
-                  <input className={inputClass} value={selectedCard.company} onChange={e => updateCard(selectedCard.id, { company: e.target.value })} />
+                  <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Company</label>
+                  <input className={inputClass} style={inputStyle} value={selectedCard.company} onChange={e => updateCard(selectedCard.id, { company: e.target.value })} />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-gray-400 text-xs mb-1">Service</label>
-                    <input className={inputClass} value={selectedCard.service} onChange={e => updateCard(selectedCard.id, { service: e.target.value })} />
+                    <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Service</label>
+                    <input className={inputClass} style={inputStyle} value={selectedCard.service} onChange={e => updateCard(selectedCard.id, { service: e.target.value })} />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-xs mb-1">Value ($)</label>
-                    <input type="number" className={inputClass} value={selectedCard.value} onChange={e => updateCard(selectedCard.id, { value: e.target.value })} />
+                    <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Value ($)</label>
+                    <input type="number" className={inputClass} style={inputStyle} value={selectedCard.value} onChange={e => updateCard(selectedCard.id, { value: e.target.value })} />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-gray-400 text-xs mb-1">Last Contact</label>
-                    <input type="date" className={inputClass} value={selectedCard.lastContact || ''} onChange={e => updateCard(selectedCard.id, { lastContact: e.target.value })} />
+                    <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Last Contact</label>
+                    <input type="date" className={inputClass} style={inputStyle} value={selectedCard.lastContact || ''} onChange={e => updateCard(selectedCard.id, { lastContact: e.target.value })} />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-xs mb-1">Next Follow-up</label>
-                    <input type="date" className={inputClass} value={selectedCard.nextFollowUp || ''} onChange={e => updateCard(selectedCard.id, { nextFollowUp: e.target.value })} />
+                    <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Next Follow-up</label>
+                    <input type="date" className={inputClass} style={inputStyle} value={selectedCard.nextFollowUp || ''} onChange={e => updateCard(selectedCard.id, { nextFollowUp: e.target.value })} />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-gray-400 text-xs mb-1">Temperature</label>
+                  <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Temperature</label>
                   <div className="flex gap-2">
                     {TEMPS.map(t => (
                       <button
                         key={t.value}
                         onClick={() => updateCard(selectedCard.id, { temperature: t.value })}
-                        className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${selectedCard.temperature === t.value ? `${t.color}/20 ${t.textColor} border border-current` : 'bg-dark-200/50 text-gray-400 border border-white/10'}`}
+                        className="flex-1 py-2 rounded-lg text-sm font-medium transition-colors"
+                        style={selectedCard.temperature === t.value
+                          ? { background: 'var(--bg-elevated)', color: t.colorVar, border: `1px solid ${t.colorVar}` }
+                          : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                       >
                         <span className={`inline-block w-2 h-2 rounded-full ${t.color} mr-1.5`} />{t.label}
                       </button>
@@ -328,8 +334,8 @@ export default function App() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-gray-400 text-xs mb-1">Stage</label>
-                  <select className={inputClass} value={selectedCard.stage} onChange={e => updateCard(selectedCard.id, { stage: e.target.value })}>
+                  <label className="block text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Stage</label>
+                  <select className={inputClass} style={inputStyle} value={selectedCard.stage} onChange={e => updateCard(selectedCard.id, { stage: e.target.value })}>
                     {COLUMNS.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
                   </select>
                 </div>
@@ -337,29 +343,29 @@ export default function App() {
 
               {/* Notes */}
               <div>
-                <h4 className="text-white font-medium text-sm mb-2">Notes History</h4>
+                <h4 className="font-medium text-sm mb-2" style={{ color: 'var(--text-heading)' }}>Notes History</h4>
                 <div className="space-y-2 max-h-48 overflow-y-auto mb-3">
                   {(selectedCard.notes || []).length === 0 ? (
-                    <p className="text-gray-500 text-sm">No notes yet.</p>
+                    <p className="text-sm" style={{ color: 'var(--text-muted)' }}>No notes yet.</p>
                   ) : (
                     [...(selectedCard.notes || [])].reverse().map((note, i) => (
-                      <div key={i} className="bg-dark-200/30 rounded-lg p-2">
-                        <p className="text-gray-300 text-sm">{note.text}</p>
-                        <p className="text-gray-500 text-xs mt-1">{new Date(note.date).toLocaleString()}</p>
+                      <div key={i} className="rounded-lg p-2" style={{ background: 'var(--bg-elevated)' }}>
+                        <p className="text-sm" style={{ color: 'var(--text-body)' }}>{note.text}</p>
+                        <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{new Date(note.date).toLocaleString()}</p>
                       </div>
                     ))
                   )}
                 </div>
                 <div className="flex gap-2">
-                  <input className={inputClass + ' flex-1'} value={newNote} onChange={e => setNewNote(e.target.value)} placeholder="Add a note..." onKeyDown={e => e.key === 'Enter' && addNote()} />
-                  <button onClick={addNote} className={btnPrimary + ' text-xs'}>Add</button>
+                  <input className={inputClass + ' flex-1'} style={inputStyle} value={newNote} onChange={e => setNewNote(e.target.value)} placeholder="Add a note..." onKeyDown={e => e.key === 'Enter' && addNote()} />
+                  <button onClick={addNote} className="px-4 py-2 font-medium rounded-lg transition-colors text-sm text-xs" style={btnPrimaryStyle}>Add</button>
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex gap-2 pt-2 border-t border-white/10">
+              <div className="flex gap-2 pt-2" style={{ borderTop: '1px solid var(--border)' }}>
                 <CopyButton text={JSON.stringify(selectedCard, null, 2)} label="Copy" />
-                <button onClick={() => deleteCard(selectedCard.id)} className="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg transition-colors text-sm">Delete Deal</button>
+                <button onClick={() => deleteCard(selectedCard.id)} className="px-3 py-1.5 rounded-lg transition-colors text-sm" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>Delete Deal</button>
               </div>
             </div>
           </div>

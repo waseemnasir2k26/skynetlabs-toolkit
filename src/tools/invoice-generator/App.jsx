@@ -40,12 +40,13 @@ export default function App() {
   return (
     <div className="flex flex-col" style={{ minHeight: 'calc(100vh - 12rem)' }}>
       {/* Tool-specific sub-header */}
-      <div className="border-b border-white/5 bg-dark-100/50 px-4 py-3 flex items-center justify-between">
+      <div className="border-b px-4 py-3 flex items-center justify-between" style={{ borderColor: 'var(--border)', background: 'var(--bg-elevated)' }}>
         <div className="flex items-center gap-3">
-          <h2 className="text-white font-semibold text-sm">Invoice Generator</h2>
+          <h2 className="font-semibold text-sm" style={{ color: 'var(--text-heading)' }}>Invoice Generator</h2>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden p-2 text-gray-400 hover:text-white rounded-lg hover:bg-dark-200 transition-all"
+            className="lg:hidden p-2 rounded-lg transition-all"
+            style={{ color: 'var(--text-muted)' }}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -89,21 +90,21 @@ export default function App() {
           <div className="lg:hidden mb-4 flex gap-2">
             <button
               onClick={() => setShowPreview(false)}
-              className={`flex-1 py-2.5 rounded-lg text-xs font-medium transition-all ${
-                !showPreview
-                  ? 'bg-primary text-white'
-                  : 'bg-dark-200 text-gray-400 hover:text-gray-200'
-              }`}
+              className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all"
+              style={!showPreview
+                ? { background: 'var(--accent)', color: 'var(--text-heading)' }
+                : { background: 'var(--bg-card)', color: 'var(--text-muted)' }
+              }
             >
               Edit Invoice
             </button>
             <button
               onClick={() => setShowPreview(true)}
-              className={`flex-1 py-2.5 rounded-lg text-xs font-medium transition-all ${
-                showPreview
-                  ? 'bg-primary text-white'
-                  : 'bg-dark-200 text-gray-400 hover:text-gray-200'
-              }`}
+              className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-all"
+              style={showPreview
+                ? { background: 'var(--accent)', color: 'var(--text-heading)' }
+                : { background: 'var(--bg-card)', color: 'var(--text-muted)' }
+              }
             >
               Preview
             </button>

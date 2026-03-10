@@ -2,6 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== THEME VARIABLES ===== */
+:root,
+[data-theme="dark"] {
+  --bg-page:          #050507;
+  --bg-card:          #0c0e14;
+  --bg-card-hover:    #11131a;
+  --bg-input:         #0a0c12;
+  --bg-elevated:      #161922;
+  --bg-tooltip:       #1e2130;
+  --border:           rgba(255,255,255,0.07);
+  --border-hover:     rgba(255,255,255,0.14);
+  --border-focus:     rgba(0,229,160,0.5);
+  --text-heading:     #f2f3f5;
+  --text-body:        #c4c8d4;
+  --text-muted:       #626880;
+  --text-on-accent:   #020503;
+  --accent:           #00e5a0;
+  --accent-hover:     #00cc8e;
+  --accent-soft:      rgba(0,229,160,0.08);
+  --accent-glow:      0 0 24px rgba(0,229,160,0.2);
+  --danger:           #ff4d6a;
+  --danger-soft:      rgba(255,77,106,0.08);
+  --warning:          #ffb84d;
+  --warning-soft:     rgba(255,184,77,0.08);
+  --success:          #00e5a0;
+  --success-soft:     rgba(0,229,160,0.08);
+  --info:             #4d94ff;
+  --info-soft:        rgba(77,148,255,0.08);
+  --shadow-card:      0 2px 8px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.05);
+  --shadow-lg:        0 8px 32px rgba(0,0,0,0.6);
+  --shadow-glow:      0 0 20px rgba(0,229,160,0.15);
+  --radius:           10px;
+  --radius-lg:        16px;
+  --radius-sm:        6px;
+}
+
+[data-theme="light"] {
+  --bg-page:          #f4f5f7;
+  --bg-card:          #ffffff;
+  --bg-card-hover:    #fafbfc;
+  --bg-input:         #f0f1f4;
+  --bg-elevated:      #ffffff;
+  --bg-tooltip:       #1a1d28;
+  --border:           rgba(0,0,0,0.08);
+  --border-hover:     rgba(0,0,0,0.15);
+  --border-focus:     rgba(0,180,120,0.5);
+  --text-heading:     #0f1117;
+  --text-body:        #3d4355;
+  --text-muted:       #8891a5;
+  --text-on-accent:   #ffffff;
+  --accent:           #00b878;
+  --accent-hover:     #009e68;
+  --accent-soft:      rgba(0,184,120,0.07);
+  --accent-glow:      0 0 24px rgba(0,184,120,0.12);
+  --danger:           #dc3550;
+  --danger-soft:      rgba(220,53,80,0.06);
+  --warning:          #d49200;
+  --warning-soft:     rgba(212,146,0,0.06);
+  --success:          #00b878;
+  --success-soft:     rgba(0,184,120,0.06);
+  --info:             #2b74e0;
+  --info-soft:        rgba(43,116,224,0.06);
+  --shadow-card:      0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-lg:        0 8px 24px rgba(0,0,0,0.08);
+  --shadow-glow:      0 0 20px rgba(0,184,120,0.08);
+  --radius:           10px;
+  --radius-lg:        16px;
+  --radius-sm:        6px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,12 +83,13 @@ html {
 }
 
 body {
-  background-color: #0a0a0f;
-  color: #e2e8f0;
+  background-color: var(--bg-page);
+  color: var(--text-body);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -32,16 +103,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: var(--bg-page);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #13b973;
+  background: var(--accent);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0f9a60;
+  background: var(--accent-hover);
 }
 
 /* Glass morphism utility */

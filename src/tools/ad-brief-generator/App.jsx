@@ -262,53 +262,53 @@ export default function App() {
             <div className="space-y-5">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Business Name *</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Business Name *</label>
                   <input type="text" value={form.businessName} onChange={e => updateForm('businessName', e.target.value)}
-                    placeholder="Your business name" className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                    placeholder="Your business name" className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Service / Product *</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Service / Product *</label>
                   <input type="text" value={form.service} onChange={e => updateForm('service', e.target.value)}
-                    placeholder="What you're promoting" className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                    placeholder="What you're promoting" className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Business Description</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Business Description</label>
                 <input type="text" value={form.businessDesc} onChange={e => updateForm('businessDesc', e.target.value)}
-                  placeholder="Brief description of your business" className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                  placeholder="Brief description of your business" className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Target Audience *</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Target Audience *</label>
                 <textarea value={form.audience} onChange={e => updateForm('audience', e.target.value)} rows={3}
                   placeholder="Describe your ideal customer: demographics, interests, pain points..."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50 resize-none" />
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Campaign Goal</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Campaign Goal</label>
                   <select value={form.goal} onChange={e => updateForm('goal', e.target.value)}
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50">
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                     {CAMPAIGN_GOALS.map(g => <option key={g} value={g}>{g}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Budget Range</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Budget Range</label>
                   <select value={form.budget} onChange={e => updateForm('budget', e.target.value)}
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50">
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                     {BUDGET_RANGES.map(b => <option key={b} value={b}>{b}</option>)}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Platforms * (select at least one)</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Platforms * (select at least one)</label>
                 <div className="flex flex-wrap gap-2">
                   {PLATFORMS.map(p => (
                     <button key={p} onClick={() => togglePlatform(p)}
-                      className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${form.platforms.includes(p) ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-dark-300/50 text-gray-400 border border-white/5 hover:text-white'}`}>
+                      className="px-3 py-1.5 rounded-lg text-sm transition-colors border" style={form.platforms.includes(p) ? { background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
                       {p}
                     </button>
                   ))}
@@ -316,11 +316,11 @@ export default function App() {
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Tone</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Tone</label>
                 <div className="flex flex-wrap gap-2">
                   {TONES.map(t => (
                     <button key={t} onClick={() => updateForm('tone', t)}
-                      className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${form.tone === t ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-dark-300/50 text-gray-400 border border-white/5 hover:text-white'}`}>
+                      className="px-3 py-1.5 rounded-lg text-sm transition-colors border" style={form.tone === t ? { background: 'var(--accent-soft)', color: 'var(--accent)', borderColor: 'var(--accent)' } : { background: 'var(--bg-elevated)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
                       {t}
                     </button>
                   ))}
@@ -328,7 +328,7 @@ export default function App() {
               </div>
 
               <button onClick={handleGenerate} disabled={!isValid}
-                className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                className="w-full py-3 font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
                 Generate Brief
               </button>
             </div>
@@ -337,15 +337,15 @@ export default function App() {
       ) : (
         <div className="space-y-6">
           <div className="flex items-center justify-between flex-wrap gap-3">
-            <button onClick={handleReset} className="px-4 py-2 bg-dark-200/50 text-gray-300 rounded-lg text-sm hover:bg-dark-300 transition-colors">&larr; Start Over</button>
+            <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: 'var(--bg-elevated)', color: 'var(--text-body)' }}>&larr; Start Over</button>
             <CopyButton text={getAllText()} label="Copy All" />
           </div>
 
           {/* Tabs */}
-          <div className="flex flex-wrap gap-1 bg-dark-200/30 rounded-xl p-1 border border-white/5">
+          <div className="flex flex-wrap gap-1 rounded-xl p-1 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
             {TABS.map((tab, i) => (
               <button key={tab} onClick={() => setActiveTab(i)}
-                className={`px-4 py-2 rounded-lg text-sm transition-colors ${activeTab === i ? 'bg-primary/20 text-primary font-medium' : 'text-gray-400 hover:text-white'}`}>
+                className="px-4 py-2 rounded-lg text-sm transition-colors" style={activeTab === i ? { background: 'var(--accent-soft)', color: 'var(--accent)', fontWeight: 500 } : { color: 'var(--text-muted)' }}>
                 {tab}
               </button>
             ))}
@@ -356,24 +356,24 @@ export default function App() {
             <ResultCard title="Campaign Strategy" icon="🎯">
               <div className="space-y-4 text-sm">
                 <div>
-                  <h4 className="text-white font-medium mb-1">Objective</h4>
-                  <p className="text-gray-300">{results.strategy.objective}</p>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Objective</h4>
+                  <p className="" style={{ color: 'var(--text-body)' }}>{results.strategy.objective}</p>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-1">Overview</h4>
-                  <p className="text-gray-300">{results.strategy.overview}</p>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Overview</h4>
+                  <p className="" style={{ color: 'var(--text-body)' }}>{results.strategy.overview}</p>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-1">KPIs</h4>
-                  <div className="flex flex-wrap gap-2">{results.strategy.kpis.map(k => <span key={k} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">{k}</span>)}</div>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>KPIs</h4>
+                  <div className="flex flex-wrap gap-2">{results.strategy.kpis.map(k => <span key={k} className="px-3 py-1 rounded-full text-xs" style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>{k}</span>)}</div>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-1">Funnel Strategy</h4>
-                  <p className="text-gray-300">{results.strategy.funnel}</p>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Funnel Strategy</h4>
+                  <p className="" style={{ color: 'var(--text-body)' }}>{results.strategy.funnel}</p>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-1">Timeline</h4>
-                  <p className="text-gray-300">{results.strategy.timeline}</p>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Timeline</h4>
+                  <p className="" style={{ color: 'var(--text-body)' }}>{results.strategy.timeline}</p>
                 </div>
               </div>
             </ResultCard>
@@ -384,14 +384,14 @@ export default function App() {
             <ResultCard title="5 Ad Angles" icon="💡">
               <div className="space-y-4">
                 {results.angles.map((a, i) => (
-                  <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
+                  <div key={i} className="rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-primary font-medium">{i + 1}. {a.name}</h4>
+                      <h4 className="font-medium" style={{ color: 'var(--accent)' }}>{i + 1}. {a.name}</h4>
                       <CopyButton text={`${a.name}\n${a.hook}`} label="" />
                     </div>
-                    <p className="text-white text-sm mb-2">{a.hook}</p>
-                    <p className="text-gray-400 text-xs mb-1"><span className="text-gray-300">Why it works:</span> {a.why}</p>
-                    <p className="text-gray-400 text-xs"><span className="text-gray-300">Emotional trigger:</span> <span className="text-primary">{a.trigger}</span></p>
+                    <p className="text-sm mb-2" style={{ color: 'var(--text-heading)' }}>{a.hook}</p>
+                    <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}><span className="" style={{ color: 'var(--text-body)' }}>Why it works:</span> {a.why}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}><span className="" style={{ color: 'var(--text-body)' }}>Emotional trigger:</span> <span className="" style={{ color: 'var(--accent)' }}>{a.trigger}</span></p>
                   </div>
                 ))}
               </div>
@@ -406,14 +406,14 @@ export default function App() {
                   <div className="space-y-4 text-sm">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="text-white font-medium">Headlines</h4>
-                        <span className="text-gray-500 text-xs">Max: {data.specs.headline || '40'} chars</span>
+                        <h4 className="font-medium" style={{ color: 'var(--text-heading)' }}>Headlines</h4>
+                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Max: {data.specs.headline || '40'} chars</span>
                       </div>
                       {data.headlines.map((h, i) => (
-                        <div key={i} className="flex items-center justify-between gap-2 py-1.5 border-b border-white/5 last:border-0">
-                          <span className="text-gray-300">{i + 1}. {h}</span>
+                        <div key={i} className="flex items-center justify-between gap-2 py-1.5 border-b last:border-0" style={{ borderColor: 'var(--border)' }}>
+                          <span className="" style={{ color: 'var(--text-body)' }}>{i + 1}. {h}</span>
                           <div className="flex items-center gap-2 shrink-0">
-                            <span className={`text-xs ${h.length <= (data.specs.headline || 40) ? 'text-green-400' : 'text-red-400'}`}>
+                            <span className="text-xs" style={{ color: h.length <= (data.specs.headline || 40) ? 'var(--success)' : 'var(--danger)' }}>
                               {h.length} chars {h.length <= (data.specs.headline || 40) ? '\u2705' : '\u274C'}
                             </span>
                             <CopyButton text={h} label="" />
@@ -422,23 +422,23 @@ export default function App() {
                       ))}
                     </div>
                     <div>
-                      <h4 className="text-white font-medium mb-2">Primary Text</h4>
+                      <h4 className="font-medium mb-2" style={{ color: 'var(--text-heading)' }}>Primary Text</h4>
                       {data.primaryTexts.map((p, i) => (
-                        <div key={i} className="bg-dark-200/30 rounded-lg p-3 mb-2 border border-white/5">
+                        <div key={i} className="rounded-lg p-3 mb-2 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
                           <div className="flex justify-between items-start gap-2">
-                            <p className="text-gray-300 text-sm">{p}</p>
+                            <p className="text-sm" style={{ color: 'var(--text-body)' }}>{p}</p>
                             <CopyButton text={p} label="" className="shrink-0" />
                           </div>
-                          <span className="text-gray-500 text-xs mt-1 block">{p.length} chars</span>
+                          <span className="text-xs mt-1 block" style={{ color: 'var(--text-muted)' }}>{p.length} chars</span>
                         </div>
                       ))}
                     </div>
                     <div>
-                      <h4 className="text-white font-medium mb-2">CTAs</h4>
+                      <h4 className="font-medium mb-2" style={{ color: 'var(--text-heading)' }}>CTAs</h4>
                       <div className="flex flex-wrap gap-2">
                         {data.ctas.map((c, i) => (
-                          <div key={i} className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-3 py-1.5">
-                            <span className="text-primary text-sm">{c}</span>
+                          <div key={i} className="inline-flex items-center gap-2 border rounded-lg px-3 py-1.5" style={{ background: 'var(--accent-soft)', borderColor: 'var(--accent)' }}>
+                            <span className="text-sm" style={{ color: 'var(--accent)' }}>{c}</span>
                             <CopyButton text={c} label="" />
                           </div>
                         ))}
@@ -455,21 +455,21 @@ export default function App() {
             <ResultCard title="Visual Direction" icon="🎨">
               <div className="space-y-4 text-sm">
                 <div>
-                  <h4 className="text-white font-medium mb-1">Creative Style</h4>
-                  <p className="text-gray-300">{results.visual.style}</p>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Creative Style</h4>
+                  <p className="" style={{ color: 'var(--text-body)' }}>{results.visual.style}</p>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-2">Asset Sizes</h4>
-                  <div className="space-y-1">{results.visual.formats.map((f, i) => <p key={i} className="text-gray-300 text-xs bg-dark-200/30 rounded px-3 py-1.5">{f}</p>)}</div>
+                  <h4 className="font-medium mb-2" style={{ color: 'var(--text-heading)' }}>Asset Sizes</h4>
+                  <div className="space-y-1">{results.visual.formats.map((f, i) => <p key={i} className="text-xs rounded px-3 py-1.5" style={{ color: 'var(--text-body)', background: 'var(--bg-elevated)' }}>{f}</p>)}</div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-green-400 font-medium mb-2">Do</h4>
-                    {results.visual.doList.map((d, i) => <p key={i} className="text-gray-300 text-sm flex items-start gap-2 mb-1"><span className="text-green-400">+</span> {d}</p>)}
+                    <h4 className="font-medium mb-2" style={{ color: 'var(--success)' }}>Do</h4>
+                    {results.visual.doList.map((d, i) => <p key={i} className="text-sm flex items-start gap-2 mb-1" style={{ color: 'var(--text-body)' }}><span className="" style={{ color: 'var(--success)' }}>+</span> {d}</p>)}
                   </div>
                   <div>
-                    <h4 className="text-red-400 font-medium mb-2">Don't</h4>
-                    {results.visual.dontList.map((d, i) => <p key={i} className="text-gray-300 text-sm flex items-start gap-2 mb-1"><span className="text-red-400">-</span> {d}</p>)}
+                    <h4 className="font-medium mb-2" style={{ color: 'var(--danger)' }}>Don't</h4>
+                    {results.visual.dontList.map((d, i) => <p key={i} className="text-sm flex items-start gap-2 mb-1" style={{ color: 'var(--text-body)' }}><span className="" style={{ color: 'var(--danger)' }}>-</span> {d}</p>)}
                   </div>
                 </div>
               </div>
@@ -481,24 +481,24 @@ export default function App() {
             <ResultCard title="Audience Targeting" icon="👥">
               <div className="space-y-4 text-sm">
                 <div>
-                  <h4 className="text-white font-medium mb-1">Primary Audience</h4>
-                  <p className="text-gray-300">{results.audienceTargeting.primary}</p>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Primary Audience</h4>
+                  <p className="" style={{ color: 'var(--text-body)' }}>{results.audienceTargeting.primary}</p>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-1">Demographics</h4>
-                  <p className="text-gray-300">{results.audienceTargeting.demographics}</p>
+                  <h4 className="font-medium mb-1" style={{ color: 'var(--text-heading)' }}>Demographics</h4>
+                  <p className="" style={{ color: 'var(--text-body)' }}>{results.audienceTargeting.demographics}</p>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-2">Interest Targeting</h4>
-                  {results.audienceTargeting.interests.map((int, i) => <p key={i} className="text-gray-300 flex items-start gap-2 mb-1"><span className="text-primary">+</span> {int}</p>)}
+                  <h4 className="font-medium mb-2" style={{ color: 'var(--text-heading)' }}>Interest Targeting</h4>
+                  {results.audienceTargeting.interests.map((int, i) => <p key={i} className="flex items-start gap-2 mb-1" style={{ color: 'var(--text-body)' }}><span className="" style={{ color: 'var(--accent)' }}>+</span> {int}</p>)}
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-2">Retargeting Audiences</h4>
-                  {results.audienceTargeting.retargeting.map((r, i) => <p key={i} className="text-gray-300 flex items-start gap-2 mb-1"><span className="text-primary">+</span> {r}</p>)}
+                  <h4 className="font-medium mb-2" style={{ color: 'var(--text-heading)' }}>Retargeting Audiences</h4>
+                  {results.audienceTargeting.retargeting.map((r, i) => <p key={i} className="flex items-start gap-2 mb-1" style={{ color: 'var(--text-body)' }}><span className="" style={{ color: 'var(--accent)' }}>+</span> {r}</p>)}
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-2">Exclusions</h4>
-                  {results.audienceTargeting.exclusions.map((e, i) => <p key={i} className="text-gray-300 flex items-start gap-2 mb-1"><span className="text-red-400">-</span> {e}</p>)}
+                  <h4 className="font-medium mb-2" style={{ color: 'var(--text-heading)' }}>Exclusions</h4>
+                  {results.audienceTargeting.exclusions.map((e, i) => <p key={i} className="flex items-start gap-2 mb-1" style={{ color: 'var(--text-body)' }}><span className="" style={{ color: 'var(--danger)' }}>-</span> {e}</p>)}
                 </div>
               </div>
             </ResultCard>
@@ -511,30 +511,30 @@ export default function App() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="border-b border-white/10">
-                        <th className="py-2 px-3 text-gray-400 font-medium">Variable</th>
-                        <th className="py-2 px-3 text-gray-400 font-medium">Control (A)</th>
-                        <th className="py-2 px-3 text-gray-400 font-medium">Variant (B)</th>
-                        <th className="py-2 px-3 text-gray-400 font-medium">Metric</th>
-                        <th className="py-2 px-3 text-gray-400 font-medium">Duration</th>
+                      <tr className="border-b" style={{ borderColor: 'var(--border)' }}>
+                        <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Variable</th>
+                        <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Control (A)</th>
+                        <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Variant (B)</th>
+                        <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Metric</th>
+                        <th className="py-2 px-3 font-medium" style={{ color: 'var(--text-muted)' }}>Duration</th>
                       </tr>
                     </thead>
                     <tbody>
                       {results.abTesting.tests.map((test, i) => (
-                        <tr key={i} className="border-b border-white/5">
-                          <td className="py-2 px-3 text-primary">{test.variable}</td>
-                          <td className="py-2 px-3 text-gray-300">{test.control}</td>
-                          <td className="py-2 px-3 text-gray-300">{test.variant}</td>
-                          <td className="py-2 px-3 text-gray-300">{test.metric}</td>
-                          <td className="py-2 px-3 text-gray-300">{test.duration}</td>
+                        <tr key={i} className="border-b" style={{ borderColor: 'var(--border)' }}>
+                          <td className="py-2 px-3" style={{ color: 'var(--accent)' }}>{test.variable}</td>
+                          <td className="py-2 px-3" style={{ color: 'var(--text-body)' }}>{test.control}</td>
+                          <td className="py-2 px-3" style={{ color: 'var(--text-body)' }}>{test.variant}</td>
+                          <td className="py-2 px-3" style={{ color: 'var(--text-body)' }}>{test.metric}</td>
+                          <td className="py-2 px-3" style={{ color: 'var(--text-body)' }}>{test.duration}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
                 <div>
-                  <h4 className="text-white font-medium mb-2">Testing Rules</h4>
-                  {results.abTesting.rules.map((r, i) => <p key={i} className="text-gray-300 flex items-start gap-2 mb-1"><span className="text-primary">{i + 1}.</span> {r}</p>)}
+                  <h4 className="font-medium mb-2" style={{ color: 'var(--text-heading)' }}>Testing Rules</h4>
+                  {results.abTesting.rules.map((r, i) => <p key={i} className="flex items-start gap-2 mb-1" style={{ color: 'var(--text-body)' }}><span className="" style={{ color: 'var(--accent)' }}>{i + 1}.</span> {r}</p>)}
                 </div>
               </div>
             </ResultCard>

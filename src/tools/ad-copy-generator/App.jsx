@@ -166,53 +166,53 @@ export default function App() {
           <ResultCard title="Ad Copy Details" icon="✍️">
             <div className="space-y-5">
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Service / Product *</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Service / Product *</label>
                 <input type="text" value={form.service} onChange={e => updateForm('service', e.target.value)}
                   placeholder="e.g., AI Automation, Web Design, SEO Services..."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Target Keyword *</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Target Keyword *</label>
                 <input type="text" value={form.keyword} onChange={e => updateForm('keyword', e.target.value)}
                   placeholder="e.g., marketing agency, web developer, business consultant..."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50" />
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Platform</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Platform</label>
                   <select value={form.platform} onChange={e => updateForm('platform', e.target.value)}
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50">
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                     {PLATFORMS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-gray-300 text-sm font-medium mb-2">Tone</label>
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Tone</label>
                   <select value={form.tone} onChange={e => updateForm('tone', e.target.value)}
-                    className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50">
+                    className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                     {TONES.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">Unique Selling Proposition (optional)</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>Unique Selling Proposition (optional)</label>
                 <textarea value={form.usp} onChange={e => updateForm('usp', e.target.value)} rows={2}
                   placeholder="What makes you different? e.g., 10x faster delivery, 100% money-back guarantee..."
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50 resize-none" />
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none resize-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }} />
               </div>
 
               <div>
-                <label className="block text-gray-300 text-sm font-medium mb-2">CTA Goal</label>
+                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-body)' }}>CTA Goal</label>
                 <select value={form.ctaGoal} onChange={e => updateForm('ctaGoal', e.target.value)}
-                  className="w-full bg-dark-200/50 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50">
+                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)', color: 'var(--text-heading)' }}>
                   {CTA_GOALS.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
 
               <button onClick={handleGenerate} disabled={!isValid}
-                className="w-full py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+                className="w-full py-3 font-semibold rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>
                 Generate Copy
               </button>
             </div>
@@ -221,7 +221,7 @@ export default function App() {
       ) : (
         <div className="space-y-6">
           <div className="flex items-center justify-between flex-wrap gap-3">
-            <button onClick={handleReset} className="px-4 py-2 bg-dark-200/50 text-gray-300 rounded-lg text-sm hover:bg-dark-300 transition-colors">&larr; Start Over</button>
+            <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: 'var(--bg-elevated)', color: 'var(--text-body)' }}>&larr; Start Over</button>
             <CopyButton text={getAllText()} label="Copy All" />
           </div>
 
@@ -229,9 +229,9 @@ export default function App() {
           <ResultCard title={`${results.platformLabel} - Character Limits`} icon="📐">
             <div className="flex flex-wrap gap-3">
               {results.specsRef.map(s => (
-                <div key={s.field} className="bg-dark-200/30 rounded-lg px-4 py-2 border border-white/5">
-                  <span className="text-gray-400 text-xs block">{s.field}</span>
-                  <span className="text-primary font-semibold">{s.maxChars} chars</span>
+                <div key={s.field} className="rounded-lg px-4 py-2 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+                  <span className="text-xs block" style={{ color: 'var(--text-muted)' }}>{s.field}</span>
+                  <span className="font-semibold" style={{ color: 'var(--accent)' }}>{s.maxChars} chars</span>
                 </div>
               ))}
             </div>
@@ -241,13 +241,13 @@ export default function App() {
           <ResultCard title="Headline Variations" icon="🔤">
             <div className="space-y-2">
               {results.headlines.map((h, i) => (
-                <div key={i} className="flex items-center justify-between gap-3 bg-dark-200/30 rounded-lg px-4 py-2.5 border border-white/5">
+                <div key={i} className="flex items-center justify-between gap-3 rounded-lg px-4 py-2.5 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <span className="text-gray-500 text-xs w-5 shrink-0">{i + 1}.</span>
-                    <span className="text-white text-sm truncate">{h.text}</span>
+                    <span className="text-xs w-5 shrink-0" style={{ color: 'var(--text-muted)' }}>{i + 1}.</span>
+                    <span className="text-sm truncate" style={{ color: 'var(--text-heading)' }}>{h.text}</span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className={`text-xs font-mono ${h.withinLimit ? 'text-green-400' : 'text-red-400'}`}>
+                    <span className="text-xs font-mono" style={{ color: h.withinLimit ? 'var(--success)' : 'var(--danger)' }}>
                       {h.charCount} {h.withinLimit ? '\u2705' : '\u274C'}
                     </span>
                     <CopyButton text={h.text} label="" />
@@ -261,13 +261,13 @@ export default function App() {
           <ResultCard title="Primary Text Variations" icon="📝">
             <div className="space-y-3">
               {results.primaryTexts.map((p, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
+                <div key={i} className="rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
                   <div className="flex justify-between items-start gap-2">
-                    <p className="text-gray-300 text-sm flex-1">{p.text}</p>
+                    <p className="text-sm flex-1" style={{ color: 'var(--text-body)' }}>{p.text}</p>
                     <CopyButton text={p.text} label="" className="shrink-0" />
                   </div>
                   <div className="flex items-center gap-2 mt-2">
-                    <span className={`text-xs font-mono ${p.withinLimit ? 'text-green-400' : 'text-red-400'}`}>
+                    <span className="text-xs font-mono" style={{ color: p.withinLimit ? 'var(--success)' : 'var(--danger)' }}>
                       {p.charCount} chars {p.withinLimit ? '\u2705' : '\u274C'}
                     </span>
                   </div>
@@ -280,9 +280,9 @@ export default function App() {
           <ResultCard title="Call-to-Action Variations" icon="🎯">
             <div className="flex flex-wrap gap-3">
               {results.ctas.map((c, i) => (
-                <div key={i} className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-lg px-4 py-2">
-                  <span className="text-primary font-medium text-sm">{c.text}</span>
-                  <span className="text-gray-500 text-xs">({c.charCount})</span>
+                <div key={i} className="inline-flex items-center gap-2 border rounded-lg px-4 py-2" style={{ background: 'var(--accent-soft)', borderColor: 'var(--accent)' }}>
+                  <span className="font-medium text-sm" style={{ color: 'var(--accent)' }}>{c.text}</span>
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>({c.charCount})</span>
                   <CopyButton text={c.text} label="" />
                 </div>
               ))}
@@ -293,16 +293,16 @@ export default function App() {
           <ResultCard title="A/B Test Pair Suggestions" icon="🧪">
             <div className="space-y-4">
               {results.abPairs.map((ab, i) => (
-                <div key={i} className="bg-dark-200/30 rounded-lg p-4 border border-white/5">
-                  <h4 className="text-primary font-medium text-sm mb-3">Test {i + 1}: {ab.test}</h4>
+                <div key={i} className="rounded-lg p-4 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+                  <h4 className="font-medium text-sm mb-3" style={{ color: 'var(--accent)' }}>Test {i + 1}: {ab.test}</h4>
                   <div className="grid sm:grid-cols-2 gap-3">
-                    <div className="bg-dark-300/30 rounded-lg p-3 border border-white/5">
-                      <span className="text-xs text-gray-500 block mb-1">Version A</span>
-                      <p className="text-gray-300 text-sm">{ab.a}</p>
+                    <div className="rounded-lg p-3 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+                      <span className="text-xs block mb-1" style={{ color: 'var(--text-muted)' }}>Version A</span>
+                      <p className="text-sm" style={{ color: 'var(--text-body)' }}>{ab.a}</p>
                     </div>
-                    <div className="bg-dark-300/30 rounded-lg p-3 border border-primary/10">
-                      <span className="text-xs text-primary block mb-1">Version B</span>
-                      <p className="text-gray-300 text-sm">{ab.b}</p>
+                    <div className="rounded-lg p-3 border" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--accent)' }}>
+                      <span className="text-xs block mb-1" style={{ color: 'var(--accent)' }}>Version B</span>
+                      <p className="text-sm" style={{ color: 'var(--text-body)' }}>{ab.b}</p>
                     </div>
                   </div>
                 </div>
@@ -316,12 +316,12 @@ export default function App() {
               <div className="flex items-start justify-between gap-3">
                 <div className="flex flex-wrap gap-2">
                   {results.negativeKeywords.map(kw => (
-                    <span key={kw} className="px-3 py-1 bg-red-500/10 text-red-400 rounded-full text-xs border border-red-500/20">{kw}</span>
+                    <span key={kw} className="px-3 py-1 rounded-full text-xs border" style={{ background: 'var(--danger-soft)', color: 'var(--danger)', borderColor: 'var(--danger)' }}>{kw}</span>
                   ))}
                 </div>
                 <CopyButton text={results.negativeKeywords.join(', ')} label="Copy" className="shrink-0" />
               </div>
-              <p className="text-gray-500 text-xs mt-3">Add these to your Google Ads campaign to prevent wasted spend on irrelevant searches.</p>
+              <p className="text-xs mt-3" style={{ color: 'var(--text-muted)' }}>Add these to your Google Ads campaign to prevent wasted spend on irrelevant searches.</p>
             </ResultCard>
           )}
         </div>
