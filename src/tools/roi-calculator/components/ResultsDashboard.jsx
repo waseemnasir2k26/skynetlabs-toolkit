@@ -275,11 +275,11 @@ export default function ResultsDashboard({ results, businessInfo, onBack, onRese
                   <div className="w-full h-2 bg-dark-400 rounded-full overflow-hidden mt-2">
                     <div
                       className="h-full bg-gradient-to-r from-primary-600 to-primary-400 rounded-full transition-all duration-1000"
-                      style={{ width: `${(task.costSaved / task.annualCost) * 100}%` }}
+                      style={{ width: `${task.annualCost > 0 ? (task.costSaved / task.annualCost) * 100 : 0}%` }}
                     />
                   </div>
                   <p className="text-xs text-gray-600 text-right">
-                    {Math.round((task.costSaved / task.annualCost) * 100)}% automated
+                    {task.annualCost > 0 ? Math.round((task.costSaved / task.annualCost) * 100) : 0}% automated
                   </p>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Heart, Filter, LayoutGrid, List, Columns, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTestimonials } from '../contexts/TestimonialContext'
 import TestimonialCard from '../components/TestimonialCard'
@@ -15,6 +15,8 @@ export default function WallOfLovePage() {
   const [filterService, setFilterService] = useState('')
   const [filterRating, setFilterRating] = useState(0)
   const [carouselIndex, setCarouselIndex] = useState(0)
+
+  useEffect(() => { setCarouselIndex(0) }, [filterService, filterRating])
 
   const uniqueServices = [...new Set(approvedTestimonials.map(t => t.service).filter(Boolean))]
 

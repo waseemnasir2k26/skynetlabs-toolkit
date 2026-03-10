@@ -111,19 +111,17 @@ export function calcProjectStats(project) {
     .filter((r) => r.status !== 'Rejected')
     .reduce((sum, r) => sum + (parseFloat(r.hours) || 0), 0);
 
+  const rate =
+    parseFloat(project.deliverables[0]?.rate) ||
+    (originalHours > 0 ? parseFloat(project.contractValue) / originalHours : 100);
+
   const additionalCost = project.changeRequests
     .filter((r) => r.status !== 'Rejected')
     .reduce(
       (sum, r) =>
-        sum +
-        (parseFloat(r.hours) || 0) *
-          (parseFloat(project.deliverables[0]?.rate) || parseFloat(project.contractValue) / originalHours || 100),
+        sum + (parseFloat(r.hours) || 0) * rate,
       0
     );
-
-  const rate =
-    parseFloat(project.deliverables[0]?.rate) ||
-    (originalHours > 0 ? parseFloat(project.contractValue) / originalHours : 100);
 
   const timelineImpact = project.changeRequests
     .filter((r) => r.status !== 'Rejected')

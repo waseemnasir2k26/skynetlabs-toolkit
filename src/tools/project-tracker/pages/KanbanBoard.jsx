@@ -20,6 +20,7 @@ export default function KanbanBoard() {
   const handleDragStart = (e, projectId) => {
     setDragItem(projectId);
     e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', projectId);
   };
 
   const handleDragOver = (e, colKey) => {
@@ -28,8 +29,10 @@ export default function KanbanBoard() {
     setDragOverCol(colKey);
   };
 
-  const handleDragLeave = () => {
-    setDragOverCol(null);
+  const handleDragLeave = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setDragOverCol(null);
+    }
   };
 
   const handleDrop = (e, colKey) => {

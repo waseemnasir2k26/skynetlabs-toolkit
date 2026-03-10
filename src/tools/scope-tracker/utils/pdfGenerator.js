@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import { formatCurrency, formatDate } from './helpers';
 import { getNextChangeOrderNumber } from './storage';
 
@@ -37,8 +37,8 @@ export async function generateChangeOrderPDF(project, selectedRequests, stats) {
       <td style="padding:12px 8px;font-size:13px;text-align:center;">${r.category}</td>
       <td style="padding:12px 8px;font-size:13px;text-align:center;">${r.priority}</td>
       <td style="padding:12px 8px;font-size:13px;text-align:right;">${r.hours}h</td>
-      <td style="padding:12px 8px;font-size:13px;text-align:right;">${formatCurrency(parseFloat(r.hours) * stats.rate)}</td>
-      <td style="padding:12px 8px;font-size:13px;text-align:right;">+${r.timelineImpact}d</td>
+      <td style="padding:12px 8px;font-size:13px;text-align:right;">${formatCurrency((parseFloat(r.hours) || 0) * stats.rate)}</td>
+      <td style="padding:12px 8px;font-size:13px;text-align:right;">+${r.timelineImpact || 0}d</td>
     </tr>
   `
     )

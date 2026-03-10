@@ -22,7 +22,7 @@ export default function EmbedPage() {
     params.set('bg', widgetBg)
     params.set('text', widgetText)
     params.set('accent', widgetAccent)
-    return `${baseUrl}#/wall?${params.toString()}`
+    return `${window.location.origin}/testimonials/wall?${params.toString()}`
   }
 
   const generateIframeCode = () => {

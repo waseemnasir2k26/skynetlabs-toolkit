@@ -125,7 +125,7 @@ export function generateCollectionLink(settings) {
   const params = new URLSearchParams()
   if (settings.agencyName) params.set('agency', settings.agencyName)
   if (settings.services?.length) params.set('services', settings.services.join('|'))
-  return `${base}#/collect?${params.toString()}`
+  return `${window.location.origin}/testimonials/collect?${params.toString()}`
 }
 
 export function generateEmailTemplate(settings) {

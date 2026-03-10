@@ -184,7 +184,7 @@ export default function Dashboard({ project, onUpdate }) {
                   <div className="text-sm font-medium text-gray-200 truncate">{d.name}</div>
                   <div className="text-xs text-gray-500">
                     {d.hours}h @ {formatCurrency(d.rate)}/hr ={' '}
-                    {formatCurrency(parseFloat(d.hours) * parseFloat(d.rate))}
+                    {formatCurrency((parseFloat(d.hours) || 0) * (parseFloat(d.rate) || 0))}
                   </div>
                 </div>
                 <select
@@ -239,7 +239,7 @@ export default function Dashboard({ project, onUpdate }) {
                       <span>+{r.hours}h</span>
                       <span>+{r.timelineImpact || 0}d</span>
                       <span className="text-primary font-medium">
-                        {formatCurrency(parseFloat(r.hours) * stats.rate)}
+                        {formatCurrency((parseFloat(r.hours) || 0) * stats.rate)}
                       </span>
                     </div>
                     {r.clientQuote && (

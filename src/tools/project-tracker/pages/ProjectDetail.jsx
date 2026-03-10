@@ -86,7 +86,7 @@ export default function ProjectDetail() {
     navigate('/project-tracker');
   };
 
-  const clientShareUrl = `${window.location.origin}/client/${id}`;
+  const clientShareUrl = `${window.location.origin}/project-tracker/client/${id}`;
 
   const tabs = [
     { key: 'overview', label: 'Overview' },

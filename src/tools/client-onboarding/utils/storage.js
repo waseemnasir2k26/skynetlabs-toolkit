@@ -30,13 +30,21 @@ export function saveClient(client) {
       status: client.status || 'pending',
     });
   }
-  localStorage.setItem(CLIENTS_KEY, JSON.stringify(clients));
+  try {
+    localStorage.setItem(CLIENTS_KEY, JSON.stringify(clients));
+  } catch (e) {
+    console.error('Failed to save clients to localStorage:', e);
+  }
   return clients;
 }
 
 export function deleteClient(id) {
   const clients = getClients().filter(c => c.id !== id);
-  localStorage.setItem(CLIENTS_KEY, JSON.stringify(clients));
+  try {
+    localStorage.setItem(CLIENTS_KEY, JSON.stringify(clients));
+  } catch (e) {
+    console.error('Failed to save clients to localStorage:', e);
+  }
   return clients;
 }
 
@@ -56,13 +64,21 @@ export function saveTemplate(template) {
   } else {
     templates.push({ ...template, id: template.id || uuidv4(), createdAt: new Date().toISOString() });
   }
-  localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templates));
+  try {
+    localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templates));
+  } catch (e) {
+    console.error('Failed to save templates to localStorage:', e);
+  }
   return templates;
 }
 
 export function deleteTemplate(id) {
   const templates = getTemplates().filter(t => t.id !== id);
-  localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templates));
+  try {
+    localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templates));
+  } catch (e) {
+    console.error('Failed to save templates to localStorage:', e);
+  }
   return templates;
 }
 
@@ -75,7 +91,11 @@ export function getAgencyInfo() {
 }
 
 export function saveAgencyInfo(info) {
-  localStorage.setItem(AGENCY_KEY, JSON.stringify(info));
+  try {
+    localStorage.setItem(AGENCY_KEY, JSON.stringify(info));
+  } catch (e) {
+    console.error('Failed to save agency info to localStorage:', e);
+  }
 }
 
 export function calculateCompletion(clientData, sections) {
@@ -123,6 +143,5 @@ export function calculateCompletion(clientData, sections) {
 }
 
 export function generateShareLink(templateId) {
-  const base = window.location.origin + window.location.pathname;
-  return `${base}#/onboard/${templateId}`;
+  return `${window.location.origin}/client-onboarding/onboard/${templateId}`;
 }

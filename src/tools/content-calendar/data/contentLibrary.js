@@ -448,7 +448,8 @@ function customizeTemplate(template, niche, pillars) {
     .replace(/\{vulnerable admission about niche\}/g, `something real about ${niche.toLowerCase()}`)
     .replace(/\{intriguing scenario in niche\}/g, `a wild ${niche.toLowerCase()} experience`)
     .replace(/\{Niche\}/g, niche)
-    .replace(/\{next level action\}/g, `take your ${niche.toLowerCase()} to the next level`);
+    .replace(/\{next level action\}/g, `take your ${niche.toLowerCase()} to the next level`)
+    .replace(/\{viral trend\}/g, 'a viral trend');
 }
 
 function shuffleArray(array) {

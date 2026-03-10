@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { questions } from '../data/questions'
 import ProgressBar from './ProgressBar'
@@ -9,6 +9,7 @@ export default function QuizScreen({ onComplete, savedProgress }) {
   const [currentIndex, setCurrentIndex] = useState(savedProgress?.currentQuestion || 0)
   const [answers, setAnswers] = useState(savedProgress?.answers || {})
   const [direction, setDirection] = useState(1)
+  const justAnswered = useRef(false)
 
   const question = questions[currentIndex]
   const isFirst = currentIndex === 0
@@ -24,6 +25,7 @@ export default function QuizScreen({ onComplete, savedProgress }) {
   }, [answers, currentIndex])
 
   const handleAnswer = useCallback((value) => {
+    justAnswered.current = true
     setAnswers((prev) => ({ ...prev, [question.id]: value }))
   }, [question.id])
 
@@ -52,6 +54,8 @@ export default function QuizScreen({ onComplete, savedProgress }) {
 
   // Auto-advance for single choice
   useEffect(() => {
+    if (!justAnswered.current) return
+    justAnswered.current = false
     if (question.type === 'single' && currentAnswer !== undefined) {
       const timer = setTimeout(() => {
         if (!isLast) {
@@ -61,7 +65,7 @@ export default function QuizScreen({ onComplete, savedProgress }) {
       }, 400)
       return () => clearTimeout(timer)
     }
-  }, [currentAnswer, question.type])
+  }, [currentAnswer, question.type, isLast])
 
   return (
     <div className="min-h-screen flex flex-col pt-16">

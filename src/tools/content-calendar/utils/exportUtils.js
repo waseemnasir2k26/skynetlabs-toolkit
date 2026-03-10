@@ -6,7 +6,7 @@ export function exportToCSV(calendarData) {
     const platform = PLATFORMS.find(p => p.id === post.platform);
     return [
       post.date,
-      new Date(post.date).toLocaleDateString('en-US', { weekday: 'long' }),
+      new Date(post.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long' }),
       platform?.name || post.platform,
       post.contentType.label,
       post.pillarName,

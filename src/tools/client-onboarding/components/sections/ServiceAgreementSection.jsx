@@ -216,8 +216,9 @@ export default function ServiceAgreementSection({ data = {}, onChange, clientInf
 
         <SignaturePad
           onSignatureChange={(sig) => {
-            update('signature', sig);
-            if (!data.dateSigned) update('dateSigned', new Date().toLocaleDateString());
+            const updates = { ...data, signature: sig };
+            if (!data.dateSigned) updates.dateSigned = new Date().toLocaleDateString();
+            onChange(updates);
           }}
           existingSignature={data.signature}
         />

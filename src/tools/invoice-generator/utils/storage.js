@@ -20,7 +20,11 @@ export function saveInvoice(invoice) {
     invoices.unshift(updated)
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(invoices))
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(invoices))
+  } catch (e) {
+    console.error('Failed to save invoice to localStorage:', e)
+  }
   return invoices
 }
 

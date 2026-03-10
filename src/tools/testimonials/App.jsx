@@ -27,10 +27,10 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<DashboardPage />} />
-          <Route path="/wall" element={<WallOfLovePage />} />
-          <Route path="/collect" element={<CollectPage />} />
-          <Route path="/embed" element={<EmbedPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="wall" element={<WallOfLovePage />} />
+          <Route path="collect" element={<CollectPage />} />
+          <Route path="embed" element={<EmbedPage />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Routes>
       </main>
     </div>

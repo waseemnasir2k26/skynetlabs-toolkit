@@ -140,7 +140,7 @@ export default function ChangeOrders({ project, onUpdate }) {
                   </div>
                 </div>
                 <div className="text-sm font-mono text-primary shrink-0">
-                  {formatCurrency(parseFloat(r.hours) * stats.rate)}
+                  {formatCurrency((parseFloat(r.hours) || 0) * stats.rate)}
                 </div>
               </label>
             ))}
