@@ -11,18 +11,18 @@ export default function Header() {
           className="flex items-center gap-3 group"
         >
           <div className="relative">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary/30 transition-shadow duration-300">
-              <svg viewBox="0 0 24 24" className="w-6 h-6 text-dark" fill="currentColor">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300" style={{ background: 'linear-gradient(to bottom right, var(--accent), var(--accent))' }}>
+              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor" style={{ color: 'var(--text-on-accent)' }}>
                 <path d="M12 2L2 19h20L12 2zm0 4l7 13H5l7-13z" />
                 <circle cx="12" cy="15" r="1.5" />
               </svg>
             </div>
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold tracking-wider text-white">
+            <h1 className="text-lg sm:text-xl font-bold tracking-wider" style={{ color: 'var(--text-heading)' }}>
               SKYNET LABS
             </h1>
-            <p className="text-[10px] sm:text-xs text-primary-400 tracking-widest uppercase -mt-0.5">
+            <p className="text-[10px] sm:text-xs tracking-widest uppercase -mt-0.5" style={{ color: 'var(--accent)' }}>
               AI Automation Agency
             </p>
           </div>
@@ -31,7 +31,8 @@ export default function Header() {
           href="https://www.skynetjoe.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg glass text-sm text-primary-400 hover:text-primary-300 hover:border-primary-500/30 transition-all duration-300"
+          className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg glass text-sm transition-all duration-300"
+          style={{ color: 'var(--accent)' }}
         >
           <span>Visit Website</span>
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

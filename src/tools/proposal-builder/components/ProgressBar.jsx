@@ -13,7 +13,7 @@ const ProgressBar = ({ currentStep, onStepClick }) => {
     <div className="w-full">
       {/* Mobile view */}
       <div className="md:hidden flex items-center justify-between px-2 py-3">
-        <span className="text-primary font-semibold text-sm">
+        <span className="font-semibold text-sm" style={{ color: 'var(--accent)' }}>
           Step {currentStep + 1} of {steps.length}
         </span>
         <span className="text-dark-muted text-sm">{steps[currentStep].label}</span>
