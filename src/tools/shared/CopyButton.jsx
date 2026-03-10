@@ -1,13 +1,16 @@
 import { useState } from 'react'
+import { useToast } from './Toast'
 
 export default function CopyButton({ text, label = 'Copy', className = '' }) {
   const [copied, setCopied] = useState(false)
+  const toast = useToast()
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+      if (toast) toast('Copied to clipboard!', 'success')
     } catch {
       // fallback
       const ta = document.createElement('textarea')
@@ -18,6 +21,7 @@ export default function CopyButton({ text, label = 'Copy', className = '' }) {
       document.body.removeChild(ta)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+      if (toast) toast('Copied to clipboard!', 'success')
     }
   }
 

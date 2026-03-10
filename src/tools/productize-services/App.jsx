@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useCallback } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 
 function generateId() {
@@ -235,6 +236,7 @@ export default function App() {
   const [wizardData, setWizardData] = useLocalStorage('skynet-productize-wizard', { ...emptyWizard })
   const [step, setStep] = useState(1)
   const exportRef = useRef(null)
+  const toast = useToast()
 
   const updateWizard = (field, value) => setWizardData((d) => ({ ...d, [field]: value }))
 
@@ -290,9 +292,10 @@ export default function App() {
         }
       }
       pdf.save('service-packages.pdf')
+      if (toast) toast('Service packages exported as PDF!', 'success')
     } catch (err) {
       console.error('PDF export failed:', err)
-      alert('PDF export failed. Please try again.')
+      if (toast) toast('PDF export failed. Please try again.', 'error')
     }
   }, [])
 

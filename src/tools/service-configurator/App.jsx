@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
 
@@ -19,6 +20,7 @@ export default function App() {
     discountRules: []
   })
 
+  const toast = useToast()
   const [mode, setMode] = useState('setup') // setup | client
   const [editingService, setEditingService] = useState(null)
   const [editingAddon, setEditingAddon] = useState(null)
@@ -36,7 +38,7 @@ export default function App() {
 
   // CRUD helpers
   const saveService = (svc) => {
-    const item = { ...svc, id: svc.id || crypto.randomUUID(), basePrice: parseFloat(svc.basePrice) || 0, timeline: parseInt(svc.timeline) || 0 }
+    const item = { ...svc, id: svc.id || crypto.randomUUID(), basePrice: Math.max(0, parseFloat(svc.basePrice) || 0), timeline: Math.max(0, parseInt(svc.timeline) || 0) }
     updateConfig('services', svc.id ? config.services.map(s => s.id === svc.id ? item : s) : [...config.services, item])
     setEditingService(null)
   }
@@ -47,7 +49,7 @@ export default function App() {
   }
 
   const saveAddon = (addon) => {
-    const item = { ...addon, id: addon.id || crypto.randomUUID(), price: parseFloat(addon.price) || 0, time: parseInt(addon.time) || 0 }
+    const item = { ...addon, id: addon.id || crypto.randomUUID(), price: Math.max(0, parseFloat(addon.price) || 0), time: Math.max(0, parseInt(addon.time) || 0) }
     updateConfig('addons', addon.id ? config.addons.map(a => a.id === addon.id ? item : a) : [...config.addons, item])
     setEditingAddon(null)
   }
@@ -58,7 +60,7 @@ export default function App() {
   }
 
   const saveRevision = (rev) => {
-    const item = { ...rev, id: rev.id || crypto.randomUUID(), revisions: parseInt(rev.revisions) || 0, price: parseFloat(rev.price) || 0 }
+    const item = { ...rev, id: rev.id || crypto.randomUUID(), revisions: Math.max(0, parseInt(rev.revisions) || 0), price: Math.max(0, parseFloat(rev.price) || 0) }
     updateConfig('revisionPackages', rev.id ? config.revisionPackages.map(r => r.id === rev.id ? item : r) : [...config.revisionPackages, item])
     setEditingRevision(null)
   }
@@ -69,7 +71,7 @@ export default function App() {
   }
 
   const saveDiscount = (disc) => {
-    const item = { ...disc, id: disc.id || crypto.randomUUID(), value: parseFloat(disc.value) || 0, minSpend: parseFloat(disc.minSpend) || 0 }
+    const item = { ...disc, id: disc.id || crypto.randomUUID(), value: Math.max(0, parseFloat(disc.value) || 0), minSpend: Math.max(0, parseFloat(disc.minSpend) || 0) }
     updateConfig('discountRules', disc.id ? config.discountRules.map(d => d.id === disc.id ? item : d) : [...config.discountRules, item])
     setEditingDiscount(null)
   }
@@ -173,6 +175,7 @@ export default function App() {
     doc.text(`Estimated Timeline: ${quote.totalTime} days`, lm, y)
 
     doc.save('service-quote.pdf')
+    if (toast) toast('Quote exported as PDF!', 'success')
   }
 
   const inputClass = 'w-full rounded-lg px-3 py-2 text-sm placeholder-gray-500 focus:outline-none transition-colors'
@@ -194,7 +197,7 @@ export default function App() {
             ) : f.type === 'textarea' ? (
               <textarea className={inputClass + ' min-h-[60px]'} style={inputStyle} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder} />
             ) : (
-              <input type={f.type || 'text'} className={inputClass} style={inputStyle} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder} />
+              <input type={f.type || 'text'} className={inputClass} style={inputStyle} value={form[f.key] || ''} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder} min={f.type === 'number' ? '0' : undefined} />
             )}
           </div>
         ))}

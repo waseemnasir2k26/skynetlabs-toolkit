@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useCallback } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 
 function generateId() {
@@ -86,6 +87,7 @@ export default function App() {
   const [selectedProjectId, setSelectedProjectId] = useState(null)
   const [viewCR, setViewCR] = useState(null)
   const crDocRef = useRef(null)
+  const toast = useToast()
 
   // Project form
   const [projectForm, setProjectForm] = useState({ name: '', scopeSummary: '', budget: '', hourlyRate: '' })
@@ -181,9 +183,10 @@ export default function App() {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
       pdf.save(`change-request-${viewCR?.id?.slice(0, 6) || 'doc'}.pdf`)
+      if (toast) toast('Change request exported as PDF!', 'success')
     } catch (err) {
       console.error('PDF export failed:', err)
-      alert('PDF export failed. Please try again.')
+      if (toast) toast('PDF export failed. Please try again.', 'error')
     }
   }, [viewCR])
 

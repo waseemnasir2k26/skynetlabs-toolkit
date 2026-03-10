@@ -1,11 +1,13 @@
 import { useState, useMemo, useRef } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
+import { useToast } from '../shared/Toast'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
+import { useShareableURL, ShareButton } from '../shared/useShareableURL'
 
-const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
-const fmtDec = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n)
+const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(isFinite(n) ? n : 0)
+const fmtDec = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(isFinite(n) ? n : 0)
 
 export default function App() {
   const [annualGoal, setAnnualGoal] = useState(150000)
@@ -16,22 +18,47 @@ export default function App() {
   const [workingDays, setWorkingDays] = useState(5)
   const [weeksVacation, setWeeksVacation] = useState(2)
   const exportRef = useRef(null)
+  const toast = useToast()
+
+  const { generateShareURL } = useShareableURL(
+    { annualGoal, avgProjectValue, avgHourlyRate, closeRate, avgClientLifetime, workingDays, weeksVacation },
+    {
+      annualGoal: setAnnualGoal,
+      avgProjectValue: setAvgProjectValue,
+      avgHourlyRate: setAvgHourlyRate,
+      closeRate: setCloseRate,
+      avgClientLifetime: setAvgClientLifetime,
+      workingDays: setWorkingDays,
+      weeksVacation: setWeeksVacation,
+    }
+  )
 
   const metrics = useMemo(() => {
-    const workingWeeks = 52 - weeksVacation
-    const totalWorkingDays = workingWeeks * workingDays
+    const safeGoal = Math.max(0, parseFloat(annualGoal) || 0)
+    const safeProjectValue = Math.max(1, parseFloat(avgProjectValue) || 1)
+    const safeHourlyRate = Math.max(1, parseFloat(avgHourlyRate) || 1)
+    const safeCloseRate = Math.max(1, Math.min(100, parseFloat(closeRate) || 1))
+    const safeClientLifetime = Math.max(1, parseFloat(avgClientLifetime) || 1)
+    const safeWorkingDays = Math.max(1, parseFloat(workingDays) || 1)
+    const safeWeeksVacation = Math.max(0, Math.min(51, parseFloat(weeksVacation) || 0))
 
-    const monthlyTarget = annualGoal / 12
-    const weeklyTarget = annualGoal / workingWeeks
-    const dailyTarget = annualGoal / totalWorkingDays
+    const workingWeeks = Math.max(1, 52 - safeWeeksVacation)
+    const totalWorkingDays = workingWeeks * safeWorkingDays
 
-    const projectsNeeded = Math.ceil(annualGoal / avgProjectValue)
-    const activeClientsNeeded = Math.ceil(projectsNeeded / (12 / avgClientLifetime))
-    const proposalsPerMonth = Math.ceil((projectsNeeded / 12) / (closeRate / 100))
+    const monthlyTarget = safeGoal / 12
+    const weeklyTarget = safeGoal / workingWeeks
+    const dailyTarget = totalWorkingDays > 0 ? safeGoal / totalWorkingDays : 0
+
+    const projectsNeeded = Math.ceil(safeGoal / safeProjectValue)
+    const avgClientLifetimeRatio = 12 / safeClientLifetime
+    const activeClientsNeeded = avgClientLifetimeRatio > 0 ? Math.ceil(projectsNeeded / avgClientLifetimeRatio) : 0
+    const proposalsPerMonth = safeCloseRate > 0 ? Math.ceil((projectsNeeded / 12) / (safeCloseRate / 100)) : 0
     const leadsPerMonth = Math.ceil(proposalsPerMonth * 2.5)
-    const dailyOutreach = Math.ceil(leadsPerMonth / (workingDays * (workingWeeks / 12)))
+    const dailyOutreachDivisor = safeWorkingDays * (workingWeeks / 12)
+    const dailyOutreach = dailyOutreachDivisor > 0 ? Math.ceil(leadsPerMonth / dailyOutreachDivisor) : 0
 
-    const billableHoursPerDay = avgProjectValue / avgHourlyRate / (totalWorkingDays / projectsNeeded)
+    const daysPerProject = projectsNeeded > 0 ? totalWorkingDays / projectsNeeded : 1
+    const billableHoursPerDay = daysPerProject > 0 ? safeProjectValue / safeHourlyRate / daysPerProject : 0
 
     return {
       monthlyTarget,
@@ -122,6 +149,7 @@ export default function App() {
         pos += pdfHeight
       }
       pdf.save('revenue-goal-plan.pdf')
+      if (toast) toast('Revenue plan exported as PDF!', 'success')
     } finally {
       el.style.overflow = origOverflow
       el.style.height = origHeight
@@ -231,7 +259,7 @@ export default function App() {
       </div>
 
       {/* Export */}
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-3">
         <button
           onClick={handleExportPDF}
           className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all"
@@ -242,6 +270,7 @@ export default function App() {
           </svg>
           Export Goal Summary PDF
         </button>
+        <ShareButton getShareURL={generateShareURL} />
       </div>
     </ToolLayout>
   )

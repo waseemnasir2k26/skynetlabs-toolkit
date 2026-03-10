@@ -3,6 +3,7 @@ import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
 import ExportButton from '../shared/ExportButton'
+import { useToast } from '../shared/Toast'
 
 const LEAD_MAGNET_TYPES = [
   { id: 'checklist', name: 'Checklist', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', description: 'Step-by-step actionable checklist your audience can follow' },
@@ -332,6 +333,7 @@ export default function App() {
   const [generatedContent, setGeneratedContent] = useState(null)
   const [editedContent, setEditedContent] = useState(null)
   const [previewMode, setPreviewMode] = useState('desktop')
+  const toast = useToast()
 
   // Landing page customization
   const [lpConfig, setLpConfig] = useState({
@@ -393,6 +395,7 @@ export default function App() {
     const a = document.createElement('a')
     a.href = url; a.download = 'landing-page.html'; a.click()
     URL.revokeObjectURL(url)
+    if (toast) toast('Landing page downloaded!', 'success')
   }
 
   const downloadContentPdf = () => {
@@ -415,6 +418,7 @@ export default function App() {
             position += pdfHeight
           }
           pdf.save(`${(editedContent?.title || 'lead-magnet').toLowerCase().replace(/\s+/g, '-')}.pdf`)
+          if (toast) toast('Lead magnet exported as PDF!', 'success')
         })
       })
     })

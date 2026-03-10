@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useToast } from './Toast'
 
 export default function ShareButton({ getShareURL, className = '' }) {
   const [copied, setCopied] = useState(false)
+  const toast = useToast()
 
   const handleShare = async () => {
     const url = getShareURL()
@@ -30,6 +32,7 @@ export default function ShareButton({ getShareURL, className = '' }) {
 
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+    if (toast) toast('Link copied to clipboard!', 'success')
   }
 
   return (

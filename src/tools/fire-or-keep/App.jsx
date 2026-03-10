@@ -3,6 +3,7 @@ import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
 import CopyButton from '../shared/CopyButton'
+import { useShareableURL, ShareButton } from '../shared/useShareableURL'
 
 const PAYMENT_OPTIONS = [
   { value: 'always_on_time', label: 'Always on time', score: 100 },
@@ -219,6 +220,31 @@ export default function App() {
   })
   const [results, setResults] = useState(null)
 
+  const { generateShareURL } = useShareableURL(
+    {
+      clientName: form.clientName,
+      monthlyRevenue: form.monthlyRevenue,
+      avgHours: form.avgHours,
+      communicationDifficulty: form.communicationDifficulty,
+      paymentReliability: form.paymentReliability,
+      scopeCreepFrequency: form.scopeCreepFrequency,
+      stressLevel: form.stressLevel,
+      growthPotential: form.growthPotential,
+      referralLikelihood: form.referralLikelihood,
+    },
+    {
+      clientName: (v) => updateField('clientName', v),
+      monthlyRevenue: (v) => updateField('monthlyRevenue', v),
+      avgHours: (v) => updateField('avgHours', v),
+      communicationDifficulty: (v) => updateField('communicationDifficulty', v),
+      paymentReliability: (v) => updateField('paymentReliability', v),
+      scopeCreepFrequency: (v) => updateField('scopeCreepFrequency', v),
+      stressLevel: (v) => updateField('stressLevel', v),
+      growthPotential: (v) => updateField('growthPotential', v),
+      referralLikelihood: (v) => updateField('referralLikelihood', v),
+    }
+  )
+
   const updateField = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }))
   }
@@ -426,6 +452,7 @@ export default function App() {
               Reset
             </button>
           )}
+          <ShareButton getShareURL={generateShareURL} />
         </div>
       </div>
 

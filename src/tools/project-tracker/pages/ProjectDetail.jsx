@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useProjects } from '../context/ProjectContext';
+import { useToast } from '../../shared/Toast';
 import {
   calculateOverallProgress, getCurrentPhase, getHealthStatus, formatDate, formatDateTime,
   statusColors, projectTypes, createPhase, createPaymentMilestone,
@@ -14,6 +15,7 @@ export default function ProjectDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { getProject, updateProject, deleteProject, addProject } = useProjects();
+  const toast = useToast();
   const project = getProject(id);
   const [activeTab, setActiveTab] = useState('overview');
   const [editModal, setEditModal] = useState(null);
@@ -117,7 +119,7 @@ export default function ProjectDetail() {
         </div>
         <div className="flex gap-2 flex-wrap">
           <button
-            onClick={() => { navigator.clipboard.writeText(clientShareUrl); }}
+            onClick={() => { navigator.clipboard.writeText(clientShareUrl); if (toast) toast('Client link copied!', 'success'); }}
             className="px-3 py-2 bg-bg-card border border-border rounded-lg text-xs font-semibold text-text-secondary hover:text-primary hover:border-primary transition-colors"
           >
             Copy Client Link

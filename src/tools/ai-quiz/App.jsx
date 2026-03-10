@@ -7,6 +7,7 @@ import AdminPanel from './components/AdminPanel'
 import { calculateScores } from './utils/scoring'
 import { saveResult, getAnswersProgress, clearProgress } from './utils/storage'
 import { generatePDF } from './utils/pdf'
+import { useToast } from '../shared/Toast'
 
 const SCREENS = {
   LANDING: 'landing',
@@ -20,6 +21,7 @@ export default function App() {
   const [answers, setAnswers] = useState(null)
   const [showAdmin, setShowAdmin] = useState(false)
   const [savedProgress, setSavedProgress] = useState(null)
+  const toast = useToast()
 
   useEffect(() => {
     const progress = getAnswersProgress()
@@ -74,8 +76,9 @@ export default function App() {
   const handleDownloadPDF = useCallback(() => {
     if (scores && answers) {
       generatePDF(scores, answers)
+      if (toast) toast('Quiz results exported as PDF!', 'success')
     }
-  }, [scores, answers])
+  }, [scores, answers, toast])
 
   return (
     <div className="py-6">

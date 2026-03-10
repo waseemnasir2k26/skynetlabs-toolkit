@@ -13,6 +13,7 @@ import PricingStep from './components/steps/PricingStep';
 import TermsStep from './components/steps/TermsStep';
 import { exportToPDF } from './utils/pdfExport';
 import { createEmptyProposal } from './utils/defaultData';
+import { useToast } from '../shared/Toast';
 
 const TOTAL_STEPS = 7;
 
@@ -33,6 +34,7 @@ function AppContent() {
   const [saving, setSaving] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [saveMsg, setSaveMsg] = useState('');
+  const toast = useToast();
 
   const StepComponent = stepComponents[currentStep];
 
@@ -50,6 +52,7 @@ function AppContent() {
       saveProposal();
       setSaveMsg('Saved!');
       setTimeout(() => setSaveMsg(''), 2000);
+      if (toast) toast('Proposal saved!', 'success');
     } finally {
       setSaving(false);
     }
@@ -60,6 +63,7 @@ function AppContent() {
     try {
       const filename = `${proposal.project.title || 'Proposal'} - ${proposal.clientInfo.company || proposal.clientInfo.name || 'Client'}.pdf`;
       await exportToPDF('proposal-preview', filename);
+      if (toast) toast('Proposal exported as PDF!', 'success');
     } finally {
       setExporting(false);
     }

@@ -6,7 +6,7 @@ export default function ExpensesSection({ expenses, onChange }) {
   const total = Object.values(expenses).reduce((a, b) => a + b, 0)
 
   const handleChange = (id, val) => {
-    onChange({ ...expenses, [id]: Number(val) })
+    onChange({ ...expenses, [id]: Math.max(0, Number(val) || 0) })
   }
 
   return (

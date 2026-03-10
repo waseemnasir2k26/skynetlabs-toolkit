@@ -1,13 +1,17 @@
 import { TASK_FREQUENCIES } from './constants'
 
 export function calculateROI(tasks, automationPercent, implementationCost) {
-  const pct = automationPercent / 100
+  const safeAutomation = Math.max(0, Math.min(100, parseFloat(automationPercent) || 0))
+  const safeImplCost = Math.max(0, parseFloat(implementationCost) || 0)
+  const pct = safeAutomation / 100
 
   const taskBreakdown = tasks.map((task) => {
     const freq = TASK_FREQUENCIES.find((f) => f.label === task.frequency)
     const annualWeeks = 52
-    const annualHours = task.hoursPerWeek * annualWeeks
-    const annualCost = annualHours * task.hourlyCost
+    const safeHours = Math.max(0, parseFloat(task.hoursPerWeek) || 0)
+    const safeCost = Math.max(0, parseFloat(task.hourlyCost) || 0)
+    const annualHours = safeHours * annualWeeks
+    const annualCost = annualHours * safeCost
     const hoursSaved = annualHours * pct
     const costSaved = annualCost * pct
 
@@ -27,26 +31,26 @@ export function calculateROI(tasks, automationPercent, implementationCost) {
   const totalHoursSaved = taskBreakdown.reduce((sum, t) => sum + t.hoursSaved, 0)
   const totalCostSaved = taskBreakdown.reduce((sum, t) => sum + t.costSaved, 0)
 
-  const netSavingsYear1 = totalCostSaved - implementationCost
-  const roiPercent = implementationCost > 0
-    ? Math.round((netSavingsYear1 / implementationCost) * 100)
+  const netSavingsYear1 = totalCostSaved - safeImplCost
+  const roiPercent = safeImplCost > 0
+    ? Math.round((netSavingsYear1 / safeImplCost) * 100)
     : 0
 
   const paybackMonths = totalCostSaved > 0
-    ? Math.round((implementationCost / (totalCostSaved / 12)) * 10) / 10
+    ? Math.round((safeImplCost / (totalCostSaved / 12)) * 10) / 10
     : 0
 
-  const fiveYearSavings = totalCostSaved * 5 - implementationCost
+  const fiveYearSavings = totalCostSaved * 5 - safeImplCost
 
   // Monthly projection data for charts
   const monthlyProjection = []
-  let cumulativeSavings = -implementationCost
+  let cumulativeSavings = -safeImplCost
   for (let month = 0; month <= 24; month++) {
     cumulativeSavings += month === 0 ? 0 : totalCostSaved / 12
     monthlyProjection.push({
       month: `M${month}`,
       savings: Math.round(cumulativeSavings),
-      investment: implementationCost,
+      investment: safeImplCost,
       monthlySavings: Math.round(totalCostSaved / 12),
     })
   }
@@ -61,8 +65,8 @@ export function calculateROI(tasks, automationPercent, implementationCost) {
     roiPercent,
     paybackMonths,
     fiveYearSavings,
-    implementationCost,
-    automationPercent,
+    implementationCost: safeImplCost,
+    automationPercent: safeAutomation,
     monthlyProjection,
     hoursSavedPerWeek: Math.round(totalHoursSaved / 52),
     daysFreedPerYear: Math.round(totalHoursSaved / 8),

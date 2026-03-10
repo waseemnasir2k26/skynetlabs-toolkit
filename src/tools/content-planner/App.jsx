@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
+import { useToast } from '../shared/Toast'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
 
@@ -128,6 +129,7 @@ export default function App() {
   const [filterFunnel, setFilterFunnel] = useState('All')
   const [statuses, setStatuses] = useState({})
   const exportRef = useRef(null)
+  const toast = useToast()
 
   const addTopic = () => {
     const t = topicInput.trim()
@@ -221,6 +223,7 @@ export default function App() {
         pos += ph
       }
       pdf.save('content-strategy-90-day.pdf')
+      if (toast) toast('Content plan exported as PDF!', 'success')
     } finally {
       el.style.overflow = orig.overflow
       el.style.height = orig.height

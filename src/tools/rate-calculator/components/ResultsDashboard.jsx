@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import AnimatedNumber from './AnimatedNumber'
 import RateCharts from './RateCharts'
 import { marketRates, experienceLevels, niches } from '../data/marketData'
+import { useToast } from '../../shared/Toast'
 
 export default function ResultsDashboard({ calculations, niche, experience }) {
   const {
@@ -20,6 +21,7 @@ export default function ResultsDashboard({ calculations, niche, experience }) {
 
   const nicheLabel = niches.find((n) => n.id === niche)?.label || niche
   const expLabel = experienceLevels.find((e) => e.id === experience)?.label || experience
+  const toast = useToast()
 
   const handleShare = async () => {
     const text = `My freelance rate calculation:\n\nHourly: $${Math.round(hourlyRate)}\nProject: $${Math.round(projectRate)}\nRetainer: $${Math.round(monthlyRetainer)}/mo\n\nCalculated with Skynet Labs Freelance Rate Calculator\nhttps://www.skynetjoe.com`
@@ -29,7 +31,7 @@ export default function ResultsDashboard({ calculations, niche, experience }) {
       } catch { /* user cancelled */ }
     } else {
       await navigator.clipboard.writeText(text)
-      alert('Results copied to clipboard!')
+      if (toast) toast('Results copied to clipboard!', 'success')
     }
   }
 

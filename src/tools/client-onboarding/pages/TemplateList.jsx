@@ -4,11 +4,13 @@ import { getTemplates, deleteTemplate, saveTemplate } from '../utils/storage';
 import { generateShareLink } from '../utils/storage';
 import { SECTION_DEFINITIONS } from '../data/sections';
 import { v4 as uuidv4 } from 'uuid';
+import { useToast } from '../../shared/Toast';
 
 export default function TemplateList() {
   const [templates, setTemplates] = useState([]);
   const [copiedId, setCopiedId] = useState(null);
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     setTemplates(getTemplates());
@@ -36,6 +38,7 @@ export default function TemplateList() {
     navigator.clipboard.writeText(link);
     setCopiedId(templateId);
     setTimeout(() => setCopiedId(null), 2000);
+    if (toast) toast('Template link copied!', 'success');
   };
 
   return (

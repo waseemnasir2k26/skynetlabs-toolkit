@@ -2,6 +2,7 @@ import { useState, useMemo, useRef } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
+import { useToast } from '../shared/Toast'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
@@ -19,6 +20,7 @@ export default function App() {
   const [sources, setSources] = useState([{ ...EMPTY_SOURCE, id: Date.now() }])
   const [removedIds, setRemovedIds] = useState(new Set())
   const exportRef = useRef(null)
+  const toast = useToast()
 
   const addSource = () => setSources((prev) => [...prev, { ...EMPTY_SOURCE, id: Date.now() }])
   const removeSource = (id) => setSources((prev) => prev.filter((s) => s.id !== id))
@@ -32,11 +34,12 @@ export default function App() {
   const analysis = useMemo(() => {
     if (activeSources.length === 0) return null
 
-    const totalRevenue = activeSources.reduce((sum, s) => sum + Number(s.monthlyRevenue), 0)
+    const totalRevenue = activeSources.reduce((sum, s) => sum + Math.max(0, parseFloat(s.monthlyRevenue) || 0), 0)
+    if (totalRevenue === 0) return null
     const withPct = activeSources.map((s) => ({
       ...s,
-      revenue: Number(s.monthlyRevenue),
-      percentage: (Number(s.monthlyRevenue) / totalRevenue) * 100,
+      revenue: Math.max(0, parseFloat(s.monthlyRevenue) || 0),
+      percentage: totalRevenue > 0 ? (Math.max(0, parseFloat(s.monthlyRevenue) || 0) / totalRevenue) * 100 : 0,
     })).sort((a, b) => b.revenue - a.revenue)
 
     const maxPct = Math.max(...withPct.map((s) => s.percentage))
@@ -47,7 +50,8 @@ export default function App() {
     const hhi = withPct.reduce((sum, s) => sum + Math.pow(s.percentage / 100, 2), 0)
     const maxHhi = 1 // single source
     const minHhi = 1 / Math.max(activeSources.length, 1)
-    const normalizedHhi = activeSources.length > 1 ? (maxHhi - hhi) / (maxHhi - minHhi) : 0
+    const hhiDenom = maxHhi - minHhi
+    const normalizedHhi = activeSources.length > 1 && hhiDenom > 0 ? (maxHhi - hhi) / hhiDenom : 0
 
     // Service type diversity bonus
     const uniqueServices = new Set(activeSources.map((s) => s.serviceType)).size
@@ -109,6 +113,7 @@ export default function App() {
         pos += ph
       }
       pdf.save('revenue-diversification-report.pdf')
+      if (toast) toast('Report exported as PDF!', 'success')
     } finally {
       el.style.overflow = orig.overflow
       el.style.height = orig.height
@@ -127,7 +132,7 @@ export default function App() {
     return (
       <div className="rounded-lg px-3 py-2 text-sm" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
         <p className="font-medium" style={{ color: "var(--text-heading)" }}>{payload[0].name}</p>
-        <p style={{ color: "var(--text-muted)" }}>${Number(payload[0].value).toLocaleString()}/mo ({((payload[0].value / analysis.totalRevenue) * 100).toFixed(1)}%)</p>
+        <p style={{ color: "var(--text-muted)" }}>${Number(payload[0].value).toLocaleString()}/mo ({analysis.totalRevenue > 0 ? ((payload[0].value / analysis.totalRevenue) * 100).toFixed(1) : '0.0'}%)</p>
       </div>
     )
   }
@@ -156,6 +161,7 @@ export default function App() {
                 {idx === 0 && <label className="text-xs mb-1 block" style={{ color: "var(--text-muted)" }}>Monthly $</label>}
                 <input
                   type="number"
+                  min="0"
                   value={source.monthlyRevenue}
                   onChange={(e) => updateSource(source.id, 'monthlyRevenue', e.target.value)}
                   placeholder="0"
@@ -290,9 +296,9 @@ export default function App() {
               <div className="rounded-lg p-4" style={{ background: "var(--danger-soft)", border: "1px solid var(--danger)" }}>
                 <p className="font-semibold" style={{ color: "var(--danger)" }}>Revenue Gap: ${revenueGap.toLocaleString()}/mo (${(revenueGap * 12).toLocaleString()}/yr)</p>
                 <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>
-                  You would lose {((revenueGap / originalTotal) * 100).toFixed(0)}% of your revenue.
-                  {revenueGap / originalTotal > 0.3 && ' This is a survival-level risk. Diversify urgently.'}
-                  {revenueGap / originalTotal > 0.15 && revenueGap / originalTotal <= 0.3 && ' This is a significant risk. Start diversifying.'}
+                  You would lose {originalTotal > 0 ? ((revenueGap / originalTotal) * 100).toFixed(0) : '0'}% of your revenue.
+                  {originalTotal > 0 && revenueGap / originalTotal > 0.3 && ' This is a survival-level risk. Diversify urgently.'}
+                  {originalTotal > 0 && revenueGap / originalTotal > 0.15 && revenueGap / originalTotal <= 0.3 && ' This is a significant risk. Start diversifying.'}
                 </p>
               </div>
             )}

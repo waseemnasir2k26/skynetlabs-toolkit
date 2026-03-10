@@ -4,10 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { SECTION_DEFINITIONS } from '../data/sections';
 import { getTemplates, saveTemplate } from '../utils/storage';
 import { generateShareLink } from '../utils/storage';
+import { useToast } from '../../shared/Toast';
 
 export default function TemplateBuilder() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const toast = useToast();
   const [templateName, setTemplateName] = useState('');
   const [selectedSections, setSelectedSections] = useState(
     SECTION_DEFINITIONS.filter(s => s.required).map(s => s.id)
@@ -60,6 +62,7 @@ export default function TemplateBuilder() {
     navigator.clipboard.writeText(shareLink);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    if (toast) toast('Share link copied!', 'success');
   };
 
   const getSectionIcon = (iconName) => {

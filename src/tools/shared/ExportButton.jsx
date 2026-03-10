@@ -1,7 +1,10 @@
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
+import { useToast } from './Toast'
 
 export default function ExportButton({ elementId, filename = 'export.pdf', label = 'Export PDF', className = '' }) {
+  const toast = useToast()
+
   const handleExport = async () => {
     const element = document.getElementById(elementId)
     if (!element) return
@@ -41,6 +44,7 @@ export default function ExportButton({ elementId, filename = 'export.pdf', label
       }
 
       pdf.save(filename)
+      if (toast) toast('PDF exported successfully!', 'success')
     } finally {
       element.style.overflow = originalOverflow
       element.style.height = originalHeight

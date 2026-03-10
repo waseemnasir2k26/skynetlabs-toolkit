@@ -36,7 +36,7 @@ function TaskCard({ task, onUpdate, onRemove, index }) {
             max="168"
             step="0.5"
             value={task.hoursPerWeek}
-            onChange={(e) => onUpdate(task.id, 'hoursPerWeek', parseFloat(e.target.value) || 0)}
+            onChange={(e) => onUpdate(task.id, 'hoursPerWeek', Math.max(0, parseFloat(e.target.value) || 0))}
             className="w-full px-3 py-2.5 rounded-lg bg-dark-300 border border-dark-400 text-white text-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none transition-colors"
           />
         </div>
@@ -47,7 +47,7 @@ function TaskCard({ task, onUpdate, onRemove, index }) {
             min="1"
             step="1"
             value={task.hourlyCost}
-            onChange={(e) => onUpdate(task.id, 'hourlyCost', parseFloat(e.target.value) || 0)}
+            onChange={(e) => onUpdate(task.id, 'hourlyCost', Math.max(0, parseFloat(e.target.value) || 0))}
             className="w-full px-3 py-2.5 rounded-lg bg-dark-300 border border-dark-400 text-white text-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none transition-colors"
           />
         </div>

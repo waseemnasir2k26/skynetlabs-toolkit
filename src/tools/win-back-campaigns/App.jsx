@@ -2,6 +2,7 @@ import { useState, useMemo, useRef } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import { useToast } from '../shared/Toast'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
 
@@ -84,6 +85,7 @@ export default function App() {
   const [generated, setGenerated] = useState(false)
   const [csvError, setCsvError] = useState('')
   const exportRef = useRef(null)
+  const toast = useToast()
 
   const addClient = () => setClients((prev) => [...prev, { ...EMPTY_CLIENT, id: Date.now() }])
   const removeClient = (id) => setClients((prev) => prev.filter((c) => c.id !== id))
@@ -188,6 +190,7 @@ export default function App() {
         pos += ph
       }
       pdf.save('win-back-campaigns.pdf')
+      if (toast) toast('Campaigns exported as PDF!', 'success')
     } finally {
       el.style.overflow = orig.overflow
       el.style.height = orig.height

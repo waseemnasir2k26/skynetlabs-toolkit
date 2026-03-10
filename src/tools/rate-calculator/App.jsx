@@ -9,6 +9,7 @@ import ResultsDashboard from './components/ResultsDashboard'
 import PricingTips from './components/PricingTips'
 import CTASection from './components/CTASection'
 import { countries, expenseCategories, experienceLevels, marketRates } from './data/marketData'
+import { useShareableURL, ShareButton } from '../shared/useShareableURL'
 
 function App() {
   const [desiredIncome, setDesiredIncome] = useState(100000)
@@ -24,6 +25,19 @@ function App() {
   const [experience, setExperience] = useState('intermediate')
   const [niche, setNiche] = useState('webdev')
 
+  const { generateShareURL } = useShareableURL(
+    { desiredIncome, country, taxRate, billableHours, weeksOff, experience, niche },
+    {
+      desiredIncome: setDesiredIncome,
+      country: setCountry,
+      taxRate: setTaxRate,
+      billableHours: setBillableHours,
+      weeksOff: setWeeksOff,
+      experience: setExperience,
+      niche: setNiche,
+    }
+  )
+
   const handleCountryChange = (c) => {
     setCountry(c)
     const found = countries.find((x) => x.name === c)
@@ -31,15 +45,18 @@ function App() {
   }
 
   const calculations = useMemo(() => {
-    const monthlyExpenses = Object.values(expenses).reduce((a, b) => a + b, 0)
+    const monthlyExpenses = Object.values(expenses).reduce((a, b) => a + (parseFloat(b) || 0), 0)
     const totalExpenses = monthlyExpenses * 12
-    const taxAmount = desiredIncome * (taxRate / 100)
-    const totalNeeded = desiredIncome + totalExpenses + taxAmount
+    const safeIncome = Math.max(0, parseFloat(desiredIncome) || 0)
+    const safeTaxRate = Math.max(0, Math.min(100, parseFloat(taxRate) || 0))
+    const taxAmount = safeIncome * (safeTaxRate / 100)
+    const totalNeeded = safeIncome + totalExpenses + taxAmount
 
-    const billableWeeks = 52 - weeksOff
-    const annualBillableHours = billableHours * billableWeeks
+    const billableWeeks = Math.max(1, 52 - (parseFloat(weeksOff) || 0))
+    const safeBillableHours = Math.max(1, parseFloat(billableHours) || 1)
+    const annualBillableHours = safeBillableHours * billableWeeks
 
-    const baseHourly = totalNeeded / annualBillableHours
+    const baseHourly = annualBillableHours > 0 ? totalNeeded / annualBillableHours : 0
     const expMultiplier = experienceLevels.find((e) => e.id === experience)?.multiplier || 1
     const nicheData = marketRates[niche] || marketRates.webdev
 
@@ -54,9 +71,9 @@ function App() {
     const monthlyRetainer = hourlyRate * nicheData.retainerHours * 0.85 // slight retainer discount
 
     const annualRevenue = hourlyRate * annualBillableHours
-    const profitMargin = ((annualRevenue - totalExpenses - taxAmount) / annualRevenue) * 100
+    const profitMargin = annualRevenue > 0 ? ((annualRevenue - totalExpenses - taxAmount) / annualRevenue) * 100 : 0
 
-    const clientsNeeded = annualRevenue / (projectRate * 12)
+    const clientsNeeded = projectRate > 0 ? annualRevenue / (projectRate * 12) : 0
 
     const marketLow = nicheData.low * expMultiplier
     const marketMid = nicheData.mid * expMultiplier
@@ -124,6 +141,10 @@ function App() {
               Your Results
             </span>
           </div>
+        </div>
+
+        <div className="flex justify-end">
+          <ShareButton getShareURL={generateShareURL} />
         </div>
 
         {/* Results */}

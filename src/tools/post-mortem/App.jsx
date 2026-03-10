@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
 
@@ -50,6 +51,7 @@ export default function App() {
   const [entries, setEntries] = useLocalStorage('skynet-post-mortems', [])
   const [form, setForm] = useState({ ...emptyForm })
   const [view, setView] = useState('form') // form | history | analysis
+  const toast = useToast()
   const [search, setSearch] = useState('')
   const [filterService, setFilterService] = useState('')
   const [selectedEntry, setSelectedEntry] = useState(null)
@@ -214,6 +216,7 @@ export default function App() {
       doc.text(lessonLines, lm, y)
 
       doc.save(`post-mortem-${entry.projectName.replace(/\s+/g, '-').toLowerCase()}.pdf`)
+      if (toast) toast('Post-mortem exported as PDF!', 'success')
     } else {
       doc.text('Aggregate Post-Mortem Report', lm, y); y += 10
       doc.setFontSize(11)
@@ -244,6 +247,7 @@ export default function App() {
       })
 
       doc.save('post-mortem-aggregate-report.pdf')
+      if (toast) toast('Aggregate report exported as PDF!', 'success')
     }
   }
 

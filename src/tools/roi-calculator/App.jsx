@@ -6,6 +6,7 @@ import StepSettings from './components/StepSettings'
 import ResultsDashboard from './components/ResultsDashboard'
 import { calculateROI } from './utils/calculations'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { useShareableURL, ShareButton } from '../shared/useShareableURL'
 
 const INITIAL_BUSINESS_INFO = {
   industry: '',
@@ -34,6 +35,17 @@ export default function App() {
   const [tasks, setTasks] = useLocalStorage('roi-tasks', INITIAL_TASKS)
   const [settings, setSettings] = useLocalStorage('roi-settings', INITIAL_SETTINGS)
   const [results, setResults] = useState(null)
+
+  const { generateShareURL } = useShareableURL(
+    {
+      automationPercent: settings.automationPercent,
+      implementationCost: settings.implementationCost,
+    },
+    {
+      automationPercent: (v) => setSettings(prev => ({ ...prev, automationPercent: v })),
+      implementationCost: (v) => setSettings(prev => ({ ...prev, implementationCost: v })),
+    }
+  )
 
   useEffect(() => {
     if (currentStep === 4) {
@@ -104,12 +116,17 @@ export default function App() {
           />
         )}
         {currentStep === 4 && results && (
-          <ResultsDashboard
-            results={results}
-            businessInfo={businessInfo}
-            onBack={() => goToStep(3)}
-            onReset={handleReset}
-          />
+          <>
+            <ResultsDashboard
+              results={results}
+              businessInfo={businessInfo}
+              onBack={() => goToStep(3)}
+              onReset={handleReset}
+            />
+            <div className="flex justify-center mt-4">
+              <ShareButton getShareURL={generateShareURL} />
+            </div>
+          </>
         )}
       </main>
     </div>

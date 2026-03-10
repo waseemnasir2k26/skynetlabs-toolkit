@@ -4,6 +4,7 @@ import InvoiceForm from './components/InvoiceForm'
 import InvoicePreview from './components/InvoicePreview'
 import { useInvoice } from './hooks/useInvoice'
 import { generatePDF } from './utils/pdf'
+import { useToast } from '../shared/Toast'
 
 export default function App() {
   const {
@@ -24,18 +25,20 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [downloading, setDownloading] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
+  const toast = useToast()
 
   const handleDownload = useCallback(async () => {
     setDownloading(true)
     try {
       await generatePDF('invoice-preview', invoice.invoiceNumber)
+      if (toast) toast('Invoice exported as PDF!', 'success')
     } catch (err) {
       console.error('PDF generation failed:', err)
-      alert('Failed to generate PDF. Please try again.')
+      if (toast) toast('Failed to generate PDF. Please try again.', 'error')
     } finally {
       setDownloading(false)
     }
-  }, [invoice.invoiceNumber])
+  }, [invoice.invoiceNumber, toast])
 
   return (
     <div className="flex flex-col" style={{ minHeight: 'calc(100vh - 12rem)' }}>

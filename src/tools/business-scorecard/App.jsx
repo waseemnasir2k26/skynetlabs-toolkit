@@ -1,10 +1,12 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
 import ExportButton from '../shared/ExportButton'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from 'recharts'
+import ShareButton from '../shared/ShareButton'
+import { useSearchParams } from 'react-router-dom'
 
 const CATEGORIES = [
   {
@@ -134,6 +136,29 @@ export default function App() {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [showResults, setShowResults] = useState(false)
   const [started, setStarted] = useState(false)
+  const [searchParams] = useSearchParams()
+
+  // Load answers from URL on mount
+  useEffect(() => {
+    const encoded = searchParams.get('answers')
+    if (encoded) {
+      try {
+        const parsed = JSON.parse(decodeURIComponent(encoded))
+        if (parsed && typeof parsed === 'object') {
+          setAnswers(parsed)
+          setShowResults(true)
+          setStarted(true)
+        }
+      } catch { /* ignore bad data */ }
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const generateShareURL = useCallback(() => {
+    const url = new URL(window.location.href)
+    url.search = ''
+    url.searchParams.set('answers', JSON.stringify(answers))
+    return url.toString()
+  }, [answers])
 
   const flatQuestions = useMemo(() => {
     const flat = []
@@ -300,6 +325,7 @@ export default function App() {
             </button>
             <div className="flex gap-3">
               <ExportButton elementId="scorecard-results" filename="business-scorecard.pdf" label="Export PDF" />
+              <ShareButton getShareURL={generateShareURL} />
               <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }}>Reset</button>
             </div>
           </div>

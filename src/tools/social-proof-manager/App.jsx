@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import html2canvas from 'html2canvas'
 
@@ -53,6 +54,7 @@ export default function App() {
   const [showCollectionForm, setShowCollectionForm] = useState(false)
   const [newQuestion, setNewQuestion] = useState('')
   const cardRef = useRef(null)
+  const toast = useToast()
 
   // Collection form state
   const [formData, setFormData] = useState({
@@ -177,6 +179,7 @@ ${selected.map(t => `<div class="card">
     const a = document.createElement('a')
     a.href = url; a.download = 'wall-of-love.html'; a.click()
     URL.revokeObjectURL(url)
+    if (toast) toast('Wall of Love downloaded!', 'success')
   }
 
   const downloadQuoteCard = async () => {
@@ -185,6 +188,7 @@ ${selected.map(t => `<div class="card">
     const url = canvas.toDataURL('image/png')
     const a = document.createElement('a')
     a.href = url; a.download = 'testimonial-card.png'; a.click()
+    if (toast) toast('Quote card downloaded!', 'success')
   }
 
   // Generate shareable link (simulated)

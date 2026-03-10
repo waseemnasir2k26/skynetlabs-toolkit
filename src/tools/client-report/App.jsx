@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
@@ -230,6 +231,7 @@ export default function App() {
   const [templateName, setTemplateName] = useState('')
   const [exporting, setExporting] = useState(false)
   const previewRef = useRef(null)
+  const toast = useToast()
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
 
@@ -313,9 +315,10 @@ export default function App() {
       }
 
       doc.save(`${setup.clientName || 'client'}-report.pdf`)
+      if (toast) toast('Client report exported as PDF!', 'success')
     } catch (err) {
       console.error('Export failed:', err)
-      alert('PDF export failed. Please try again.')
+      if (toast) toast('PDF export failed. Please try again.', 'error')
     } finally {
       setExporting(false)
     }

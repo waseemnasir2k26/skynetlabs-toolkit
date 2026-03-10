@@ -6,11 +6,13 @@ import {
   calcProjectStats,
   getPriorityColor,
 } from '../utils/helpers';
+import { useToast } from '../../shared/Toast';
 
 export default function ChangeOrders({ project, onUpdate }) {
   const [selected, setSelected] = useState(new Set());
   const [generating, setGenerating] = useState(false);
   const stats = calcProjectStats(project);
+  const toast = useToast();
 
   const pendingRequests = project.changeRequests.filter(
     (r) => r.status === 'Pending' || r.status === 'Approved'
@@ -66,8 +68,10 @@ export default function ChangeOrders({ project, onUpdate }) {
         changeOrders: [...(project.changeOrders || []), newOrder],
       });
       setSelected(new Set());
+      if (toast) toast('Change order PDF generated!', 'success');
     } catch (err) {
       console.error('PDF generation failed:', err);
+      if (toast) toast('PDF generation failed.', 'error');
     } finally {
       setGenerating(false);
     }

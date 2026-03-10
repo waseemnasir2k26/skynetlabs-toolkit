@@ -3,14 +3,19 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGri
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ExportButton from '../shared/ExportButton'
+import { useShareableURL, ShareButton } from '../shared/useShareableURL'
 
 const fmt = (n) => {
-  if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`
-  if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`
-  return `$${n.toFixed(0)}`
+  const safe = isFinite(n) ? n : 0
+  if (Math.abs(safe) >= 1000000) return `$${(safe / 1000000).toFixed(1)}M`
+  if (Math.abs(safe) >= 1000) return `$${(safe / 1000).toFixed(1)}K`
+  return `$${safe.toFixed(0)}`
 }
 
-const pct = (n) => `${n.toFixed(1)}%`
+const pct = (n) => {
+  const safe = isFinite(n) ? n : 0
+  return `${safe.toFixed(1)}%`
+}
 
 function NumberInput({ label, value, onChange, prefix = '', suffix = '', min = 0, step = 1 }) {
   return (
@@ -23,7 +28,7 @@ function NumberInput({ label, value, onChange, prefix = '', suffix = '', min = 0
         <input
           type="number"
           value={value}
-          onChange={e => onChange(parseFloat(e.target.value) || 0)}
+          onChange={e => onChange(Math.max(min, parseFloat(e.target.value) || 0))}
           min={min}
           step={step}
           className={`w-full rounded-lg py-2.5 focus:outline-none ${prefix ? 'pl-7 pr-4' : suffix ? 'pl-4 pr-8' : 'px-4'}`} style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-heading)' }}
@@ -73,6 +78,19 @@ export default function App() {
   const [lifetimeMonths, setLifetimeMonths] = useState(12)
   const [reduceCPL, setReduceCPL] = useState(20)
   const [improveConv, setImproveConv] = useState(15)
+
+  const { generateShareURL } = useShareableURL(
+    { adSpend, cpl, convRate, avgValue, lifetimeMonths, reduceCPL, improveConv },
+    {
+      adSpend: setAdSpend,
+      cpl: setCpl,
+      convRate: setConvRate,
+      avgValue: setAvgValue,
+      lifetimeMonths: setLifetimeMonths,
+      reduceCPL: setReduceCPL,
+      improveConv: setImproveConv,
+    }
+  )
 
   const calc = useMemo(() => {
     const leadsPerMonth = cpl > 0 ? adSpend / cpl : 0
@@ -240,12 +258,13 @@ export default function App() {
         </div>
       </div>
 
-      <div className="mt-6 flex justify-center">
+      <div className="mt-6 flex justify-center gap-3">
         <ExportButton
           elementId="ad-roi-results"
           filename="ad-roi-analysis.pdf"
           label="Export as PDF"
         />
+        <ShareButton getShareURL={generateShareURL} />
       </div>
     </ToolLayout>
   )
