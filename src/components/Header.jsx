@@ -14,7 +14,6 @@ const tools = [
   { path: '/brief-analyzer', name: 'Brief Analyzer', emoji: '🔍' },
   { path: '/niche-scanner', name: 'Niche Scanner', emoji: '🔬' },
   { path: '/sow-generator', name: 'SOW Generator', emoji: '📝' },
-  { path: '/client-health', name: 'Client Health', emoji: '💊' },
   { path: '/meeting-manager', name: 'Meeting Manager', emoji: '📞' },
   { path: '/positioning-generator', name: 'Positioning', emoji: '🏆' },
   // Ad Creative & Marketing
@@ -28,7 +27,6 @@ const tools = [
   { path: '/post-mortem', name: 'Post-Mortem', emoji: '🔎' },
   { path: '/client-report', name: 'Client Report', emoji: '📊' },
   // Revenue & Growth
-  { path: '/micro-crm', name: 'Micro-CRM', emoji: '🔄' },
   { path: '/service-configurator', name: 'Service Configurator', emoji: '⚙️' },
   { path: '/revenue-goal', name: 'Revenue Goal', emoji: '🎯' },
   { path: '/revenue-diversification', name: 'Revenue Diversification', emoji: '🥧' },

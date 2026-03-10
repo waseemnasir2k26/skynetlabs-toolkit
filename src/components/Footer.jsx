@@ -31,7 +31,7 @@ export default function Footer() {
               <Link to="/proposal-builder" className="text-gray-500 hover:text-primary text-xs transition-colors">Proposal Builder</Link>
               <Link to="/scope-tracker" className="text-gray-500 hover:text-primary text-xs transition-colors">Scope Tracker</Link>
               <Link to="/project-tracker" className="text-gray-500 hover:text-primary text-xs transition-colors">Project Tracker</Link>
-              <Link to="/micro-crm" className="text-gray-500 hover:text-primary text-xs transition-colors">Micro-CRM</Link>
+              <Link to="/brief-analyzer" className="text-gray-500 hover:text-primary text-xs transition-colors">Brief Analyzer</Link>
               <Link to="/testimonials" className="text-gray-500 hover:text-primary text-xs transition-colors">Testimonials</Link>
               <Link to="/client-onboarding" className="text-gray-500 hover:text-primary text-xs transition-colors">Client Onboarding</Link>
               <Link to="/sow-generator" className="text-gray-500 hover:text-primary text-xs transition-colors">SOW Generator</Link>

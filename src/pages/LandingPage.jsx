@@ -14,7 +14,6 @@ const tools = [
   { path: '/brief-analyzer', name: 'Client Brief Analyzer', emoji: '🔍', description: 'Paste any client brief. Extract deliverables, flag scope creep risks, estimate hours.', category: 'AI Intelligence' },
   { path: '/niche-scanner', name: 'Niche Profitability Scanner', emoji: '🔬', description: 'Analyze any freelance niche for demand, rates, competition, and growth.', category: 'AI Intelligence' },
   { path: '/sow-generator', name: 'SOW Generator', emoji: '📝', description: 'Generate a complete Statement of Work with milestones and payment terms.', category: 'AI Intelligence' },
-  { path: '/client-health', name: 'Client Health Dashboard', emoji: '💊', description: 'Track all clients. See health scores, spot deteriorating relationships.', category: 'AI Intelligence' },
   { path: '/meeting-manager', name: 'Meeting Lifecycle Manager', emoji: '📞', description: 'Get structured agendas before meetings, action items after.', category: 'AI Intelligence' },
   { path: '/positioning-generator', name: 'Competitive Positioning', emoji: '🏆', description: 'Map competitors, find gaps, generate your unique positioning strategy.', category: 'AI Intelligence' },
   // Ad Creative & Marketing
@@ -28,7 +27,6 @@ const tools = [
   { path: '/post-mortem', name: 'Project Post-Mortem', emoji: '🔎', description: 'Capture wins, failures, and budget vs actual after each project.', category: 'Agency Operations' },
   { path: '/client-report', name: 'Client Report Builder', emoji: '📊', description: 'Drag-and-drop report builder with metrics, tasks, and PDF export.', category: 'Agency Operations' },
   // Revenue & Growth
-  { path: '/micro-crm', name: 'Pipeline Micro-CRM', emoji: '🔄', description: 'The anti-HubSpot. Track leads, follow-ups, proposals, and revenue.', category: 'Revenue & Growth' },
   { path: '/service-configurator', name: 'Services Configurator', emoji: '⚙️', description: 'Clients build their own custom quote with live price updates.', category: 'Revenue & Growth' },
   { path: '/revenue-goal', name: 'Revenue Goal Planner', emoji: '🎯', description: 'Set your income goal. See exactly how many clients and leads you need.', category: 'Revenue & Growth' },
   { path: '/revenue-diversification', name: 'Revenue Diversification', emoji: '🥧', description: 'Visualize income concentration risk and run what-if scenarios.', category: 'Revenue & Growth' },
@@ -133,7 +131,7 @@ export default function LandingPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6" style={{ background: "var(--accent-soft)", border: "1px solid var(--accent-soft)", color: "var(--accent)" }}>
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "var(--accent)" }} />
-              29 Free Tools for Your Business
+              27 Free Tools for Your Business
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black mb-6 leading-tight">
@@ -161,7 +159,7 @@ export default function LandingPage() {
             <LiveUsers />
             <div className="flex items-center justify-center gap-6 sm:gap-10">
               {[
-                { value: '29', label: 'Free Tools' },
+                { value: '27', label: 'Free Tools' },
                 { value: '100%', label: 'Free Forever' },
                 { value: 'Zero', label: 'Sign-up Required' },
               ].map((stat, i) => (

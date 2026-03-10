@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
@@ -55,6 +55,24 @@ export default function App() {
   const [newQuestion, setNewQuestion] = useState('')
   const cardRef = useRef(null)
   const toast = useToast()
+
+  // Load shared collection form from URL
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const collectParam = params.get('collect')
+      if (collectParam) {
+        const data = JSON.parse(atob(collectParam))
+        if (data.questions && Array.isArray(data.questions)) {
+          setQuestions(data.questions)
+          setShowCollectionForm(true)
+          setActiveTab('collect')
+        }
+      }
+    } catch {
+      // Invalid param, ignore
+    }
+  }, [])
 
   // Collection form state
   const [formData, setFormData] = useState({

@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { jsPDF } from 'jspdf'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
-import ExportButton from '../shared/ExportButton'
+import { useToast } from '../shared/Toast'
 
 const SERVICE_TYPES = ['Web Development', 'Design', 'Marketing', 'Automation', 'Consulting', 'Other']
 const REVISION_POLICIES = ['2 rounds', '3 rounds', 'Unlimited', 'Per-phase']
@@ -458,6 +459,290 @@ function sowToPlainText(sow) {
   return text
 }
 
+function exportSOWtoPDF(sow) {
+  const pdf = new jsPDF('p', 'mm', 'a4')
+  const pageWidth = pdf.internal.pageSize.getWidth()
+  const pageHeight = pdf.internal.pageSize.getHeight()
+  const margin = 20
+  const contentWidth = pageWidth - margin * 2
+  let y = margin
+
+  function checkPage(needed = 15) {
+    if (y + needed > pageHeight - margin) {
+      pdf.addPage()
+      y = margin
+    }
+  }
+
+  function heading(num, text) {
+    checkPage(20)
+    y += 8
+    pdf.setFontSize(13)
+    pdf.setFont('helvetica', 'bold')
+    pdf.setTextColor(0, 180, 120)
+    pdf.text(`${num}.`, margin, y)
+    pdf.setTextColor(30, 30, 30)
+    pdf.text(text, margin + 8, y)
+    y += 8
+    pdf.setFont('helvetica', 'normal')
+    pdf.setFontSize(10)
+    pdf.setTextColor(60, 60, 60)
+  }
+
+  function bodyText(text, indent = 0) {
+    const lines = pdf.splitTextToSize(text, contentWidth - indent)
+    lines.forEach(line => {
+      checkPage(6)
+      pdf.text(line, margin + indent, y)
+      y += 5
+    })
+  }
+
+  function bulletItem(text, symbol = '•', symbolColor = [0, 180, 120]) {
+    checkPage(8)
+    pdf.setTextColor(...symbolColor)
+    pdf.text(symbol, margin + 4, y)
+    pdf.setTextColor(60, 60, 60)
+    const lines = pdf.splitTextToSize(text, contentWidth - 14)
+    lines.forEach((line, i) => {
+      if (i > 0) checkPage(6)
+      pdf.text(line, margin + 10, y)
+      y += 5
+    })
+    y += 1
+  }
+
+  // === HEADER ===
+  pdf.setFontSize(22)
+  pdf.setFont('helvetica', 'bold')
+  pdf.setTextColor(30, 30, 30)
+  pdf.text('Statement of Work', pageWidth / 2, y, { align: 'center' })
+  y += 10
+  pdf.setFontSize(14)
+  pdf.setTextColor(0, 180, 120)
+  pdf.text(sow.projectName, pageWidth / 2, y, { align: 'center' })
+  y += 8
+  pdf.setFontSize(10)
+  pdf.setTextColor(120, 120, 120)
+  pdf.text(`Prepared for: ${sow.clientName}  |  Date: ${sow.dateStr}`, pageWidth / 2, y, { align: 'center' })
+  y += 4
+  pdf.setDrawColor(200, 200, 200)
+  pdf.line(margin, y, pageWidth - margin, y)
+  y += 6
+
+  pdf.setTextColor(60, 60, 60)
+  pdf.setFontSize(10)
+
+  // === 1. Project Overview ===
+  heading(1, 'Project Overview')
+  bodyText(`This Statement of Work outlines the scope, timeline, deliverables, and terms for the ${sow.projectName} project. The service provider will deliver ${sow.serviceType} services to ${sow.clientName} over a period of ${sow.duration} weeks for a total investment of ${formatCurrency(sow.budget)}.`)
+  y += 2
+  if (sow.description) bodyText(sow.description)
+
+  // === 2. Scope of Work ===
+  heading(2, 'Scope of Work')
+  bodyText(`The project is divided into ${sow.phases.length} phase(s), each with specific deliverables and milestones:`)
+  y += 3
+
+  sow.phases.forEach(phase => {
+    checkPage(25)
+    // Phase header box
+    pdf.setFillColor(245, 245, 245)
+    const phaseHeaderH = 8
+    pdf.roundedRect(margin, y - 3, contentWidth, phaseHeaderH, 2, 2, 'F')
+    pdf.setFont('helvetica', 'bold')
+    pdf.setFontSize(10)
+    pdf.setTextColor(30, 30, 30)
+    pdf.text(`Phase ${phase.number}: ${phase.name}`, margin + 4, y + 2)
+    pdf.setFont('helvetica', 'normal')
+    pdf.setFontSize(9)
+    pdf.setTextColor(120, 120, 120)
+    pdf.text(`Weeks ${phase.weekStart}-${phase.weekEnd}`, pageWidth - margin - 4, y + 2, { align: 'right' })
+    y += phaseHeaderH + 3
+
+    pdf.setFontSize(10)
+    pdf.setTextColor(60, 60, 60)
+    phase.deliverables.forEach(d => {
+      bulletItem(d, '✓', [0, 180, 120])
+    })
+
+    pdf.setFontSize(9)
+    pdf.setTextColor(120, 120, 120)
+    pdf.text(`Phase Budget: ${formatCurrency(phase.budget)}`, margin + 4, y)
+    y += 8
+    pdf.setFontSize(10)
+    pdf.setTextColor(60, 60, 60)
+  })
+
+  // === 3. Out of Scope ===
+  heading(3, 'Out of Scope')
+  bodyText('The following items are explicitly excluded from this engagement unless agreed upon in a separate change order:')
+  y += 2
+  const exclusions = [
+    'Work not explicitly listed in the Scope of Work above',
+    'Third-party licensing fees, stock assets, or subscription costs',
+    'Content creation (copywriting, photography) unless specified',
+    'Ongoing maintenance or support beyond the project timeline',
+    'Changes to requirements after phase sign-off (subject to change order process)',
+    'Training beyond what is specified in the deliverables',
+  ]
+  exclusions.forEach(item => bulletItem(item, '✗', [220, 60, 60]))
+
+  // === 4. Timeline & Milestones ===
+  heading(4, 'Timeline & Milestones')
+  bodyText(`Total project duration: ${sow.duration} weeks`)
+  y += 3
+
+  // Table header
+  checkPage(12)
+  pdf.setFillColor(240, 240, 240)
+  pdf.rect(margin, y - 3, contentWidth, 8, 'F')
+  pdf.setFont('helvetica', 'bold')
+  pdf.setFontSize(9)
+  pdf.setTextColor(100, 100, 100)
+  pdf.text('Milestone', margin + 4, y + 2)
+  pdf.text('Timeline', margin + contentWidth * 0.45, y + 2)
+  pdf.text('Key Deliverable', margin + contentWidth * 0.6, y + 2)
+  y += 8
+
+  pdf.setFont('helvetica', 'normal')
+  pdf.setFontSize(9)
+
+  // Kickoff row
+  const tableRows = [
+    { milestone: 'Project Kickoff', timeline: 'Week 1', deliverable: 'Kickoff meeting & project plan' },
+    ...sow.phases.map(p => ({
+      milestone: `${p.name} Complete`,
+      timeline: `Week ${p.weekEnd}`,
+      deliverable: p.deliverables[0],
+    })),
+    { milestone: 'Final Delivery', timeline: `Week ${sow.duration}`, deliverable: 'All deliverables complete & handoff' },
+  ]
+
+  tableRows.forEach(row => {
+    checkPage(10)
+    pdf.setTextColor(30, 30, 30)
+    pdf.text(row.milestone, margin + 4, y)
+    pdf.setTextColor(60, 60, 60)
+    pdf.text(row.timeline, margin + contentWidth * 0.45, y)
+    const delLines = pdf.splitTextToSize(row.deliverable, contentWidth * 0.38)
+    delLines.forEach((line, i) => {
+      pdf.text(line, margin + contentWidth * 0.6, y + i * 4)
+    })
+    y += Math.max(6, delLines.length * 4 + 2)
+    pdf.setDrawColor(230, 230, 230)
+    pdf.line(margin, y - 1, pageWidth - margin, y - 1)
+  })
+  y += 3
+
+  // === 5. Payment Schedule ===
+  heading(5, 'Payment Schedule')
+  bodyText(`Total project investment: ${formatCurrency(sow.budget)}`)
+  y += 3
+
+  // Payment table header
+  checkPage(12)
+  pdf.setFillColor(240, 240, 240)
+  pdf.rect(margin, y - 3, contentWidth, 8, 'F')
+  pdf.setFont('helvetica', 'bold')
+  pdf.setFontSize(9)
+  pdf.setTextColor(100, 100, 100)
+  pdf.text('Milestone', margin + 4, y + 2)
+  pdf.text('Amount', margin + contentWidth * 0.65, y + 2, { align: 'right' })
+  pdf.text('%', margin + contentWidth - 4, y + 2, { align: 'right' })
+  y += 8
+
+  pdf.setFont('helvetica', 'normal')
+  sow.paymentSchedule.forEach(p => {
+    checkPage(8)
+    pdf.setTextColor(60, 60, 60)
+    pdf.text(p.milestone, margin + 4, y)
+    pdf.setFont('helvetica', 'bold')
+    pdf.setTextColor(30, 30, 30)
+    pdf.text(formatCurrency(p.amount), margin + contentWidth * 0.65, y, { align: 'right' })
+    pdf.setFont('helvetica', 'normal')
+    pdf.setTextColor(60, 60, 60)
+    pdf.text(`${p.percent}%`, margin + contentWidth - 4, y, { align: 'right' })
+    y += 6
+    pdf.setDrawColor(230, 230, 230)
+    pdf.line(margin, y - 1, pageWidth - margin, y - 1)
+  })
+  y += 3
+
+  pdf.setFontSize(9)
+  pdf.setTextColor(120, 120, 120)
+  bodyText('Payment is due within 14 days of invoice date. Late payments may incur a 1.5% monthly fee.')
+  pdf.setFontSize(10)
+  pdf.setTextColor(60, 60, 60)
+
+  // === 6. Revision Policy ===
+  heading(6, 'Revision Policy')
+  bodyText(sow.revisionPolicyText)
+
+  // === 7. Acceptance Criteria ===
+  heading(7, 'Acceptance Criteria')
+  const criteria = [
+    'Each phase deliverable will be submitted for Client review upon completion.',
+    'The Client has 5 business days to review and provide feedback on each deliverable.',
+    'If no feedback is received within 5 business days, the deliverable is considered accepted.',
+    'Written sign-off (email confirmation is acceptable) is required to proceed to the next phase.',
+    'Final project acceptance will be confirmed in writing by the Client upon completion of all deliverables.',
+  ]
+  criteria.forEach(c => bulletItem(c))
+
+  // === 8. Termination Clause ===
+  heading(8, 'Termination Clause')
+  const termination = [
+    'Either party may terminate this agreement with 14 days written notice.',
+    'Upon termination, the Client will pay for all work completed up to the termination date.',
+    'All completed deliverables and work-in-progress will be transferred to the Client upon final payment.',
+    'Deposits and payments for completed phases are non-refundable.',
+    'If the project is paused for more than 30 days without written agreement, the service provider reserves the right to re-scope the remaining work.',
+  ]
+  termination.forEach(t => bulletItem(t))
+
+  // === 9. Signatures ===
+  heading(9, 'Signatures')
+  y += 4
+  checkPage(50)
+
+  pdf.setDrawColor(200, 200, 200)
+
+  // Provider
+  pdf.setFontSize(10)
+  pdf.setTextColor(120, 120, 120)
+  pdf.text('Service Provider', margin, y)
+  y += 18
+  pdf.line(margin, y, margin + 70, y)
+  y += 5
+  pdf.setFontSize(9)
+  pdf.text('Name', margin, y)
+  pdf.text('Date', margin + 50, y)
+  y += 14
+
+  // Client
+  pdf.setFontSize(10)
+  pdf.text(`Client (${sow.clientName})`, margin, y)
+  y += 18
+  pdf.line(margin, y, margin + 70, y)
+  y += 5
+  pdf.setFontSize(9)
+  pdf.text('Name', margin, y)
+  pdf.text('Date', margin + 50, y)
+
+  // Footer on each page
+  const totalPages = pdf.internal.getNumberOfPages()
+  for (let i = 1; i <= totalPages; i++) {
+    pdf.setPage(i)
+    pdf.setFontSize(8)
+    pdf.setTextColor(180, 180, 180)
+    pdf.text(`Generated by SkynetLabs Free Tools  •  skynetjoe.com`, pageWidth / 2, pageHeight - 8, { align: 'center' })
+    pdf.text(`Page ${i} of ${totalPages}`, pageWidth - margin, pageHeight - 8, { align: 'right' })
+  }
+
+  pdf.save(`SOW - ${sow.projectName}.pdf`)
+}
+
 const INITIAL_FORM = {
   projectName: '',
   clientName: '',
@@ -472,6 +757,7 @@ const INITIAL_FORM = {
 export default function App() {
   const [form, setForm] = useState(INITIAL_FORM)
   const [sow, setSOW] = useState(null)
+  const toast = useToast()
 
   const updateField = (field, value) => setForm((prev) => ({ ...prev, [field]: value }))
 
@@ -635,7 +921,16 @@ export default function App() {
             <ResultCard title="Generated SOW" icon="📄">
               <div className="flex gap-2 mb-4">
                 <CopyButton text={sowToPlainText(sow)} label="Copy SOW" />
-                <ExportButton elementId="sow-document" filename={`SOW - ${sow.projectName}.pdf`} label="Export PDF" />
+                <button
+                  onClick={() => { exportSOWtoPDF(sow); if (toast) toast('SOW exported as PDF!', 'success') }}
+                  className="inline-flex items-center gap-2 px-4 py-2 font-medium rounded-lg transition-all"
+                  style={{ background: 'var(--accent)', color: 'var(--text-on-accent)' }}
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Export PDF
+                </button>
               </div>
               <div className="max-h-[70vh] overflow-y-auto pr-2">
                 <SOWDocument sow={sow} />

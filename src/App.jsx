@@ -14,7 +14,6 @@ const ClientOnboarding = lazy(() => import('./tools/client-onboarding/App'))
 const BriefAnalyzer = lazy(() => import('./tools/brief-analyzer/App'))
 const NicheScanner = lazy(() => import('./tools/niche-scanner/App'))
 const SOWGenerator = lazy(() => import('./tools/sow-generator/App'))
-const ClientHealth = lazy(() => import('./tools/client-health/App'))
 const MeetingManager = lazy(() => import('./tools/meeting-manager/App'))
 const PositioningGenerator = lazy(() => import('./tools/positioning-generator/App'))
 
@@ -31,7 +30,6 @@ const PostMortem = lazy(() => import('./tools/post-mortem/App'))
 const ClientReport = lazy(() => import('./tools/client-report/App'))
 
 // Revenue & Growth
-const MicroCRM = lazy(() => import('./tools/micro-crm/App'))
 const ServiceConfigurator = lazy(() => import('./tools/service-configurator/App'))
 const RevenueGoal = lazy(() => import('./tools/revenue-goal/App'))
 const RevenueDiversification = lazy(() => import('./tools/revenue-diversification/App'))
@@ -74,7 +72,6 @@ export default function App() {
         <Route path="/brief-analyzer" element={<Tool><BriefAnalyzer /></Tool>} />
         <Route path="/niche-scanner" element={<Tool><NicheScanner /></Tool>} />
         <Route path="/sow-generator" element={<Tool><SOWGenerator /></Tool>} />
-        <Route path="/client-health" element={<Tool><ClientHealth /></Tool>} />
         <Route path="/meeting-manager" element={<Tool><MeetingManager /></Tool>} />
         <Route path="/positioning-generator" element={<Tool><PositioningGenerator /></Tool>} />
         {/* Ad Creative & Marketing */}
@@ -88,7 +85,6 @@ export default function App() {
         <Route path="/post-mortem" element={<Tool><PostMortem /></Tool>} />
         <Route path="/client-report" element={<Tool><ClientReport /></Tool>} />
         {/* Revenue & Growth */}
-        <Route path="/micro-crm" element={<Tool><MicroCRM /></Tool>} />
         <Route path="/service-configurator" element={<Tool><ServiceConfigurator /></Tool>} />
         <Route path="/revenue-goal" element={<Tool><RevenueGoal /></Tool>} />
         <Route path="/revenue-diversification" element={<Tool><RevenueDiversification /></Tool>} />
