@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
@@ -755,8 +756,8 @@ const INITIAL_FORM = {
 }
 
 export default function App() {
-  const [form, setForm] = useState(INITIAL_FORM)
-  const [sow, setSOW] = useState(null)
+  const [form, setForm] = useLocalStorage('skynet-sow-generator-form', INITIAL_FORM)
+  const [sow, setSOW] = useLocalStorage('skynet-sow-generator-result', null)
   const toast = useToast()
 
   const updateField = (field, value) => setForm((prev) => ({ ...prev, [field]: value }))

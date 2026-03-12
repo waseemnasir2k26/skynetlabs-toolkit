@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
@@ -18,7 +19,7 @@ const COLORS = ['var(--accent)', 'var(--info)', 'var(--warning)', 'var(--danger)
 const EMPTY_SOURCE = { clientName: '', monthlyRevenue: '', serviceType: SERVICE_TYPES[0] }
 
 export default function App() {
-  const [sources, setSources] = useState([{ ...EMPTY_SOURCE, id: generateId() }])
+  const [sources, setSources] = useLocalStorage('skynet-revenue-diversification', [{ ...EMPTY_SOURCE, id: generateId() }])
   const [removedIds, setRemovedIds] = useState(new Set())
   const exportRef = useRef(null)
   const toast = useToast()

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
@@ -175,11 +176,11 @@ const LOADING_STEPS = [
 ]
 
 export default function App() {
-  const [url, setUrl] = useState('')
-  const [businessType, setBusinessType] = useState('')
+  const [url, setUrl] = useLocalStorage('skynet-website-audit-url', '')
+  const [businessType, setBusinessType] = useLocalStorage('skynet-website-audit-businessType', '')
   const [isLoading, setIsLoading] = useState(false)
   const [loadingStep, setLoadingStep] = useState(0)
-  const [results, setResults] = useState(null)
+  const [results, setResults] = useLocalStorage('skynet-website-audit-results', null)
 
   useEffect(() => {
     if (!isLoading) return

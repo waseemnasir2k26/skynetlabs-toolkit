@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
@@ -194,14 +194,14 @@ function anglesToText(angles, summary) {
 }
 
 export default function App() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useLocalStorage('skynet-competitor-angles-form', {
     competitorName: '',
     competitorPositioning: '',
     yourService: '',
     differentiators: '',
     platforms: [],
   })
-  const [results, setResults] = useState(null)
+  const [results, setResults] = useLocalStorage('skynet-competitor-angles-results', null)
 
   const update = (field, value) => setForm(prev => ({ ...prev, [field]: value }))
 

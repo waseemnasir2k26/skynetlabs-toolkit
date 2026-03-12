@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import { useToast } from '../shared/Toast'
@@ -116,18 +117,18 @@ function generatePillars(topics, niche) {
 }
 
 export default function App() {
-  const [niche, setNiche] = useState('')
+  const [niche, setNiche] = useLocalStorage('skynet-content-planner-niche', '')
   const [topicInput, setTopicInput] = useState('')
-  const [topics, setTopics] = useState([])
-  const [targetClient, setTargetClient] = useState('')
-  const [selectedPlatforms, setSelectedPlatforms] = useState([])
-  const [frequency, setFrequency] = useState({})
-  const [generated, setGenerated] = useState(false)
-  const [calendar, setCalendar] = useState([])
+  const [topics, setTopics] = useLocalStorage('skynet-content-planner-topics', [])
+  const [targetClient, setTargetClient] = useLocalStorage('skynet-content-planner-target', '')
+  const [selectedPlatforms, setSelectedPlatforms] = useLocalStorage('skynet-content-planner-platforms', [])
+  const [frequency, setFrequency] = useLocalStorage('skynet-content-planner-frequency', {})
+  const [generated, setGenerated] = useLocalStorage('skynet-content-planner-generated', false)
+  const [calendar, setCalendar] = useLocalStorage('skynet-content-planner-calendar', [])
   const [filterPlatform, setFilterPlatform] = useState('All')
   const [filterWeek, setFilterWeek] = useState('All')
   const [filterFunnel, setFilterFunnel] = useState('All')
-  const [statuses, setStatuses] = useState({})
+  const [statuses, setStatuses] = useLocalStorage('skynet-content-planner-statuses', {})
   const exportRef = useRef(null)
   const toast = useToast()
 

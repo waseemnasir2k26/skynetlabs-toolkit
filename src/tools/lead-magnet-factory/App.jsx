@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
@@ -325,18 +326,18 @@ ${bullets.map(b => `    <div class="bullet">
 
 export default function App() {
   const [step, setStep] = useState(1)
-  const [selectedType, setSelectedType] = useState(null)
-  const [topic, setTopic] = useState('')
-  const [audience, setAudience] = useState('')
-  const [brand, setBrand] = useState('')
-  const [niche, setNiche] = useState('')
-  const [generatedContent, setGeneratedContent] = useState(null)
-  const [editedContent, setEditedContent] = useState(null)
+  const [selectedType, setSelectedType] = useLocalStorage('skynet-lead-magnet-type', null)
+  const [topic, setTopic] = useLocalStorage('skynet-lead-magnet-topic', '')
+  const [audience, setAudience] = useLocalStorage('skynet-lead-magnet-audience', '')
+  const [brand, setBrand] = useLocalStorage('skynet-lead-magnet-brand', '')
+  const [niche, setNiche] = useLocalStorage('skynet-lead-magnet-niche', '')
+  const [generatedContent, setGeneratedContent] = useLocalStorage('skynet-lead-magnet-content', null)
+  const [editedContent, setEditedContent] = useLocalStorage('skynet-lead-magnet-edited', null)
   const [previewMode, setPreviewMode] = useState('desktop')
   const toast = useToast()
 
   // Landing page customization
-  const [lpConfig, setLpConfig] = useState({
+  const [lpConfig, setLpConfig] = useLocalStorage('skynet-lead-magnet-lp', {
     headline: '',
     bullets: ['', '', '', ''],
     ctaText: 'Get My Free Copy Now',

@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
@@ -71,13 +72,13 @@ function MetricBox({ label, value, sub, highlight = false }) {
 }
 
 export default function App() {
-  const [adSpend, setAdSpend] = useState(5000)
-  const [cpl, setCpl] = useState(50)
-  const [convRate, setConvRate] = useState(10)
-  const [avgValue, setAvgValue] = useState(2000)
-  const [lifetimeMonths, setLifetimeMonths] = useState(12)
-  const [reduceCPL, setReduceCPL] = useState(20)
-  const [improveConv, setImproveConv] = useState(15)
+  const [adSpend, setAdSpend] = useLocalStorage('skynet-ad-roi-adSpend', 5000)
+  const [cpl, setCpl] = useLocalStorage('skynet-ad-roi-cpl', 50)
+  const [convRate, setConvRate] = useLocalStorage('skynet-ad-roi-convRate', 10)
+  const [avgValue, setAvgValue] = useLocalStorage('skynet-ad-roi-avgValue', 2000)
+  const [lifetimeMonths, setLifetimeMonths] = useLocalStorage('skynet-ad-roi-lifetimeMonths', 12)
+  const [reduceCPL, setReduceCPL] = useLocalStorage('skynet-ad-roi-reduceCPL', 20)
+  const [improveConv, setImproveConv] = useLocalStorage('skynet-ad-roi-improveConv', 15)
 
   const { generateShareURL } = useShareableURL(
     { adSpend, cpl, convRate, avgValue, lifetimeMonths, reduceCPL, improveConv },

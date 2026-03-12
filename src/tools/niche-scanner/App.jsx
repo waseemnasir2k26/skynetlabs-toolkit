@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
@@ -316,10 +317,10 @@ function generatePositioningAngles(text, match, expData, matchedNiches) {
 }
 
 export default function App() {
-  const [description, setDescription] = useState('')
-  const [location, setLocation] = useState('')
-  const [experience, setExperience] = useState('intermediate')
-  const [results, setResults] = useState(null)
+  const [description, setDescription] = useLocalStorage('skynet-niche-scanner-desc', '')
+  const [location, setLocation] = useLocalStorage('skynet-niche-scanner-location', '')
+  const [experience, setExperience] = useLocalStorage('skynet-niche-scanner-exp', 'intermediate')
+  const [results, setResults] = useLocalStorage('skynet-niche-scanner-results', null)
 
   const handleAnalyze = () => {
     if (!description.trim()) return

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
@@ -221,10 +222,10 @@ function analyzeBrief(briefText, hourlyRate, serviceType) {
 }
 
 export default function App() {
-  const [briefText, setBriefText] = useState('')
-  const [hourlyRate, setHourlyRate] = useState('')
-  const [serviceType, setServiceType] = useState('Web Development')
-  const [results, setResults] = useState(null)
+  const [briefText, setBriefText] = useLocalStorage('skynet-brief-analyzer-text', '')
+  const [hourlyRate, setHourlyRate] = useLocalStorage('skynet-brief-analyzer-rate', '')
+  const [serviceType, setServiceType] = useLocalStorage('skynet-brief-analyzer-type', 'Web Development')
+  const [results, setResults] = useLocalStorage('skynet-brief-analyzer-results', null)
 
   const handleAnalyze = () => {
     if (!briefText.trim()) return

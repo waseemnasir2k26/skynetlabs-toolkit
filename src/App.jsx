@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import LandingPage from './pages/LandingPage'
+import NotFound from './pages/NotFound'
 
 // Lazy load all tools for code splitting
 const ProposalBuilder = lazy(() => import('./tools/proposal-builder/App'))
@@ -95,6 +96,7 @@ export default function App() {
         <Route path="/business-scorecard" element={<Tool><BusinessScorecard /></Tool>} />
         <Route path="/website-audit" element={<Tool><WebsiteAudit /></Tool>} />
         <Route path="/lead-magnet-factory" element={<Tool><LeadMagnetFactory /></Tool>} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )

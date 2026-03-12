@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://skynetlabs-toolkit.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/proposal-builder</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/scope-tracker</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/testimonials</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/project-tracker</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/client-onboarding</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/brief-analyzer</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/niche-scanner</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/sow-generator</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/meeting-manager</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/positioning-generator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/ad-roi-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/competitor-angles</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/command-center</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/onboarding-portal</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/scope-change</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/productize-services</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/post-mortem</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/client-report</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/service-configurator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/revenue-goal</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/revenue-diversification</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/win-back-campaigns</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/content-planner</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/social-proof-manager</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/business-scorecard</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/website-audit</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/lead-magnet-factory</loc><priority>0.7</priority></url>
+</urlset>

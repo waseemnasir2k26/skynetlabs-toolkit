@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
@@ -154,7 +155,7 @@ function generatePositioning(form) {
 }
 
 export default function App() {
-  const [form, setForm] = useState({
+  const [form, setForm] = useLocalStorage('skynet-positioning-form', {
     services: [],
     niche: '',
     priceRange: PRICE_RANGES[1],
@@ -162,7 +163,7 @@ export default function App() {
     competitors: ['', '', ''],
   })
   const [serviceInput, setServiceInput] = useState('')
-  const [results, setResults] = useState(null)
+  const [results, setResults] = useLocalStorage('skynet-positioning-results', null)
 
   const updateForm = (key, val) => setForm(prev => ({ ...prev, [key]: val }))
 

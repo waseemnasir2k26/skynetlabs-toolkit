@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
@@ -258,10 +259,10 @@ function generateFollowUpEmail(clientName, decisions, actionItems, questions, su
 }
 
 function PreMeetingTab() {
-  const [clientName, setClientName] = useState('')
-  const [meetingType, setMeetingType] = useState('Check-in')
-  const [topics, setTopics] = useState('')
-  const [agenda, setAgenda] = useState(null)
+  const [clientName, setClientName] = useLocalStorage('skynet-meeting-pre-client', '')
+  const [meetingType, setMeetingType] = useLocalStorage('skynet-meeting-pre-type', 'Check-in')
+  const [topics, setTopics] = useLocalStorage('skynet-meeting-pre-topics', '')
+  const [agenda, setAgenda] = useLocalStorage('skynet-meeting-pre-agenda', null)
 
   const canGenerate = clientName.trim()
 
@@ -372,9 +373,9 @@ function PreMeetingTab() {
 }
 
 function PostMeetingTab() {
-  const [clientName, setClientName] = useState('')
-  const [rawNotes, setRawNotes] = useState('')
-  const [result, setResult] = useState(null)
+  const [clientName, setClientName] = useLocalStorage('skynet-meeting-post-client', '')
+  const [rawNotes, setRawNotes] = useLocalStorage('skynet-meeting-post-notes', '')
+  const [result, setResult] = useLocalStorage('skynet-meeting-post-result', null)
 
   const canProcess = clientName.trim() && rawNotes.trim()
 

@@ -1,4 +1,5 @@
-import { useState, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import { useToast } from '../shared/Toast'
@@ -10,13 +11,13 @@ const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency:
 const fmtDec = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(isFinite(n) ? n : 0)
 
 export default function App() {
-  const [annualGoal, setAnnualGoal] = useState(150000)
-  const [avgProjectValue, setAvgProjectValue] = useState(5000)
-  const [avgHourlyRate, setAvgHourlyRate] = useState(100)
-  const [closeRate, setCloseRate] = useState(25)
-  const [avgClientLifetime, setAvgClientLifetime] = useState(6)
-  const [workingDays, setWorkingDays] = useState(5)
-  const [weeksVacation, setWeeksVacation] = useState(2)
+  const [annualGoal, setAnnualGoal] = useLocalStorage('skynet-revenue-goal-annualGoal', 150000)
+  const [avgProjectValue, setAvgProjectValue] = useLocalStorage('skynet-revenue-goal-avgProjectValue', 5000)
+  const [avgHourlyRate, setAvgHourlyRate] = useLocalStorage('skynet-revenue-goal-avgHourlyRate', 100)
+  const [closeRate, setCloseRate] = useLocalStorage('skynet-revenue-goal-closeRate', 25)
+  const [avgClientLifetime, setAvgClientLifetime] = useLocalStorage('skynet-revenue-goal-avgClientLifetime', 6)
+  const [workingDays, setWorkingDays] = useLocalStorage('skynet-revenue-goal-workingDays', 5)
+  const [weeksVacation, setWeeksVacation] = useLocalStorage('skynet-revenue-goal-weeksVacation', 2)
   const exportRef = useRef(null)
   const toast = useToast()
 

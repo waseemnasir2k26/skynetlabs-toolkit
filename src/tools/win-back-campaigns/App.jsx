@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef } from 'react'
+import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
@@ -81,7 +82,7 @@ const EMAIL_TEMPLATES = {
 }
 
 export default function App() {
-  const [clients, setClients] = useState([{ ...EMPTY_CLIENT, id: generateId() }])
+  const [clients, setClients] = useLocalStorage('skynet-win-back-campaigns', [{ ...EMPTY_CLIENT, id: generateId() }])
   const [editedEmails, setEditedEmails] = useState({})
   const [generated, setGenerated] = useState(false)
   const [csvError, setCsvError] = useState('')
