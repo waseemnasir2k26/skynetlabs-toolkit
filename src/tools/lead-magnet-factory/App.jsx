@@ -5,6 +5,7 @@ import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
 import ExportButton from '../shared/ExportButton'
 import { useToast } from '../shared/Toast'
+import ShareButton from '../shared/ShareButton'
 
 const LEAD_MAGNET_TYPES = [
   { id: 'checklist', name: 'Checklist', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', description: 'Step-by-step actionable checklist your audience can follow' },
@@ -605,6 +606,7 @@ export default function App() {
                 Download Landing Page HTML
               </button>
               <button onClick={handleReset} className="px-4 py-2 rounded-lg text-sm transition-colors" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)" }}>Start Over</button>
+              <ShareButton getShareURL={() => window.location.href} />
             </div>
           </div>
 

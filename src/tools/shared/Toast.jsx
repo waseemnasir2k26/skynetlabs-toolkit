@@ -74,7 +74,7 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={addToast}>
       {children}
-      <div className="fixed bottom-4 right-4 z-[9999] flex flex-col gap-2">
+      <div className="fixed bottom-4 right-4 z-[9999] flex flex-col gap-2" role="status" aria-live="polite">
         {toasts.map(toast => (
           <ToastItem key={toast.id} toast={toast} onDismiss={dismissToast} />
         ))}

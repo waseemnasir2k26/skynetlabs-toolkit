@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { generateId } from '../shared/utils'
 
@@ -437,7 +438,10 @@ export default function App() {
           <button onClick={() => { setView('admin'); setCurrentSessionId(null) }} className="text-sm inline-flex items-center gap-1 transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>
             &larr; Back to Sessions
           </button>
-          <CopyButton text={briefText} label="Copy Brief" />
+          <div className="flex gap-3">
+            <CopyButton text={briefText} label="Copy Brief" />
+            <ShareButton getShareURL={() => window.location.href} />
+          </div>
         </div>
 
         <ResultCard title="Project Brief" icon="\uD83D\uDCCB">

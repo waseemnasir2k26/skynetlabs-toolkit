@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
@@ -533,7 +534,10 @@ export default function App() {
                 </div>
               </ResultCard>
 
-              <button className="px-4 py-2 font-medium rounded-lg transition-colors text-sm" style={btnPrimary} onClick={() => exportPDF(null)}>Export Aggregate Report (PDF)</button>
+              <div className="flex gap-3 flex-wrap">
+                <button className="px-4 py-2 font-medium rounded-lg transition-colors text-sm" style={btnPrimary} onClick={() => exportPDF(null)}>Export Aggregate Report (PDF)</button>
+                <ShareButton getShareURL={() => window.location.href} />
+              </div>
             </>
           )}
         </div>

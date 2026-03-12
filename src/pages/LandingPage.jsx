@@ -2,42 +2,7 @@ import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import LiveUsers from '../tools/shared/LiveUsers'
-
-const tools = [
-  // Core Tools
-  { path: '/proposal-builder', name: 'Proposal & Quote Builder', emoji: '📋', description: 'Build stunning client proposals with live preview and PDF export.', category: 'Generator' },
-  { path: '/scope-tracker', name: 'Scope Creep Tracker', emoji: '🎯', description: 'Track scope changes, generate change orders, and protect your profits.', category: 'Agency Operations' },
-  { path: '/testimonials', name: 'Testimonial Collector', emoji: '⭐', description: 'Collect, manage, and showcase client testimonials beautifully.', category: 'Authority Building' },
-  { path: '/project-tracker', name: 'Client Project Tracker', emoji: '📈', description: 'Full project management with Kanban, calendar, and client portals.', category: 'Agency Operations' },
-  { path: '/client-onboarding', name: 'Client Onboarding & NDA', emoji: '🤝', description: 'Professional onboarding forms with NDA, contracts, and e-signatures.', category: 'Agency Operations' },
-  // AI Intelligence
-  { path: '/brief-analyzer', name: 'Client Brief Analyzer', emoji: '🔍', description: 'Paste any client brief. Extract deliverables, flag scope creep risks, estimate hours.', category: 'AI Intelligence' },
-  { path: '/niche-scanner', name: 'Niche Profitability Scanner', emoji: '🔬', description: 'Analyze any freelance niche for demand, rates, competition, and growth.', category: 'AI Intelligence' },
-  { path: '/sow-generator', name: 'SOW Generator', emoji: '📝', description: 'Generate a complete Statement of Work with milestones and payment terms.', category: 'AI Intelligence' },
-  { path: '/meeting-manager', name: 'Meeting Lifecycle Manager', emoji: '📞', description: 'Get structured agendas before meetings, action items after.', category: 'AI Intelligence' },
-  { path: '/positioning-generator', name: 'Competitive Positioning', emoji: '🏆', description: 'Map competitors, find gaps, generate your unique positioning strategy.', category: 'AI Intelligence' },
-  // Ad Creative & Marketing
-  { path: '/ad-roi-calculator', name: 'Ad ROI Calculator', emoji: '📉', description: 'Show clients their current ad ROI and projected improvements.', category: 'Ad Creative & Marketing' },
-  { path: '/competitor-angles', name: 'Competitor Angle Finder', emoji: '🎯', description: 'Generate counter-positioning angles with ad headlines and concepts.', category: 'Ad Creative & Marketing' },
-  // Agency Operations
-  { path: '/command-center', name: 'Client Command Center', emoji: '🖥️', description: 'Single-screen dashboard for every client, project, and deadline.', category: 'Agency Operations' },
-  { path: '/onboarding-portal', name: 'Onboarding Portal', emoji: '🚪', description: 'Branded portal where new clients complete onboarding steps.', category: 'Agency Operations' },
-  { path: '/scope-change', name: 'Scope Change System', emoji: '📋', description: 'Log scope changes, calculate cost, generate change requests.', category: 'Agency Operations' },
-  { path: '/productize-services', name: 'Service Productizer', emoji: '📦', description: 'Transform custom services into scalable, productized packages.', category: 'Agency Operations' },
-  { path: '/post-mortem', name: 'Project Post-Mortem', emoji: '🔎', description: 'Capture wins, failures, and budget vs actual after each project.', category: 'Agency Operations' },
-  { path: '/client-report', name: 'Client Report Builder', emoji: '📊', description: 'Drag-and-drop report builder with metrics, tasks, and PDF export.', category: 'Agency Operations' },
-  // Revenue & Growth
-  { path: '/service-configurator', name: 'Services Configurator', emoji: '⚙️', description: 'Clients build their own custom quote with live price updates.', category: 'Revenue & Growth' },
-  { path: '/revenue-goal', name: 'Revenue Goal Planner', emoji: '🎯', description: 'Set your income goal. See exactly how many clients and leads you need.', category: 'Revenue & Growth' },
-  { path: '/revenue-diversification', name: 'Revenue Diversification', emoji: '🥧', description: 'Visualize income concentration risk and run what-if scenarios.', category: 'Revenue & Growth' },
-  { path: '/win-back-campaigns', name: 'Win-Back Campaigns', emoji: '📧', description: 'Segmented, personalized re-engagement email sequences for past clients.', category: 'Revenue & Growth' },
-  // Authority Building
-  { path: '/content-planner', name: '90-Day Content Planner', emoji: '📆', description: '90-day content calendar mapped to your sales funnel.', category: 'Authority Building' },
-  { path: '/social-proof-manager', name: 'Social Proof Manager', emoji: '🌟', description: 'Collect, organize, and deploy testimonials with embeddable widgets.', category: 'Authority Building' },
-  { path: '/business-scorecard', name: 'Business Health Scorecard', emoji: '💯', description: '50-question diagnostic covering every aspect of your freelance business.', category: 'Authority Building' },
-  { path: '/website-audit', name: 'Website Conversion Audit', emoji: '🔍', description: '20-point conversion optimization report with fix recommendations.', category: 'Authority Building' },
-  { path: '/lead-magnet-factory', name: 'Lead Magnet Factory', emoji: '🧲', description: 'Create a lead magnet AND its landing page in one workflow.', category: 'Authority Building' },
-]
+import tools, { TOOL_COUNT } from '../config/tools'
 
 const categories = [
   'All',
@@ -131,7 +96,7 @@ export default function LandingPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-6" style={{ background: "var(--accent-soft)", border: "1px solid var(--accent-soft)", color: "var(--accent)" }}>
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "var(--accent)" }} />
-              27 Free Tools for Your Business
+              {TOOL_COUNT} Free Tools for Your Business
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black mb-6 leading-tight">
@@ -159,7 +124,7 @@ export default function LandingPage() {
             <LiveUsers />
             <div className="flex items-center justify-center gap-6 sm:gap-10">
               {[
-                { value: '27', label: 'Free Tools' },
+                { value: String(TOOL_COUNT), label: 'Free Tools' },
                 { value: '100%', label: 'Free Forever' },
                 { value: 'Zero', label: 'Sign-up Required' },
               ].map((stat, i) => (

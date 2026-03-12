@@ -47,8 +47,8 @@ function LoadingSpinner() {
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <div className="flex flex-col items-center gap-4">
-        <div className="w-12 h-12 border-4 border-dark-400 border-t-primary rounded-full animate-spin" />
-        <p className="text-gray-400 text-sm">Loading tool...</p>
+        <div className="w-12 h-12 rounded-full animate-spin" style={{ border: '4px solid var(--border)', borderTopColor: 'var(--accent)' }} />
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Loading tool...</p>
       </div>
     </div>
   )

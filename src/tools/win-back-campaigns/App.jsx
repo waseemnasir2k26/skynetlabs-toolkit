@@ -4,6 +4,7 @@ import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
 import { useToast } from '../shared/Toast'
+import ShareButton from '../shared/ShareButton'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
 import { generateId } from '../shared/utils'
@@ -366,7 +367,7 @@ export default function App() {
             </ResultCard>
           ))}
 
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-3">
             <button
               onClick={handleExportPDF}
               className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
@@ -376,6 +377,7 @@ export default function App() {
               </svg>
               Export All Sequences PDF
             </button>
+            <ShareButton getShareURL={() => window.location.href} />
           </div>
         </div>
       )}

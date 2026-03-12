@@ -4,6 +4,7 @@ import { jsPDF } from 'jspdf'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 import { useToast } from '../shared/Toast'
 
 const SERVICE_TYPES = ['Web Development', 'Design', 'Marketing', 'Automation', 'Consulting', 'Other']
@@ -932,6 +933,7 @@ export default function App() {
                   </svg>
                   Export PDF
                 </button>
+                <ShareButton getShareURL={() => window.location.href} />
               </div>
               <div className="max-h-[70vh] overflow-y-auto pr-2">
                 <SOWDocument sow={sow} />

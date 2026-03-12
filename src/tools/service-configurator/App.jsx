@@ -6,6 +6,7 @@ import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
 import { generateId } from '../shared/utils'
+import ShareButton from '../shared/ShareButton'
 
 const emptyService = { id: '', name: '', description: '', basePrice: '', timeline: '' }
 const emptyAddon = { id: '', name: '', description: '', price: '', time: '' }
@@ -216,13 +217,16 @@ export default function App() {
       description="Build service packages with add-ons, rush pricing, and discounts. Let clients configure and get instant quotes."
     >
       {/* Mode Toggle */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex items-center gap-2 mb-6">
         <button onClick={() => setMode('setup')} className="px-4 py-2 rounded-lg text-sm font-medium transition-colors" style={mode === 'setup' ? btnPrimaryStyle : { ...btnSecondaryStyle }}>
           Setup Mode
         </button>
         <button onClick={() => setMode('client')} className="px-4 py-2 rounded-lg text-sm font-medium transition-colors" style={mode === 'client' ? btnPrimaryStyle : { ...btnSecondaryStyle }}>
           Client Preview
         </button>
+        <div className="ml-auto">
+          <ShareButton getShareURL={() => window.location.href} />
+        </div>
       </div>
 
       {mode === 'setup' && (

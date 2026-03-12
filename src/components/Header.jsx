@@ -2,42 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import ThemeToggle from '../tools/shared/ThemeToggle'
 import LiveUsers from '../tools/shared/LiveUsers'
-
-const tools = [
-  // Core Tools
-  { path: '/proposal-builder', name: 'Proposal Builder', emoji: '📋' },
-  { path: '/scope-tracker', name: 'Scope Creep Tracker', emoji: '🎯' },
-  { path: '/testimonials', name: 'Testimonial Collector', emoji: '⭐' },
-  { path: '/project-tracker', name: 'Project Tracker', emoji: '📈' },
-  { path: '/client-onboarding', name: 'Client Onboarding', emoji: '🤝' },
-  // AI Intelligence
-  { path: '/brief-analyzer', name: 'Brief Analyzer', emoji: '🔍' },
-  { path: '/niche-scanner', name: 'Niche Scanner', emoji: '🔬' },
-  { path: '/sow-generator', name: 'SOW Generator', emoji: '📝' },
-  { path: '/meeting-manager', name: 'Meeting Manager', emoji: '📞' },
-  { path: '/positioning-generator', name: 'Positioning', emoji: '🏆' },
-  // Ad Creative & Marketing
-  { path: '/ad-roi-calculator', name: 'Ad ROI Calculator', emoji: '📉' },
-  { path: '/competitor-angles', name: 'Competitor Angles', emoji: '🎯' },
-  // Agency Operations
-  { path: '/command-center', name: 'Command Center', emoji: '🖥️' },
-  { path: '/onboarding-portal', name: 'Onboarding Portal', emoji: '🚪' },
-  { path: '/scope-change', name: 'Scope Change', emoji: '📋' },
-  { path: '/productize-services', name: 'Productize Services', emoji: '📦' },
-  { path: '/post-mortem', name: 'Post-Mortem', emoji: '🔎' },
-  { path: '/client-report', name: 'Client Report', emoji: '📊' },
-  // Revenue & Growth
-  { path: '/service-configurator', name: 'Service Configurator', emoji: '⚙️' },
-  { path: '/revenue-goal', name: 'Revenue Goal', emoji: '🎯' },
-  { path: '/revenue-diversification', name: 'Revenue Diversification', emoji: '🥧' },
-  { path: '/win-back-campaigns', name: 'Win-Back Campaigns', emoji: '📧' },
-  // Authority Building
-  { path: '/content-planner', name: 'Content Planner', emoji: '📆' },
-  { path: '/social-proof-manager', name: 'Social Proof', emoji: '🌟' },
-  { path: '/business-scorecard', name: 'Business Scorecard', emoji: '💯' },
-  { path: '/website-audit', name: 'Website Audit', emoji: '🔍' },
-  { path: '/lead-magnet-factory', name: 'Lead Magnet', emoji: '🧲' },
-]
+import { headerTools as tools } from '../config/tools'
 
 export default function Header() {
   const location = useLocation()

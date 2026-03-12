@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
@@ -443,6 +444,7 @@ export default function App() {
             <button onClick={exportPDF} disabled={exporting || sections.length === 0} className="px-4 py-2 font-medium rounded-lg transition-colors text-sm disabled:opacity-50" style={btnPrimaryStyle}>
               {exporting ? 'Exporting...' : 'Export PDF'}
             </button>
+            <ShareButton getShareURL={() => window.location.href} />
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 
 const EXPERIENCE_LEVELS = [
   { value: 'beginner', label: 'Beginner (0-2 years)', multiplier: 0.6 },
@@ -408,6 +409,7 @@ export default function App() {
               Reset
             </button>
           )}
+          <ShareButton getShareURL={() => window.location.href} />
         </div>
       </div>
 

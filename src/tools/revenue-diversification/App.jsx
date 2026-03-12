@@ -4,6 +4,7 @@ import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
 import { useToast } from '../shared/Toast'
+import ShareButton from '../shared/ShareButton'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
@@ -326,7 +327,7 @@ export default function App() {
       )}
 
       {analysis && (
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-3">
           <button
             onClick={handleExportPDF}
             className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-all" style={{ background: "var(--accent)", color: "var(--text-on-accent)" }}
@@ -336,6 +337,7 @@ export default function App() {
             </svg>
             Export Risk Assessment PDF
           </button>
+          <ShareButton getShareURL={() => window.location.href} />
         </div>
       )}
     </ToolLayout>

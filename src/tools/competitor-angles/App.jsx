@@ -3,6 +3,7 @@ import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
 import ExportButton from '../shared/ExportButton'
+import ShareButton from '../shared/ShareButton'
 
 const PLATFORM_OPTIONS = [
   'Meta / Facebook',
@@ -342,6 +343,7 @@ export default function App() {
               filename="competitor-angles.pdf"
               label="Export as PDF"
             />
+            <ShareButton getShareURL={() => window.location.href} />
           </div>
 
           <div id="competitor-angles-results" className="space-y-6">

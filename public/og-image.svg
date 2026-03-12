@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050507"/>
+      <stop offset="50%" style="stop-color:#0a0a10"/>
+      <stop offset="100%" style="stop-color:#050507"/>
+    </linearGradient>
+
+    <!-- Green accent glow -->
+    <radialGradient id="glowGreen" cx="50%" cy="45%" r="35%">
+      <stop offset="0%" style="stop-color:#00e5a0;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#00e5a0;stop-opacity:0"/>
+    </radialGradient>
+
+    <!-- Top-left subtle glow -->
+    <radialGradient id="glowCorner" cx="15%" cy="20%" r="40%">
+      <stop offset="0%" style="stop-color:#00e5a0;stop-opacity:0.04"/>
+      <stop offset="100%" style="stop-color:#00e5a0;stop-opacity:0"/>
+    </radialGradient>
+
+    <!-- Lightning bolt gradient -->
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00e5a0"/>
+      <stop offset="100%" style="stop-color:#00b87e"/>
+    </linearGradient>
+
+    <!-- Glow filter for the bolt -->
+    <filter id="boltGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle text glow -->
+    <filter id="textGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Grid pattern -->
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#ffffff" stroke-width="0.3" opacity="0.04"/>
+    </pattern>
+
+    <!-- Dot pattern for texture -->
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="0.5" fill="#00e5a0" opacity="0.1"/>
+    </pattern>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Grid overlay -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Dot texture -->
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Ambient glows -->
+  <rect width="1200" height="630" fill="url(#glowGreen)"/>
+  <rect width="1200" height="630" fill="url(#glowCorner)"/>
+
+  <!-- Decorative border lines - top -->
+  <line x1="60" y1="40" x2="1140" y2="40" stroke="#00e5a0" stroke-width="1" opacity="0.15"/>
+  <!-- Decorative border lines - bottom -->
+  <line x1="60" y1="590" x2="1140" y2="590" stroke="#00e5a0" stroke-width="1" opacity="0.15"/>
+
+  <!-- Corner accents - top left -->
+  <path d="M 60 60 L 60 40 L 100 40" fill="none" stroke="#00e5a0" stroke-width="2" opacity="0.5"/>
+  <!-- Corner accents - top right -->
+  <path d="M 1140 60 L 1140 40 L 1100 40" fill="none" stroke="#00e5a0" stroke-width="2" opacity="0.5"/>
+  <!-- Corner accents - bottom left -->
+  <path d="M 60 570 L 60 590 L 100 590" fill="none" stroke="#00e5a0" stroke-width="2" opacity="0.5"/>
+  <!-- Corner accents - bottom right -->
+  <path d="M 1140 570 L 1140 590 L 1100 590" fill="none" stroke="#00e5a0" stroke-width="2" opacity="0.5"/>
+
+  <!-- Decorative circuit lines - left side -->
+  <g opacity="0.08" stroke="#00e5a0" stroke-width="1" fill="none">
+    <path d="M 120 150 L 120 200 L 160 200"/>
+    <circle cx="160" cy="200" r="3" fill="#00e5a0"/>
+    <path d="M 100 300 L 140 300 L 140 340"/>
+    <circle cx="140" cy="340" r="3" fill="#00e5a0"/>
+    <path d="M 130 420 L 130 460 L 170 460 L 170 480"/>
+    <circle cx="170" cy="480" r="3" fill="#00e5a0"/>
+  </g>
+
+  <!-- Decorative circuit lines - right side -->
+  <g opacity="0.08" stroke="#00e5a0" stroke-width="1" fill="none">
+    <path d="M 1080 170 L 1080 210 L 1040 210"/>
+    <circle cx="1040" cy="210" r="3" fill="#00e5a0"/>
+    <path d="M 1060 350 L 1060 390 L 1020 390"/>
+    <circle cx="1020" cy="390" r="3" fill="#00e5a0"/>
+    <path d="M 1070 450 L 1070 490 L 1030 490 L 1030 510"/>
+    <circle cx="1030" cy="510" r="3" fill="#00e5a0"/>
+  </g>
+
+  <!-- Lightning bolt icon -->
+  <g transform="translate(600, 175)" filter="url(#boltGlow)">
+    <polygon
+      points="-12,-45 8,-45 2,-8 18,-8 -8,45 -2,5 -18,5"
+      fill="url(#boltGrad)"
+      opacity="0.9"
+    />
+  </g>
+
+  <!-- Small decorative bolts -->
+  <g transform="translate(380, 190) scale(0.3)" opacity="0.15">
+    <polygon points="-12,-45 8,-45 2,-8 18,-8 -8,45 -2,5 -18,5" fill="#00e5a0"/>
+  </g>
+  <g transform="translate(820, 200) scale(0.25)" opacity="0.12">
+    <polygon points="-12,-45 8,-45 2,-8 18,-8 -8,45 -2,5 -18,5" fill="#00e5a0"/>
+  </g>
+
+  <!-- "SKYNET LABS" main title -->
+  <text
+    x="600" y="295"
+    font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    font-size="72"
+    font-weight="800"
+    fill="#ffffff"
+    text-anchor="middle"
+    letter-spacing="14"
+    filter="url(#textGlow)"
+  >SKYNET LABS</text>
+
+  <!-- Green underline accent below title -->
+  <rect x="420" y="315" width="360" height="3" rx="1.5" fill="#00e5a0" opacity="0.7"/>
+
+  <!-- Subtitle -->
+  <text
+    x="600" y="370"
+    font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    font-size="32"
+    font-weight="500"
+    fill="#00e5a0"
+    text-anchor="middle"
+    letter-spacing="1"
+  >27 Free Tools for Freelancers &amp; Agencies</text>
+
+  <!-- Divider dots -->
+  <g opacity="0.4">
+    <circle cx="540" cy="410" r="2" fill="#00e5a0"/>
+    <circle cx="560" cy="410" r="2" fill="#00e5a0"/>
+    <circle cx="580" cy="410" r="2" fill="#00e5a0"/>
+    <circle cx="600" cy="410" r="2" fill="#00e5a0"/>
+    <circle cx="620" cy="410" r="2" fill="#00e5a0"/>
+    <circle cx="640" cy="410" r="2" fill="#00e5a0"/>
+    <circle cx="660" cy="410" r="2" fill="#00e5a0"/>
+  </g>
+
+  <!-- Tagline: No Sign-up Required bullet 100% Free -->
+  <text
+    x="600" y="455"
+    font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    font-size="20"
+    font-weight="400"
+    fill="#a0a0b0"
+    text-anchor="middle"
+    letter-spacing="2"
+  >NO SIGN-UP REQUIRED</text>
+
+  <!-- Bullet separator -->
+  <circle cx="600" cy="478" r="3" fill="#00e5a0" opacity="0.6"/>
+
+  <text
+    x="600" y="505"
+    font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    font-size="20"
+    font-weight="400"
+    fill="#a0a0b0"
+    text-anchor="middle"
+    letter-spacing="2"
+  >100% FREE</text>
+
+  <!-- URL at the bottom -->
+  <text
+    x="600" y="562"
+    font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    font-size="22"
+    font-weight="600"
+    fill="#00e5a0"
+    text-anchor="middle"
+    letter-spacing="3"
+    opacity="0.8"
+  >skynetjoe.com</text>
+
+  <!-- Floating particles / stars -->
+  <g opacity="0.3">
+    <circle cx="200" cy="100" r="1.5" fill="#00e5a0"/>
+    <circle cx="350" cy="80" r="1" fill="#ffffff"/>
+    <circle cx="900" cy="120" r="1.5" fill="#00e5a0"/>
+    <circle cx="1050" cy="90" r="1" fill="#ffffff"/>
+    <circle cx="150" cy="500" r="1" fill="#00e5a0"/>
+    <circle cx="250" cy="450" r="1.5" fill="#ffffff"/>
+    <circle cx="950" cy="520" r="1" fill="#00e5a0"/>
+    <circle cx="1080" cy="450" r="1.5" fill="#ffffff"/>
+    <circle cx="300" cy="250" r="1" fill="#00e5a0"/>
+    <circle cx="850" cy="300" r="1" fill="#ffffff"/>
+    <circle cx="180" cy="350" r="1.5" fill="#00e5a0"/>
+    <circle cx="1020" cy="280" r="1" fill="#ffffff"/>
+    <circle cx="450" cy="550" r="1" fill="#00e5a0"/>
+    <circle cx="750" cy="540" r="1" fill="#ffffff"/>
+  </g>
+
+  <!-- Subtle hexagon decorations -->
+  <g opacity="0.04" stroke="#00e5a0" stroke-width="1" fill="none">
+    <polygon points="250,130 270,118 290,130 290,152 270,164 250,152" />
+    <polygon points="910,450 930,438 950,450 950,472 930,484 910,472" />
+    <polygon points="180,480 200,468 220,480 220,502 200,514 180,502" />
+    <polygon points="1000,140 1020,128 1040,140 1040,162 1020,174 1000,162" />
+  </g>
+</svg>

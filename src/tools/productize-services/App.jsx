@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useCallback } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { generateId } from '../shared/utils'
@@ -451,6 +452,7 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <CopyButton text={packagesText} label="Copy All" />
                 <button onClick={exportPDF} className="px-4 py-2 text-sm rounded-xl font-medium transition-colors hover:opacity-80" style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}>Export PDF</button>
+                <ShareButton getShareURL={() => window.location.href} />
                 <button onClick={resetWizard} className="px-4 py-2 text-sm rounded-xl transition-all hover:opacity-80" style={{ background: 'var(--danger-soft)', color: 'var(--danger)' }}>Start Over</button>
               </div>
             </div>

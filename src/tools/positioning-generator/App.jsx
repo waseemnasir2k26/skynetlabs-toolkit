@@ -3,6 +3,7 @@ import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 
 const SERVICE_OPTIONS = [
   'Web Design', 'Web Development', 'SEO', 'PPC/Ads', 'Social Media Marketing',
@@ -315,6 +316,7 @@ export default function App() {
               &larr; Start Over
             </button>
             <CopyButton text={getAllText()} label="Copy All" />
+            <ShareButton getShareURL={() => window.location.href} />
           </div>
 
           {/* Market Analysis */}

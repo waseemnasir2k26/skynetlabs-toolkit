@@ -3,6 +3,7 @@ import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 
 const MEETING_TYPES = ['Kickoff', 'Check-in', 'Review', 'Sales call', 'Scope discussion']
 
@@ -539,6 +540,7 @@ export default function App() {
         >
           Post-Meeting
         </button>
+        <ShareButton getShareURL={() => window.location.href} />
       </div>
 
       {activeTab === 'pre' ? <PreMeetingTab /> : <PostMeetingTab />}

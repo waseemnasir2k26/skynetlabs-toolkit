@@ -5,6 +5,7 @@ import ResultCard from '../shared/ResultCard'
 import ScoreGauge from '../shared/ScoreGauge'
 import CopyButton from '../shared/CopyButton'
 import ExportButton from '../shared/ExportButton'
+import ShareButton from '../shared/ShareButton'
 
 const SERVICE_TYPES = [
   'Web Development',
@@ -418,12 +419,13 @@ export default function App() {
           </ResultCard>
 
           {/* Export */}
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-3">
             <ExportButton
               elementId="brief-results"
               filename="brief-analysis.pdf"
               label="Export Analysis PDF"
             />
+            <ShareButton getShareURL={() => window.location.href} />
           </div>
         </div>
       )}
