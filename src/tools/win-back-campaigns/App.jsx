@@ -5,6 +5,7 @@ import CopyButton from '../shared/CopyButton'
 import { useToast } from '../shared/Toast'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
+import { generateId } from '../shared/utils'
 
 const SERVICE_TYPES = ['Web Development', 'Design', 'SEO', 'Social Media', 'Content Writing', 'Consulting', 'Advertising', 'Email Marketing', 'Video Production', 'Other']
 
@@ -80,14 +81,14 @@ const EMAIL_TEMPLATES = {
 }
 
 export default function App() {
-  const [clients, setClients] = useState([{ ...EMPTY_CLIENT, id: Date.now() }])
+  const [clients, setClients] = useState([{ ...EMPTY_CLIENT, id: generateId() }])
   const [editedEmails, setEditedEmails] = useState({})
   const [generated, setGenerated] = useState(false)
   const [csvError, setCsvError] = useState('')
   const exportRef = useRef(null)
   const toast = useToast()
 
-  const addClient = () => setClients((prev) => [...prev, { ...EMPTY_CLIENT, id: Date.now() }])
+  const addClient = () => setClients((prev) => [...prev, { ...EMPTY_CLIENT, id: generateId() }])
   const removeClient = (id) => setClients((prev) => prev.filter((c) => c.id !== id))
   const updateClient = (id, field, value) => setClients((prev) => prev.map((c) => c.id === id ? { ...c, [field]: value } : c))
 
@@ -114,7 +115,7 @@ export default function App() {
         const newClients = lines.slice(1).map((line) => {
           const cols = line.split(',').map((c) => c.trim())
           return {
-            id: Date.now() + Math.random(),
+            id: generateId(),
             name: cols[nameIdx] || '',
             email: emailIdx >= 0 ? cols[emailIdx] : '',
             lastProject: projectIdx >= 0 ? cols[projectIdx] : '',

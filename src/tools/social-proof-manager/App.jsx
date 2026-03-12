@@ -5,6 +5,7 @@ import CopyButton from '../shared/CopyButton'
 import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import html2canvas from 'html2canvas'
+import { generateId } from '../shared/utils'
 
 const DEFAULT_QUESTIONS = [
   'How was your overall experience working with us?',
@@ -91,7 +92,7 @@ export default function App() {
     e.preventDefault()
     if (!formData.name || !formData.answers[0]) return
     const newT = {
-      id: Date.now().toString(),
+      id: generateId(),
       ...formData,
       questions: [...questions],
       status: 'New',

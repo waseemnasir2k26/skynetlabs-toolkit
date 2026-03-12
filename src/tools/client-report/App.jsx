@@ -8,6 +8,7 @@ import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove } from '@dnd-kit/sortable'
+import { generateId } from '../shared/utils'
 
 const BLOCK_TYPES = [
   { type: 'executive-summary', label: 'Executive Summary', icon: '&#128196;' },
@@ -20,7 +21,7 @@ const BLOCK_TYPES = [
 ]
 
 function createBlock(type) {
-  const base = { id: crypto.randomUUID(), type }
+  const base = { id: generateId(), type }
   switch (type) {
     case 'executive-summary': return { ...base, content: '' }
     case 'key-metrics': return { ...base, metrics: [{ label: '', value: '', trend: 'up' }] }
@@ -267,14 +268,14 @@ export default function App() {
 
   const saveTemplate = () => {
     if (!templateName.trim()) return
-    const tpl = { id: crypto.randomUUID(), name: templateName.trim(), setup, sections, createdAt: new Date().toISOString() }
+    const tpl = { id: generateId(), name: templateName.trim(), setup, sections, createdAt: new Date().toISOString() }
     setTemplates(prev => [tpl, ...prev])
     setTemplateName('')
   }
 
   const loadTemplate = (tpl) => {
     setSetup(tpl.setup)
-    setSections(tpl.sections.map(s => ({ ...s, id: crypto.randomUUID() })))
+    setSections(tpl.sections.map(s => ({ ...s, id: generateId() })))
   }
 
   const deleteTemplate = (id) => {

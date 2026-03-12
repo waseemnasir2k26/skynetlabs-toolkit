@@ -6,6 +6,7 @@ import { useToast } from '../shared/Toast'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
+import { generateId } from '../shared/utils'
 
 const SERVICE_TYPES = [
   'Web Development', 'Design', 'SEO', 'Social Media', 'Content Writing',
@@ -17,12 +18,12 @@ const COLORS = ['var(--accent)', 'var(--info)', 'var(--warning)', 'var(--danger)
 const EMPTY_SOURCE = { clientName: '', monthlyRevenue: '', serviceType: SERVICE_TYPES[0] }
 
 export default function App() {
-  const [sources, setSources] = useState([{ ...EMPTY_SOURCE, id: Date.now() }])
+  const [sources, setSources] = useState([{ ...EMPTY_SOURCE, id: generateId() }])
   const [removedIds, setRemovedIds] = useState(new Set())
   const exportRef = useRef(null)
   const toast = useToast()
 
-  const addSource = () => setSources((prev) => [...prev, { ...EMPTY_SOURCE, id: Date.now() }])
+  const addSource = () => setSources((prev) => [...prev, { ...EMPTY_SOURCE, id: generateId() }])
   const removeSource = (id) => setSources((prev) => prev.filter((s) => s.id !== id))
   const updateSource = (id, field, value) => {
     setSources((prev) => prev.map((s) => s.id === id ? { ...s, [field]: value } : s))

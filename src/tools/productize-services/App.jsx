@@ -4,10 +4,7 @@ import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
 import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
-
-function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
-}
+import { generateId } from '../shared/utils'
 
 const STEPS = [
   { num: 1, label: 'Your Service' },

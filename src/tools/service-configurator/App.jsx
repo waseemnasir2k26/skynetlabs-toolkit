@@ -5,6 +5,7 @@ import CopyButton from '../shared/CopyButton'
 import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
+import { generateId } from '../shared/utils'
 
 const emptyService = { id: '', name: '', description: '', basePrice: '', timeline: '' }
 const emptyAddon = { id: '', name: '', description: '', price: '', time: '' }
@@ -38,7 +39,7 @@ export default function App() {
 
   // CRUD helpers
   const saveService = (svc) => {
-    const item = { ...svc, id: svc.id || crypto.randomUUID(), basePrice: Math.max(0, parseFloat(svc.basePrice) || 0), timeline: Math.max(0, parseInt(svc.timeline) || 0) }
+    const item = { ...svc, id: svc.id || generateId(), basePrice: Math.max(0, parseFloat(svc.basePrice) || 0), timeline: Math.max(0, parseInt(svc.timeline) || 0) }
     updateConfig('services', svc.id ? config.services.map(s => s.id === svc.id ? item : s) : [...config.services, item])
     setEditingService(null)
   }
@@ -49,7 +50,7 @@ export default function App() {
   }
 
   const saveAddon = (addon) => {
-    const item = { ...addon, id: addon.id || crypto.randomUUID(), price: Math.max(0, parseFloat(addon.price) || 0), time: Math.max(0, parseInt(addon.time) || 0) }
+    const item = { ...addon, id: addon.id || generateId(), price: Math.max(0, parseFloat(addon.price) || 0), time: Math.max(0, parseInt(addon.time) || 0) }
     updateConfig('addons', addon.id ? config.addons.map(a => a.id === addon.id ? item : a) : [...config.addons, item])
     setEditingAddon(null)
   }
@@ -60,7 +61,7 @@ export default function App() {
   }
 
   const saveRevision = (rev) => {
-    const item = { ...rev, id: rev.id || crypto.randomUUID(), revisions: Math.max(0, parseInt(rev.revisions) || 0), price: Math.max(0, parseFloat(rev.price) || 0) }
+    const item = { ...rev, id: rev.id || generateId(), revisions: Math.max(0, parseInt(rev.revisions) || 0), price: Math.max(0, parseFloat(rev.price) || 0) }
     updateConfig('revisionPackages', rev.id ? config.revisionPackages.map(r => r.id === rev.id ? item : r) : [...config.revisionPackages, item])
     setEditingRevision(null)
   }
@@ -71,7 +72,7 @@ export default function App() {
   }
 
   const saveDiscount = (disc) => {
-    const item = { ...disc, id: disc.id || crypto.randomUUID(), value: Math.max(0, parseFloat(disc.value) || 0), minSpend: Math.max(0, parseFloat(disc.minSpend) || 0) }
+    const item = { ...disc, id: disc.id || generateId(), value: Math.max(0, parseFloat(disc.value) || 0), minSpend: Math.max(0, parseFloat(disc.minSpend) || 0) }
     updateConfig('discountRules', disc.id ? config.discountRules.map(d => d.id === disc.id ? item : d) : [...config.discountRules, item])
     setEditingDiscount(null)
   }

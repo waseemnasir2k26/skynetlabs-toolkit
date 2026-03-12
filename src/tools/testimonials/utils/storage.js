@@ -1,3 +1,5 @@
+import { generateId } from '../../shared/utils'
+
 const STORAGE_KEYS = {
   TESTIMONIALS: 'skynet_testimonials',
   SETTINGS: 'skynet_testimonial_settings',
@@ -38,7 +40,7 @@ export function addTestimonial(testimonial) {
   const testimonials = getTestimonials()
   const newTestimonial = {
     ...testimonial,
-    id: crypto.randomUUID(),
+    id: generateId(),
     createdAt: new Date().toISOString(),
     status: 'pending',
     starred: false,

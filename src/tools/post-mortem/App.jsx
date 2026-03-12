@@ -5,6 +5,7 @@ import CopyButton from '../shared/CopyButton'
 import { useToast } from '../shared/Toast'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 import { jsPDF } from 'jspdf'
+import { generateId } from '../shared/utils'
 
 const SERVICE_TYPES = [
   'Web Design', 'Web Development', 'Branding', 'SEO', 'Social Media',
@@ -64,7 +65,7 @@ export default function App() {
     if (!form.projectName || !form.clientName) return
     const entry = {
       ...form,
-      id: editingId || crypto.randomUUID(),
+      id: editingId || generateId(),
       createdAt: editingId ? entries.find(x => x.id === editingId)?.createdAt : new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       originalBudget: parseFloat(form.originalBudget) || 0,
