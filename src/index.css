@@ -630,6 +630,11 @@ input[type="color"]::-webkit-color-swatch {
   animation: stagger-in 0.4s ease-out both;
 }
 
+/* Mega menu tool item hover */
+.mega-tool-item:hover {
+  background: var(--bg-elevated);
+}
+
 /* Responsive hide/show */
 @media (max-width: 640px) {
   .hide-mobile { display: none !important; }
