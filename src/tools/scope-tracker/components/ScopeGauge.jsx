@@ -40,7 +40,7 @@ export default function ScopeGauge({ percentage, size = 160 }) {
           <span className="text-3xl font-bold" style={{ color }}>
             {percentage.toFixed(1)}%
           </span>
-          <span className="text-xs text-gray-400 mt-1">scope creep</span>
+          <span className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>scope creep</span>
         </div>
       </div>
       <div

@@ -1,11 +1,15 @@
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
 import { useToast } from './Toast'
+import { track } from '../../lib/analytics'
 
 export default function ExportButton({ elementId, filename = 'export.pdf', label = 'Export PDF', className = '' }) {
   const toast = useToast()
 
   const handleExport = async () => {
+    const slug = window.location.pathname.replace(/^\//, '') || 'home'
+    track('export', slug, { filename })
+
     const element = document.getElementById(elementId)
     if (!element) return
 

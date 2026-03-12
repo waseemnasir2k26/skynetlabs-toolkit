@@ -20,8 +20,8 @@ const ProgressBar = ({ currentStep, onStepClick }) => {
       </div>
       <div className="md:hidden w-full bg-dark-border rounded-full h-1.5">
         <div
-          className="bg-primary rounded-full h-1.5 transition-all duration-500"
-          style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+          className="rounded-full h-1.5 transition-all duration-500"
+          style={{ width: `${((currentStep + 1) / steps.length) * 100}%`, background: 'var(--accent)' }}
         />
       </div>
 
@@ -30,8 +30,8 @@ const ProgressBar = ({ currentStep, onStepClick }) => {
         {/* Background line */}
         <div className="absolute top-5 left-0 right-0 h-0.5 bg-dark-border" />
         <div
-          className="absolute top-5 left-0 h-0.5 bg-primary transition-all duration-500"
-          style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+          className="absolute top-5 left-0 h-0.5 transition-all duration-500"
+          style={{ width: `${(currentStep / (steps.length - 1)) * 100}%`, background: 'var(--accent)' }}
         />
 
         {steps.map((step, index) => (
@@ -41,11 +41,12 @@ const ProgressBar = ({ currentStep, onStepClick }) => {
             className="relative flex flex-col items-center group z-10"
           >
             <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
+              style={
                 index <= currentStep
-                  ? 'bg-primary text-white shadow-lg shadow-primary/20'
-                  : 'bg-dark-card border-2 border-dark-border text-dark-muted group-hover:border-primary/50'
-              }`}
+                  ? { background: 'var(--accent)', color: 'var(--text-heading)', boxShadow: '0 10px 15px -3px var(--accent-soft)' }
+                  : { background: 'var(--bg-elevated)', border: '2px solid var(--border)', color: 'var(--text-muted)' }
+              }
             >
               {index < currentStep ? (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,9 +59,12 @@ const ProgressBar = ({ currentStep, onStepClick }) => {
               )}
             </div>
             <span
-              className={`mt-2 text-xs font-medium transition-colors ${
-                index <= currentStep ? 'text-primary' : 'text-dark-muted group-hover:text-dark-text'
-              }`}
+              className="mt-2 text-xs font-medium transition-colors"
+              style={
+                index <= currentStep
+                  ? { color: 'var(--accent)' }
+                  : { color: 'var(--text-muted)' }
+              }
             >
               {step.label}
             </span>

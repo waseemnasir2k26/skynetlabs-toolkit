@@ -15,12 +15,12 @@ export default function Header() {
   const location = useLocation()
 
   return (
-    <div className="border-b border-white/5 bg-dark-100/50">
+    <div className="border-b" style={{ borderColor: 'var(--border)', background: 'var(--bg-elevated)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-12">
           <Link to={BASE} className="flex items-center gap-2 group">
-            <MessageSquareHeart className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-gray-300">Testimonial Collector</span>
+            <MessageSquareHeart className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+            <span className="text-sm font-medium" style={{ color: 'var(--text-body)' }}>Testimonial Collector</span>
           </Link>
 
           <nav className="flex items-center gap-1">
@@ -30,11 +30,12 @@ export default function Header() {
                 <Link
                   key={to}
                   to={to}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200"
+                  style={
                     isActive
-                      ? 'bg-primary/10 text-primary border border-primary/20'
-                      : 'text-gray-400 hover:text-gray-200 hover:bg-dark-200'
-                  }`}
+                      ? { background: 'var(--accent-soft)', color: 'var(--accent)', border: '1px solid var(--accent)' }
+                      : { color: 'var(--text-muted)' }
+                  }
                 >
                   <Icon className="w-4 h-4" />
                   <span className="hidden md:inline">{label}</span>

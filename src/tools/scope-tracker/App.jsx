@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ToolLayout from '../shared/ToolLayout';
+import ShareButton from '../shared/ShareButton';
 import Header from './components/Header';
 import ProjectList from './components/ProjectList';
 import ProjectSetup from './components/ProjectSetup';
@@ -107,15 +109,21 @@ export default function App() {
   };
 
   return (
-    <div>
+    <ToolLayout
+      title="Scope Creep Tracker"
+      description="Track scope changes, generate change orders, and protect your profits."
+      category="Agency Operations"
+      maxWidth="wide"
+    >
       <Header
         currentView={view}
         onNavigate={handleNavigate}
         hasActiveProject={!!activeProject}
       />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {renderView()}
-      </main>
-    </div>
+      {renderView()}
+      <div className="flex justify-center mt-6">
+        <ShareButton getShareURL={() => window.location.origin + '/scope-tracker'} />
+      </div>
+    </ToolLayout>
   );
 }

@@ -68,9 +68,9 @@ export default function Dashboard({ project, onUpdate }) {
       {/* Project header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-100">{project.projectName}</h1>
-          <p className="text-gray-500 mt-0.5">
-            Client: <span className="text-gray-300">{project.clientName}</span>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>{project.projectName}</h1>
+          <p className="mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            Client: <span style={{ color: 'var(--text-body)' }}>{project.clientName}</span>
             {project.startDate && (
               <>
                 {' '}
@@ -96,25 +96,25 @@ export default function Dashboard({ project, onUpdate }) {
       {/* Stats row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Original Value</span>
-          <span className="text-xl font-bold text-gray-100">{formatCurrency(stats.originalValue)}</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Original Value</span>
+          <span className="text-xl font-bold" style={{ color: 'var(--text-heading)' }}>{formatCurrency(stats.originalValue)}</span>
         </div>
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Current Value</span>
-          <span className="text-xl font-bold text-primary">{formatCurrency(stats.currentValue)}</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Current Value</span>
+          <span className="text-xl font-bold" style={{ color: 'var(--accent)' }}>{formatCurrency(stats.currentValue)}</span>
         </div>
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Additional Cost</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Additional Cost</span>
           <span className="text-xl font-bold" style={{ color: getCreepColor(stats.creepPercentage) }}>
             +{formatCurrency(stats.additionalCost)}
           </span>
         </div>
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Change Requests</span>
-          <span className="text-xl font-bold text-gray-100">
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Change Requests</span>
+          <span className="text-xl font-bold" style={{ color: 'var(--text-heading)' }}>
             {stats.totalRequests}
             {stats.pendingRequests > 0 && (
-              <span className="text-sm font-normal text-yellow-400 ml-2">
+              <span className="text-sm font-normal ml-2" style={{ color: 'var(--warning)' }}>
                 ({stats.pendingRequests} pending)
               </span>
             )}
@@ -127,11 +127,11 @@ export default function Dashboard({ project, onUpdate }) {
         <div className="card flex flex-col items-center gap-6">
           <ScopeGauge percentage={stats.creepPercentage} />
           {stats.creepPercentage > 20 && (
-            <div className="w-full bg-red-500/10 border border-red-500/20 rounded-lg p-3 flex items-center gap-2">
-              <svg className="w-5 h-5 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-full rounded-lg p-3 flex items-center gap-2" style={{ background: 'var(--danger-soft)', border: '1px solid var(--danger)' }}>
+              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--danger)' }}>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
-              <span className="text-sm text-red-400 font-medium">
+              <span className="text-sm font-medium" style={{ color: 'var(--danger)' }}>
                 Danger Zone: Scope creep exceeds 20%
               </span>
             </div>
@@ -140,18 +140,18 @@ export default function Dashboard({ project, onUpdate }) {
           {/* Timeline bar */}
           {project.startDate && project.deadline && (
             <div className="w-full space-y-2">
-              <div className="flex items-center justify-between text-xs text-gray-500">
+              <div className="flex items-center justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
                 <span>{formatDateShort(project.startDate)}</span>
                 <span>{formatDateShort(project.deadline)}</span>
               </div>
-              <div className="w-full bg-dark-600 rounded-full h-2">
+              <div className="w-full rounded-full h-2" style={{ background: 'var(--bg-elevated)' }}>
                 <div
-                  className="h-2 rounded-full bg-primary transition-all duration-500"
-                  style={{ width: `${timelineProgress}%` }}
+                  className="h-2 rounded-full transition-all duration-500"
+                  style={{ width: `${timelineProgress}%`, background: 'var(--accent)' }}
                 />
               </div>
               {stats.timelineImpact > 0 && (
-                <div className="text-xs text-orange-400 text-center">
+                <div className="text-xs text-center" style={{ color: 'var(--warning)' }}>
                   +{stats.timelineImpact} days &rarr; New deadline:{' '}
                   {formatDate(projectedDeadline)}
                 </div>
@@ -160,29 +160,30 @@ export default function Dashboard({ project, onUpdate }) {
           )}
 
           <div className="w-full grid grid-cols-2 gap-3 text-center">
-            <div className="bg-dark-700 rounded-lg p-3">
-              <div className="text-lg font-bold text-gray-100">+{stats.additionalHours}h</div>
-              <div className="text-xs text-gray-500">Extra Hours</div>
+            <div className="rounded-lg p-3" style={{ background: 'var(--bg-elevated)' }}>
+              <div className="text-lg font-bold" style={{ color: 'var(--text-heading)' }}>+{stats.additionalHours}h</div>
+              <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Extra Hours</div>
             </div>
-            <div className="bg-dark-700 rounded-lg p-3">
-              <div className="text-lg font-bold text-gray-100">+{stats.timelineImpact}d</div>
-              <div className="text-xs text-gray-500">Days Added</div>
+            <div className="rounded-lg p-3" style={{ background: 'var(--bg-elevated)' }}>
+              <div className="text-lg font-bold" style={{ color: 'var(--text-heading)' }}>+{stats.timelineImpact}d</div>
+              <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Days Added</div>
             </div>
           </div>
         </div>
 
         {/* Original scope */}
         <div className="card lg:col-span-2 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-200">Original Scope</h2>
+          <h2 className="text-lg font-semibold" style={{ color: 'var(--text-body)' }}>Original Scope</h2>
           <div className="space-y-2">
             {project.deliverables.map((d) => (
               <div
                 key={d.id}
-                className="flex items-center justify-between bg-dark-700 rounded-lg px-4 py-3"
+                className="flex items-center justify-between rounded-lg px-4 py-3"
+                style={{ background: 'var(--bg-elevated)' }}
               >
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-gray-200 truncate">{d.name}</div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-sm font-medium truncate" style={{ color: 'var(--text-body)' }}>{d.name}</div>
+                  <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
                     {d.hours}h @ {formatCurrency(d.rate)}/hr ={' '}
                     {formatCurrency((parseFloat(d.hours) || 0) * (parseFloat(d.rate) || 0))}
                   </div>
@@ -190,7 +191,8 @@ export default function Dashboard({ project, onUpdate }) {
                 <select
                   value={d.status || 'Not Started'}
                   onChange={(e) => handleDeliverableStatus(d.id, e.target.value)}
-                  className={`!bg-transparent !border-0 !p-0 !pr-6 text-xs font-medium !ring-0 ${getStatusColor(d.status || 'Not Started').split(' ')[0]}`}
+                  className="!bg-transparent !border-0 !p-0 !pr-6 text-xs font-medium !ring-0"
+                  style={{ color: getStatusColor(d.status || 'Not Started').color }}
                 >
                   <option value="Not Started">Not Started</option>
                   <option value="In Progress">In Progress</option>
@@ -204,9 +206,9 @@ export default function Dashboard({ project, onUpdate }) {
 
       {/* Change requests list */}
       <div className="card space-y-4">
-        <h2 className="text-lg font-semibold text-gray-200">Change Requests</h2>
+        <h2 className="text-lg font-semibold" style={{ color: 'var(--text-body)' }}>Change Requests</h2>
         {project.changeRequests.length === 0 ? (
-          <div className="text-center py-12 text-gray-500">
+          <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
             <svg className="w-12 h-12 mx-auto mb-3 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
@@ -218,32 +220,33 @@ export default function Dashboard({ project, onUpdate }) {
             {project.changeRequests.map((r) => (
               <div
                 key={r.id}
-                className="bg-dark-700 rounded-lg p-4 animate-fade-in hover:bg-dark-600 transition-colors"
+                className="rounded-lg p-4 animate-fade-in transition-colors"
+                style={{ background: 'var(--bg-elevated)' }}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-semibold text-gray-100">
+                      <span className="text-sm font-semibold" style={{ color: 'var(--text-heading)' }}>
                         {r.description}
                       </span>
-                      <span className={`badge border ${getPriorityColor(r.priority)}`}>
+                      <span className="badge border" style={getPriorityColor(r.priority)}>
                         {r.priority}
                       </span>
-                      <span className={`badge border ${getStatusColor(r.status)}`}>
+                      <span className="badge border" style={getStatusColor(r.status)}>
                         {r.status}
                       </span>
                     </div>
-                    <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
+                    <div className="flex items-center gap-4 mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
                       <span>{r.category}</span>
                       <span>{formatDate(r.dateRequested)}</span>
                       <span>+{r.hours}h</span>
                       <span>+{r.timelineImpact || 0}d</span>
-                      <span className="text-primary font-medium">
+                      <span className="font-medium" style={{ color: 'var(--accent)' }}>
                         {formatCurrency((parseFloat(r.hours) || 0) * stats.rate)}
                       </span>
                     </div>
                     {r.clientQuote && (
-                      <div className="mt-2 text-xs text-gray-400 italic border-l-2 border-dark-400 pl-3">
+                      <div className="mt-2 text-xs italic border-l-2 pl-3" style={{ color: 'var(--text-muted)', borderColor: 'var(--border)' }}>
                         "{r.clientQuote}"
                       </div>
                     )}
@@ -254,7 +257,8 @@ export default function Dashboard({ project, onUpdate }) {
                         setEditingRequest(r);
                         setShowModal(true);
                       }}
-                      className="p-1.5 text-gray-500 hover:text-gray-300 transition-colors"
+                      className="p-1.5 transition-colors"
+                      style={{ color: 'var(--text-muted)' }}
                       title="Edit"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -263,7 +267,8 @@ export default function Dashboard({ project, onUpdate }) {
                     </button>
                     <button
                       onClick={() => handleDeleteRequest(r.id)}
-                      className="p-1.5 text-gray-500 hover:text-red-400 transition-colors"
+                      className="p-1.5 transition-colors hover:opacity-80"
+                      style={{ color: 'var(--text-muted)' }}
                       title="Delete"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

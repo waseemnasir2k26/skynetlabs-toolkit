@@ -53,26 +53,28 @@ export function getCreepLabel(percentage) {
 }
 
 export function getPriorityColor(priority) {
-  const colors = {
-    Low: 'text-blue-400 bg-blue-400/10 border-blue-400/20',
-    Medium: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
-    High: 'text-orange-400 bg-orange-400/10 border-orange-400/20',
-    Critical: 'text-red-400 bg-red-400/10 border-red-400/20',
+  const map = {
+    Low: '#3b82f6',
+    Medium: '#f59e0b',
+    High: '#f97316',
+    Critical: '#ef4444',
   };
-  return colors[priority] || colors.Low;
+  const c = map[priority] || map.Low;
+  return { color: c, backgroundColor: `${c}18`, borderColor: `${c}35` };
 }
 
 export function getStatusColor(status) {
-  const colors = {
-    'Not Started': 'text-gray-400 bg-gray-400/10 border-gray-400/20',
-    'In Progress': 'text-blue-400 bg-blue-400/10 border-blue-400/20',
-    Complete: 'text-primary bg-primary/10 border-primary/20',
-    Pending: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
-    Approved: 'text-primary bg-primary/10 border-primary/20',
-    Rejected: 'text-red-400 bg-red-400/10 border-red-400/20',
-    Completed: 'text-primary bg-primary/10 border-primary/20',
+  const map = {
+    'Not Started': '#9ca3af',
+    'In Progress': '#3b82f6',
+    Complete: '#13b973',
+    Pending: '#f59e0b',
+    Approved: '#13b973',
+    Rejected: '#ef4444',
+    Completed: '#13b973',
   };
-  return colors[status] || colors['Not Started'];
+  const c = map[status] || map['Not Started'];
+  return { color: c, backgroundColor: `${c}18`, borderColor: `${c}35` };
 }
 
 export function getCategoryColor(category) {

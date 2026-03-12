@@ -33,12 +33,12 @@ export default function ChangeRequestModal({ onSave, onClose, editRequest }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-dark-800 border border-dark-400 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl">
-        <div className="sticky top-0 bg-dark-800 border-b border-dark-500 px-6 py-4 flex items-center justify-between rounded-t-2xl">
-          <h2 className="text-lg font-semibold text-gray-100">
+      <div className="relative rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+        <div className="sticky top-0 border-b px-6 py-4 flex items-center justify-between rounded-t-2xl" style={{ background: 'var(--bg-elevated)', borderColor: 'var(--border)' }}>
+          <h2 className="text-lg font-semibold" style={{ color: 'var(--text-heading)' }}>
             {editRequest ? 'Edit Change Request' : 'Log New Request'}
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-200 transition-colors">
+          <button onClick={onClose} className="transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>

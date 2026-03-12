@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useToast } from './Toast'
+import { track } from '../../lib/analytics'
 
 export default function CopyButton({ text, label = 'Copy', className = '' }) {
   const [copied, setCopied] = useState(false)
   const toast = useToast()
 
   const handleCopy = async () => {
+    const slug = window.location.pathname.replace(/^\//, '') || 'home'
+    track('copy', slug)
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)
@@ -28,11 +31,12 @@ export default function CopyButton({ text, label = 'Copy', className = '' }) {
   return (
     <button
       onClick={handleCopy}
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg transition-all ${
-        copied
-          ? 'bg-primary/20 text-primary'
-          : 'bg-dark-200/50 text-gray-400 hover:text-white hover:bg-dark-200'
-      } ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-lg transition-all ${className}`}
+      style={{
+        background: copied ? 'var(--success-soft)' : 'var(--bg-elevated)',
+        color: copied ? 'var(--success)' : 'var(--text-body)',
+        border: '1px solid var(--border)',
+      }}
     >
       {copied ? (
         <>

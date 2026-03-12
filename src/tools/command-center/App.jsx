@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react'
 import ToolLayout from '../shared/ToolLayout'
 import ResultCard from '../shared/ResultCard'
 import CopyButton from '../shared/CopyButton'
+import ShareButton from '../shared/ShareButton'
 import { useLocalStorage } from '../shared/hooks/useLocalStorage'
 
 const STATUS_COLORS = {
@@ -447,6 +448,10 @@ export default function App() {
           </div>
         </div>
       </Modal>
+      {/* Share */}
+      <div className="flex justify-center mt-6">
+        <ShareButton getShareURL={() => window.location.origin + '/command-center'} />
+      </div>
     </ToolLayout>
   )
 }

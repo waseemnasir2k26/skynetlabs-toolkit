@@ -25,8 +25,8 @@ import {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-dark-700 border border-dark-400 rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-xs text-gray-400 mb-1">{label}</p>
+    <div className="rounded-lg px-3 py-2 shadow-xl" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+      <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{label}</p>
       {payload.map((entry, i) => (
         <p key={i} className="text-sm font-medium" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === 'number' && entry.name?.includes('Cost')
@@ -76,33 +76,33 @@ export default function Analytics({ project }) {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-gray-100">Analytics</h1>
-        <p className="text-gray-500 mt-0.5">{project.projectName} &middot; {project.clientName}</p>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>Analytics</h1>
+        <p className="mt-0.5" style={{ color: 'var(--text-muted)' }}>{project.projectName} &middot; {project.clientName}</p>
       </div>
 
       {/* Top metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Original Value</span>
-          <span className="text-xl font-bold text-gray-100">{formatCurrency(stats.originalValue)}</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Original Value</span>
+          <span className="text-xl font-bold" style={{ color: 'var(--text-heading)' }}>{formatCurrency(stats.originalValue)}</span>
         </div>
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Current Value</span>
-          <span className="text-xl font-bold text-primary">{formatCurrency(stats.currentValue)}</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Current Value</span>
+          <span className="text-xl font-bold" style={{ color: 'var(--accent)' }}>{formatCurrency(stats.currentValue)}</span>
         </div>
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Additional Cost</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Additional Cost</span>
           <span className="text-xl font-bold" style={{ color: getCreepColor(stats.creepPercentage) }}>
             +{formatCurrency(stats.additionalCost)}
           </span>
         </div>
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Extra Hours</span>
-          <span className="text-xl font-bold text-gray-100">+{stats.additionalHours}h</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Extra Hours</span>
+          <span className="text-xl font-bold" style={{ color: 'var(--text-heading)' }}>+{stats.additionalHours}h</span>
         </div>
         <div className="stat-card">
-          <span className="text-xs text-gray-500 uppercase tracking-wider">Timeline Impact</span>
-          <span className="text-xl font-bold text-orange-400">+{stats.timelineImpact} days</span>
+          <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Timeline Impact</span>
+          <span className="text-xl font-bold" style={{ color: 'var(--warning)' }}>+{stats.timelineImpact} days</span>
         </div>
       </div>
 
@@ -111,8 +111,8 @@ export default function Analytics({ project }) {
         <div className="card flex flex-col items-center justify-center gap-4">
           <ScopeGauge percentage={stats.creepPercentage} size={180} />
           {stats.creepPercentage > 20 && (
-            <div className="w-full bg-red-500/10 border border-red-500/20 rounded-lg p-3 text-center">
-              <span className="text-sm text-red-400 font-medium">
+            <div className="w-full rounded-lg p-3 text-center" style={{ background: 'var(--danger-soft)', border: '1px solid var(--danger)' }}>
+              <span className="text-sm font-medium" style={{ color: 'var(--danger)' }}>
                 DANGER ZONE: {stats.creepPercentage.toFixed(1)}% scope creep
               </span>
             </div>
@@ -121,31 +121,33 @@ export default function Analytics({ project }) {
 
         {/* Timeline comparison */}
         <div className="card lg:col-span-2 space-y-4">
-          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+          <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
             Timeline Impact
           </h3>
           <div className="space-y-4">
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span className="text-gray-400">Original Timeline</span>
-                <span className="text-gray-200">{formatDate(project.deadline)}</span>
+                <span style={{ color: 'var(--text-muted)' }}>Original Timeline</span>
+                <span style={{ color: 'var(--text-body)' }}>{formatDate(project.deadline)}</span>
               </div>
-              <div className="w-full bg-dark-600 rounded-full h-4">
-                <div className="h-4 rounded-full bg-primary/40" style={{ width: '100%' }} />
+              <div className="w-full rounded-full h-4" style={{ background: 'var(--bg-elevated)' }}>
+                <div className="h-4 rounded-full" style={{ width: '100%', background: 'var(--accent-soft)' }} />
               </div>
             </div>
             {projectedDeadline && (
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-400">Projected Timeline</span>
-                  <span className="text-orange-400">{formatDate(projectedDeadline)}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>Projected Timeline</span>
+                  <span style={{ color: 'var(--warning)' }}>{formatDate(projectedDeadline)}</span>
                 </div>
-                <div className="w-full bg-dark-600 rounded-full h-4">
+                <div className="w-full rounded-full h-4" style={{ background: 'var(--bg-elevated)' }}>
                   <div
-                    className="h-4 rounded-full bg-orange-500/40"
+                    className="h-4 rounded-full"
                     style={{
                       width: `${100 + (stats.timelineImpact / (project.startDate && project.deadline ? Math.max(1, Math.ceil((new Date(project.deadline) - new Date(project.startDate)) / 86400000)) : 30)) * 100}%`,
                       maxWidth: '100%',
+                      background: 'var(--warning)',
+                      opacity: 0.4,
                     }}
                   />
                 </div>
@@ -155,17 +157,17 @@ export default function Analytics({ project }) {
 
           {/* Summary comparison */}
           <div className="grid grid-cols-2 gap-4 mt-6">
-            <div className="bg-dark-700 rounded-lg p-4 text-center">
-              <div className="text-2xl font-bold text-gray-200">
+            <div className="rounded-lg p-4 text-center" style={{ background: 'var(--bg-elevated)' }}>
+              <div className="text-2xl font-bold" style={{ color: 'var(--text-body)' }}>
                 {stats.originalHours}h
               </div>
-              <div className="text-xs text-gray-500 mt-1">Original Hours</div>
+              <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Original Hours</div>
             </div>
-            <div className="bg-dark-700 rounded-lg p-4 text-center">
-              <div className="text-2xl font-bold text-primary">
+            <div className="rounded-lg p-4 text-center" style={{ background: 'var(--bg-elevated)' }}>
+              <div className="text-2xl font-bold" style={{ color: 'var(--accent)' }}>
                 {stats.originalHours + stats.additionalHours}h
               </div>
-              <div className="text-xs text-gray-500 mt-1">Current Total Hours</div>
+              <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>Current Total Hours</div>
             </div>
           </div>
         </div>
@@ -175,11 +177,11 @@ export default function Analytics({ project }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Bar chart */}
         <div className="card space-y-4">
-          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+          <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
             Scope Changes Over Time
           </h3>
           {barData.length === 0 ? (
-            <div className="h-64 flex items-center justify-center text-gray-500 text-sm">
+            <div className="h-64 flex items-center justify-center text-sm" style={{ color: 'var(--text-muted)' }}>
               No change requests yet
             </div>
           ) : (
@@ -201,11 +203,11 @@ export default function Analytics({ project }) {
 
         {/* Pie chart */}
         <div className="card space-y-4">
-          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+          <h3 className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
             Changes by Category
           </h3>
           {pieData.length === 0 ? (
-            <div className="h-64 flex items-center justify-center text-gray-500 text-sm">
+            <div className="h-64 flex items-center justify-center text-sm" style={{ color: 'var(--text-muted)' }}>
               No change requests yet
             </div>
           ) : (

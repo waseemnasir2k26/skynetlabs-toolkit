@@ -38,8 +38,8 @@ const ProposalHistory = ({ onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div className="bg-dark-card border border-dark-border rounded-xl w-full max-w-lg max-h-[80vh] flex flex-col">
         <div className="flex items-center justify-between p-5 border-b border-dark-border">
-          <h2 className="text-lg font-bold text-white">Saved Proposals</h2>
-          <button onClick={onClose} className="text-dark-muted hover:text-white transition">
+          <h2 className="text-lg font-bold" style={{ color: 'var(--text-heading)' }}>Saved Proposals</h2>
+          <button onClick={onClose} className="text-dark-muted hover:opacity-80 transition">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -61,11 +61,12 @@ const ProposalHistory = ({ onClose }) => {
                 <button
                   key={p.id}
                   onClick={() => handleLoad(p)}
-                  className="w-full text-left bg-dark-surface border border-dark-border rounded-lg p-4 hover:border-primary/50 transition group"
+                  className="w-full text-left bg-dark-surface border border-dark-border rounded-lg p-4 transition group"
+                  style={{ '--hover-border': 'var(--accent)' }}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-white font-medium text-sm truncate group-hover:text-primary transition">
+                      <h3 className="font-medium text-sm truncate transition" style={{ color: 'var(--text-heading)' }}>
                         {p.project?.title || 'Untitled Proposal'}
                       </h3>
                       <p className="text-dark-muted text-xs mt-1">
@@ -77,7 +78,7 @@ const ProposalHistory = ({ onClose }) => {
                     </div>
                     <button
                       onClick={(e) => handleDelete(p.id, e)}
-                      className="p-1.5 text-dark-muted hover:text-red-400 transition opacity-0 group-hover:opacity-100"
+                      className="p-1.5 text-dark-muted transition opacity-0 group-hover:opacity-100 hover:opacity-80"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

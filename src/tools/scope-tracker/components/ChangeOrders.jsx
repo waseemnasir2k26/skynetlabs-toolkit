@@ -89,8 +89,8 @@ export default function ChangeOrders({ project, onUpdate }) {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-gray-100">Change Order Generator</h1>
-        <p className="text-gray-500 mt-0.5">
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>Change Order Generator</h1>
+        <p className="mt-0.5" style={{ color: 'var(--text-muted)' }}>
           {project.projectName} &middot; Select requests to include in a change order
         </p>
       </div>
@@ -98,7 +98,7 @@ export default function ChangeOrders({ project, onUpdate }) {
       {/* Select requests */}
       <div className="card space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-200">Pending Requests</h2>
+          <h2 className="text-lg font-semibold" style={{ color: 'var(--text-body)' }}>Pending Requests</h2>
           {pendingRequests.length > 0 && (
             <button onClick={selectAll} className="btn-secondary text-sm !px-3 !py-1.5">
               {selected.size === pendingRequests.length ? 'Deselect All' : 'Select All'}
@@ -107,7 +107,7 @@ export default function ChangeOrders({ project, onUpdate }) {
         </div>
 
         {pendingRequests.length === 0 ? (
-          <div className="text-center py-10 text-gray-500">
+          <div className="text-center py-10" style={{ color: 'var(--text-muted)' }}>
             <p>No pending or approved requests to include.</p>
             <p className="text-sm mt-1">
               Log change requests from the Dashboard first.
@@ -118,11 +118,12 @@ export default function ChangeOrders({ project, onUpdate }) {
             {pendingRequests.map((r) => (
               <label
                 key={r.id}
-                className={`flex items-center gap-4 bg-dark-700 rounded-lg p-4 cursor-pointer transition-all duration-200 border-2 ${
+                className="flex items-center gap-4 rounded-lg p-4 cursor-pointer transition-all duration-200 border-2"
+                style={
                   selected.has(r.id)
-                    ? 'border-primary/50 bg-primary/5'
-                    : 'border-transparent hover:border-dark-400'
-                }`}
+                    ? { background: 'var(--accent-soft)', borderColor: 'var(--accent)' }
+                    : { background: 'var(--bg-elevated)', borderColor: 'transparent' }
+                }
               >
                 <input
                   type="checkbox"
@@ -132,18 +133,18 @@ export default function ChangeOrders({ project, onUpdate }) {
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-200 truncate">
+                    <span className="text-sm font-medium truncate" style={{ color: 'var(--text-body)' }}>
                       {r.description}
                     </span>
-                    <span className={`badge border ${getPriorityColor(r.priority)}`}>
+                    <span className="badge border" style={getPriorityColor(r.priority)}>
                       {r.priority}
                     </span>
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">
+                  <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                     {r.category} &middot; {r.hours}h &middot; +{r.timelineImpact || 0}d
                   </div>
                 </div>
-                <div className="text-sm font-mono text-primary shrink-0">
+                <div className="text-sm font-mono shrink-0" style={{ color: 'var(--accent)' }}>
                   {formatCurrency((parseFloat(r.hours) || 0) * stats.rate)}
                 </div>
               </label>
@@ -153,16 +154,16 @@ export default function ChangeOrders({ project, onUpdate }) {
 
         {/* Generate summary */}
         {selectedRequests.length > 0 && (
-          <div className="bg-dark-700 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-4 border border-primary/20">
+          <div className="rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-4" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--accent)' }}>
             <div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
                 {selectedRequests.length} item(s) selected
               </div>
               <div className="flex items-center gap-4 mt-1">
-                <span className="text-lg font-bold text-primary">
+                <span className="text-lg font-bold" style={{ color: 'var(--accent)' }}>
                   {formatCurrency(selectedCost)}
                 </span>
-                <span className="text-sm text-gray-400">{selectedHours}h additional</span>
+                <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{selectedHours}h additional</span>
               </div>
             </div>
             <button
@@ -194,18 +195,19 @@ export default function ChangeOrders({ project, onUpdate }) {
       {/* Previous change orders */}
       {project.changeOrders?.length > 0 && (
         <div className="card space-y-4">
-          <h2 className="text-lg font-semibold text-gray-200">Previous Change Orders</h2>
+          <h2 className="text-lg font-semibold" style={{ color: 'var(--text-body)' }}>Previous Change Orders</h2>
           <div className="space-y-2">
             {project.changeOrders.map((o) => (
               <div
                 key={o.id}
-                className="flex items-center justify-between bg-dark-700 rounded-lg p-4"
+                className="flex items-center justify-between rounded-lg p-4"
+                style={{ background: 'var(--bg-elevated)' }}
               >
                 <div>
-                  <div className="text-sm font-medium text-gray-200">
+                  <div className="text-sm font-medium" style={{ color: 'var(--text-body)' }}>
                     CO-{String(o.number).padStart(4, '0')}
                   </div>
-                  <div className="text-xs text-gray-500 mt-0.5">
+                  <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
                     {formatDate(o.date)} &middot; {o.requestIds?.length || 0} items &middot;{' '}
                     {o.totalHours}h &middot; {formatCurrency(o.totalCost)}
                   </div>

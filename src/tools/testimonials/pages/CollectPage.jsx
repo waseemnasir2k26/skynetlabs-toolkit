@@ -108,7 +108,7 @@ export default function CollectPage() {
         {/* Name */}
         <div>
           <label className="block text-sm font-medium text-dark-200 mb-2">
-            Your Name <span className="text-red-400">*</span>
+            Your Name <span style={{ color: 'var(--danger)' }}>*</span>
           </label>
           <input
             type="text"
@@ -117,7 +117,7 @@ export default function CollectPage() {
             value={form.name}
             onChange={e => updateField('name', e.target.value)}
           />
-          {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+          {errors.name && <p className="text-xs mt-1" style={{ color: 'var(--danger)' }}>{errors.name}</p>}
         </div>
 
         {/* Company */}
@@ -167,16 +167,16 @@ export default function CollectPage() {
         {/* Rating */}
         <div>
           <label className="block text-sm font-medium text-dark-200 mb-2">
-            Rating <span className="text-red-400">*</span>
+            Rating <span style={{ color: 'var(--danger)' }}>*</span>
           </label>
           <StarRating rating={form.rating} onChange={(r) => updateField('rating', r)} size="lg" />
-          {errors.rating && <p className="text-red-400 text-xs mt-1">{errors.rating}</p>}
+          {errors.rating && <p className="text-xs mt-1" style={{ color: 'var(--danger)' }}>{errors.rating}</p>}
         </div>
 
         {/* Testimonial */}
         <div>
           <label className="block text-sm font-medium text-dark-200 mb-2">
-            Your Testimonial <span className="text-red-400">*</span>
+            Your Testimonial <span style={{ color: 'var(--danger)' }}>*</span>
           </label>
           <textarea
             className={`input-field min-h-[120px] resize-y ${errors.testimonial ? 'border-red-500/50' : ''}`}
@@ -187,11 +187,11 @@ export default function CollectPage() {
           />
           <div className="flex justify-between mt-1">
             {errors.testimonial ? (
-              <p className="text-red-400 text-xs">{errors.testimonial}</p>
+              <p className="text-xs" style={{ color: 'var(--danger)' }}>{errors.testimonial}</p>
             ) : (
               <p className="text-dark-400 text-xs">Aim for 50-300 characters for the best impact</p>
             )}
-            <p className={`text-xs ${form.testimonial.length > 1800 ? 'text-yellow-400' : 'text-dark-400'}`}>
+            <p className="text-xs" style={{ color: form.testimonial.length > 1800 ? 'var(--warning)' : 'var(--text-muted)' }}>
               {form.testimonial.length}/2000
             </p>
           </div>
@@ -268,10 +268,10 @@ export default function CollectPage() {
               className="mt-1 w-4 h-4 rounded border-dark-400 bg-dark-700 text-primary-500 focus:ring-primary-500/30"
             />
             <span className="text-sm text-dark-200">
-              I allow {agencyName} to use this testimonial on their website and marketing materials. <span className="text-red-400">*</span>
+              I allow {agencyName} to use this testimonial on their website and marketing materials. <span style={{ color: 'var(--danger)' }}>*</span>
             </span>
           </label>
-          {errors.permission && <p className="text-red-400 text-xs mt-1">{errors.permission}</p>}
+          {errors.permission && <p className="text-xs mt-1" style={{ color: 'var(--danger)' }}>{errors.permission}</p>}
         </div>
 
         <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2">

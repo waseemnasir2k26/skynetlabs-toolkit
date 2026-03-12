@@ -162,15 +162,15 @@ export default function DashboardPage() {
       {/* Stats Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
         {[
-          { label: 'Total', value: stats.total, icon: MessageSquare, color: 'text-blue-400' },
-          { label: 'Approved', value: stats.approved, icon: Check, color: 'text-primary-400' },
-          { label: 'Pending', value: stats.pending, icon: Clock, color: 'text-yellow-400' },
-          { label: 'Rejected', value: stats.rejected, icon: X, color: 'text-red-400' },
-          { label: 'Starred', value: stats.starred, icon: Star, color: 'text-yellow-400' },
-          { label: 'Avg Rating', value: stats.averageRating, icon: TrendingUp, color: 'text-primary-400' },
+          { label: 'Total', value: stats.total, icon: MessageSquare, color: 'var(--info, #3b82f6)' },
+          { label: 'Approved', value: stats.approved, icon: Check, color: 'var(--accent)' },
+          { label: 'Pending', value: stats.pending, icon: Clock, color: 'var(--warning)' },
+          { label: 'Rejected', value: stats.rejected, icon: X, color: 'var(--danger)' },
+          { label: 'Starred', value: stats.starred, icon: Star, color: 'var(--warning)' },
+          { label: 'Avg Rating', value: stats.averageRating, icon: TrendingUp, color: 'var(--accent)' },
         ].map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="glass-card p-4 flex items-center gap-3">
-            <div className={`p-2 rounded-lg bg-dark-700 ${color}`}>
+            <div className="p-2 rounded-lg" style={{ background: 'var(--bg-elevated)', color }}>
               <Icon className="w-4 h-4" />
             </div>
             <div>
@@ -304,14 +304,15 @@ export default function DashboardPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h4 className="font-semibold text-dark-50">{t.name}</h4>
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                          t.status === 'approved' ? 'bg-primary-500/20 text-primary-400' :
-                          t.status === 'rejected' ? 'bg-red-500/20 text-red-400' :
-                          'bg-yellow-500/20 text-yellow-400'
-                        }`}>
+                        <span className="text-xs px-2 py-0.5 rounded-full font-medium"
+                          style={
+                            t.status === 'approved' ? { background: 'var(--success-soft)', color: 'var(--success)' } :
+                            t.status === 'rejected' ? { background: 'var(--danger-soft)', color: 'var(--danger)' } :
+                            { background: '#f59e0b20', color: 'var(--warning)' }
+                          }>
                           {t.status}
                         </span>
-                        {t.starred && <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />}
+                        {t.starred && <Star className="w-3.5 h-3.5" style={{ fill: 'var(--warning)', color: 'var(--warning)' }} />}
                       </div>
                       <p className="text-sm text-dark-400">
                         {t.company && <span>{t.company}</span>}
@@ -367,25 +368,25 @@ export default function DashboardPage() {
                 {/* Right: Actions */}
                 <div className="flex sm:flex-col items-center gap-1 flex-shrink-0">
                   {t.status !== 'approved' && (
-                    <button onClick={() => handleApprove(t.id)} className="p-2 rounded-lg hover:bg-primary-500/10 text-dark-400 hover:text-primary-400 transition-colors" title="Approve">
+                    <button onClick={() => handleApprove(t.id)} className="p-2 rounded-lg transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }} title="Approve">
                       <Check className="w-4 h-4" />
                     </button>
                   )}
                   {t.status !== 'rejected' && (
-                    <button onClick={() => handleReject(t.id)} className="p-2 rounded-lg hover:bg-red-500/10 text-dark-400 hover:text-red-400 transition-colors" title="Reject">
+                    <button onClick={() => handleReject(t.id)} className="p-2 rounded-lg transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }} title="Reject">
                       <X className="w-4 h-4" />
                     </button>
                   )}
-                  <button onClick={() => handleStar(t.id, t.starred)} className="p-2 rounded-lg hover:bg-yellow-500/10 text-dark-400 hover:text-yellow-400 transition-colors" title="Star">
-                    <Star className={`w-4 h-4 ${t.starred ? 'fill-yellow-400 text-yellow-400' : ''}`} />
+                  <button onClick={() => handleStar(t.id, t.starred)} className="p-2 rounded-lg transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }} title="Star">
+                    <Star className="w-4 h-4" style={t.starred ? { fill: 'var(--warning)', color: 'var(--warning)' } : {}} />
                   </button>
-                  <button onClick={() => handleEdit(t)} className="p-2 rounded-lg hover:bg-blue-500/10 text-dark-400 hover:text-blue-400 transition-colors" title="Edit">
+                  <button onClick={() => handleEdit(t)} className="p-2 rounded-lg transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }} title="Edit">
                     <Edit3 className="w-4 h-4" />
                   </button>
-                  <button onClick={() => handleCopyText(t)} className="p-2 rounded-lg hover:bg-dark-500 text-dark-400 hover:text-dark-200 transition-colors" title="Copy">
+                  <button onClick={() => handleCopyText(t)} className="p-2 rounded-lg transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }} title="Copy">
                     <Copy className="w-4 h-4" />
                   </button>
-                  <button onClick={() => handleDelete(t.id)} className="p-2 rounded-lg hover:bg-red-500/10 text-dark-400 hover:text-red-400 transition-colors" title="Delete">
+                  <button onClick={() => handleDelete(t.id)} className="p-2 rounded-lg transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }} title="Delete">
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>

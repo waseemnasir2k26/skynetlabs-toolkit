@@ -24,7 +24,8 @@ export default function Modal({ isOpen, onClose, title, children, maxWidth = 'ma
           <h3 className="text-lg font-bold text-dark-50">{title}</h3>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-dark-600 transition-colors text-dark-300 hover:text-dark-100"
+            className="p-2 rounded-lg transition-colors hover:opacity-80"
+            style={{ color: 'var(--text-muted)' }}
           >
             <X className="w-5 h-5" />
           </button>

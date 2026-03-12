@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import { useToast } from './Toast'
+import { track } from '../../lib/analytics'
 
 export default function ShareButton({ getShareURL, className = '' }) {
   const [copied, setCopied] = useState(false)
   const toast = useToast()
 
   const handleShare = async () => {
+    const slug = window.location.pathname.replace(/^\//, '') || 'home'
+    track('share', slug)
+
     const url = getShareURL()
 
     // Try native share first (mobile)

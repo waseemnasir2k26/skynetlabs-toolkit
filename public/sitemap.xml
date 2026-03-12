@@ -13,19 +13,39 @@
   <url><loc>https://skynetlabs-toolkit.vercel.app/positioning-generator</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/ad-roi-calculator</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/competitor-angles</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/subject-line-tester</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/email-templates</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/marketing-roi-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/cold-outreach</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/command-center</loc><priority>0.8</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/onboarding-portal</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/scope-change</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/productize-services</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/post-mortem</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/client-report</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/capacity-planner</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/timeline-generator</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/service-configurator</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/revenue-goal</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/revenue-diversification</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/win-back-campaigns</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/rate-calculator</loc><priority>0.9</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/payment-fee-calculator</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/late-fee-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/profit-margin-calculator</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/tax-estimator</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/retainer-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/expense-tracker</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/pricing-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/discount-calculator</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/invoice-generator</loc><priority>0.9</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/contract-generator</loc><priority>0.8</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/brand-kit-generator</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/content-planner</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/social-proof-manager</loc><priority>0.7</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/business-scorecard</loc><priority>0.8</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/website-audit</loc><priority>0.8</priority></url>
   <url><loc>https://skynetlabs-toolkit.vercel.app/lead-magnet-factory</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/feedback-survey</loc><priority>0.7</priority></url>
+  <url><loc>https://skynetlabs-toolkit.vercel.app/social-calendar</loc><priority>0.7</priority></url>
 </urlset>

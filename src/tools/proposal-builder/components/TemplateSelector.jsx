@@ -30,11 +30,12 @@ const TemplateSelector = () => {
         <button
           key={t.id}
           onClick={() => setTemplate(t.id)}
-          className={`flex-1 p-3 rounded-lg border transition-all ${
+          className="flex-1 p-3 rounded-lg border transition-all"
+          style={
             proposal.template === t.id
-              ? 'border-primary bg-primary/10 ring-1 ring-primary/30'
-              : 'border-dark-border bg-dark-surface hover:border-dark-muted'
-          }`}
+              ? { borderColor: 'var(--accent)', background: 'var(--accent-soft)', boxShadow: '0 0 0 1px var(--accent)' }
+              : { borderColor: 'var(--border)', background: 'var(--bg-elevated)' }
+          }
         >
           <div className="flex gap-1 mb-2">
             {t.preview.map((color, i) => (
@@ -45,7 +46,7 @@ const TemplateSelector = () => {
               />
             ))}
           </div>
-          <div className="text-xs font-medium text-white text-left">{t.name}</div>
+          <div className="text-xs font-medium text-left" style={{ color: 'var(--text-heading)' }}>{t.name}</div>
           <div className="text-[10px] text-dark-muted text-left">{t.desc}</div>
         </button>
       ))}

@@ -105,7 +105,7 @@ export default function ClientOnboarding() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 rounded-full animate-spin mx-auto mb-4" style={{ borderColor: 'var(--accent-soft)', borderTopColor: 'var(--accent)' }}></div>
           <p className="text-dark-muted">Loading onboarding form...</p>
         </div>
       </div>
@@ -134,8 +134,8 @@ export default function ClientOnboarding() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center">
-                <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'var(--accent-soft)', border: '1px solid var(--accent)' }}>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--accent)' }}>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
@@ -148,7 +148,7 @@ export default function ClientOnboarding() {
               href="https://www.skynetjoe.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-dark-muted hover:text-primary transition-colors no-underline"
+              className="text-xs text-dark-muted transition-colors hover:opacity-80 no-underline"
             >
               skynetjoe.com
             </a>
@@ -173,7 +173,7 @@ export default function ClientOnboarding() {
           <button
             onClick={handlePrev}
             disabled={currentStep === 0}
-            className="px-5 py-2.5 bg-dark-surface border border-dark-border rounded-lg text-sm text-dark-text hover:border-primary/50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer flex items-center gap-2"
+            className="px-5 py-2.5 bg-dark-surface border border-dark-border rounded-lg text-sm text-dark-text transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -188,7 +188,8 @@ export default function ClientOnboarding() {
           {currentStep < sections.length - 1 ? (
             <button
               onClick={handleNext}
-              className="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors cursor-pointer flex items-center gap-2"
+              className="px-5 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer flex items-center gap-2"
+              style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}
             >
               Next
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,7 +199,8 @@ export default function ClientOnboarding() {
           ) : (
             <button
               onClick={handleSubmit}
-              className="px-6 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors cursor-pointer flex items-center gap-2 animate-pulse-glow"
+              className="px-6 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer flex items-center gap-2 animate-pulse-glow"
+              style={{ background: 'var(--accent)', color: 'var(--text-heading)' }}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -217,13 +219,14 @@ export default function ClientOnboarding() {
                 key={sId}
                 onClick={() => setCurrentStep(idx)}
                 title={sDef?.title}
-                className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
+                className="w-3 h-3 rounded-full transition-all cursor-pointer"
+                style={
                   idx === currentStep
-                    ? 'bg-primary scale-125'
+                    ? { background: 'var(--accent)', transform: 'scale(1.25)' }
                     : idx < currentStep
-                    ? 'bg-primary/40'
-                    : 'bg-dark-border'
-                }`}
+                    ? { background: 'var(--accent-soft)' }
+                    : { background: 'var(--border)' }
+                }
               />
             );
           })}
@@ -235,7 +238,7 @@ export default function ClientOnboarding() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <p className="text-xs text-dark-muted">
             Powered by{' '}
-            <a href="https://www.skynetjoe.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-light transition-colors no-underline">
+            <a href="https://www.skynetjoe.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:opacity-80 no-underline" style={{ color: 'var(--accent)' }}>
               Skynet Labs
             </a>
             {' '} | All data is stored securely in your browser
