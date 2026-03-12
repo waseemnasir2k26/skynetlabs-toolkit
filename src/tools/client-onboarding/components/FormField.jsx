@@ -20,7 +20,8 @@ export function TextInput({ value, onChange, placeholder, type = 'text', require
       placeholder={placeholder}
       required={required}
       disabled={disabled}
-      className="w-full px-4 py-2.5 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-muted/50 focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30 transition-colors text-sm disabled:opacity-50"
+      className="w-full px-4 py-2.5 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-muted/50 focus:outline-none transition-colors text-sm disabled:opacity-50"
+      style={{ '--tw-ring-color': 'var(--accent)' }}
     />
   );
 }
@@ -33,7 +34,8 @@ export function TextArea({ value, onChange, placeholder, rows = 4, required }) {
       placeholder={placeholder}
       rows={rows}
       required={required}
-      className="w-full px-4 py-2.5 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-muted/50 focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30 transition-colors text-sm resize-vertical"
+      className="w-full px-4 py-2.5 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-muted/50 focus:outline-none transition-colors text-sm resize-vertical"
+      style={{ '--tw-ring-color': 'var(--accent)' }}
     />
   );
 }
@@ -44,7 +46,8 @@ export function Select({ value, onChange, options, placeholder, required }) {
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
       required={required}
-      className="w-full px-4 py-2.5 bg-dark-bg border border-dark-border rounded-lg text-dark-text focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30 transition-colors text-sm cursor-pointer"
+      className="w-full px-4 py-2.5 bg-dark-bg border border-dark-border rounded-lg text-dark-text focus:outline-none transition-colors text-sm cursor-pointer"
+      style={{ '--tw-ring-color': 'var(--accent)' }}
     >
       {placeholder && <option value="">{placeholder}</option>}
       {options.map((opt) => (
@@ -63,10 +66,11 @@ export function Checkbox({ checked, onChange, label, description }) {
         type="checkbox"
         checked={checked || false}
         onChange={(e) => onChange(e.target.checked)}
-        className="mt-0.5 w-5 h-5 rounded border-dark-border bg-dark-bg text-primary focus:ring-primary/30 cursor-pointer accent-[#13b973]"
+        className="mt-0.5 w-5 h-5 rounded border-dark-border bg-dark-bg cursor-pointer"
+        style={{ accentColor: 'var(--accent)' }}
       />
       <div>
-        <span className="text-sm text-dark-text group-hover:text-primary transition-colors">{label}</span>
+        <span className="text-sm text-dark-text transition-colors">{label}</span>
         {description && <p className="text-xs text-dark-muted mt-0.5">{description}</p>}
       </div>
     </label>
@@ -93,7 +97,7 @@ export function FileUpload({ onFileSelect, accept, label, multiple }) {
   };
 
   return (
-    <div className="border-2 border-dashed border-dark-border rounded-lg p-6 text-center hover:border-primary/40 transition-colors cursor-pointer relative">
+    <div className="border-2 border-dashed border-dark-border rounded-lg p-6 text-center transition-colors cursor-pointer relative">
       <input
         type="file"
         onChange={handleChange}

@@ -5,21 +5,26 @@ export default function ProgressBar({ currentStep, totalSteps, completionPercent
         <span className="text-dark-muted">
           Step {currentStep + 1} of {totalSteps}
         </span>
-        <span className="text-primary font-semibold">{completionPercent}% Complete</span>
+        <span className="font-semibold" style={{ color: 'var(--accent)' }}>{completionPercent}% Complete</span>
       </div>
       <div className="w-full h-2 bg-dark-border rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-primary-dark to-primary-light rounded-full transition-all duration-500 ease-out"
-          style={{ width: `${completionPercent}%` }}
+          className="h-full rounded-full transition-all duration-500 ease-out"
+          style={{ width: `${completionPercent}%`, background: 'var(--accent)' }}
         />
       </div>
       <div className="flex gap-1">
         {Array.from({ length: totalSteps }).map((_, i) => (
           <div
             key={i}
-            className={`flex-1 h-1 rounded-full transition-colors duration-300 ${
-              i < currentStep ? 'bg-primary' : i === currentStep ? 'bg-primary/60' : 'bg-dark-border'
-            }`}
+            className="flex-1 h-1 rounded-full transition-colors duration-300"
+            style={
+              i < currentStep
+                ? { background: 'var(--accent)' }
+                : i === currentStep
+                ? { background: 'var(--accent-soft)' }
+                : { background: 'var(--border)' }
+            }
             title={sectionTitles[i] || `Step ${i + 1}`}
           />
         ))}
