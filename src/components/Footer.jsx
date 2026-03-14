@@ -29,13 +29,12 @@ export default function Footer() {
             <h4 className="font-semibold text-sm mb-3" style={{ color: 'var(--text-body)' }}>Quick Links</h4>
             <div className="grid grid-cols-2 gap-1.5">
               <Link to="/proposal-builder" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Proposal Builder</Link>
-              <Link to="/scope-tracker" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Scope Tracker</Link>
               <Link to="/project-tracker" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Project Tracker</Link>
               <Link to="/brief-analyzer" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Brief Analyzer</Link>
-              <Link to="/testimonials" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Testimonials</Link>
-              <Link to="/client-onboarding" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Client Onboarding</Link>
-              <Link to="/sow-generator" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>SOW Generator</Link>
-              <Link to="/command-center" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Command Center</Link>
+              <Link to="/cold-outreach" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Cold Outreach</Link>
+              <Link to="/fiverr-gig-creator" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Fiverr Gig Creator</Link>
+              <Link to="/subject-line-tester" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Subject Line Tester</Link>
+              <Link to="/contract-generator" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Contract Generator</Link>
               <Link to="/business-scorecard" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Business Scorecard</Link>
               <Link to="/lead-magnet-factory" className="text-xs transition-colors hover:opacity-80" style={{ color: 'var(--text-muted)' }}>Lead Magnet</Link>
             </div>
