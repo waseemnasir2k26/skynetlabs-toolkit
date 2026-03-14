@@ -14,6 +14,7 @@ import TermsStep from './components/steps/TermsStep';
 import { exportToPDF } from './utils/pdfExport';
 import { createEmptyProposal } from './utils/defaultData';
 import { useToast } from '../shared/Toast';
+import ShareButton from '../shared/ShareButton';
 
 const TOTAL_STEPS = 7;
 
@@ -121,6 +122,7 @@ function AppContent() {
               </>
             )}
           </button>
+          <ShareButton getShareURL={() => window.location.href} />
           <button
             onClick={handleExport}
             disabled={exporting}

@@ -34,6 +34,7 @@ const tools = [
   { path: '/client-report', name: 'Client Report Builder', emoji: '📊', description: 'Drag-and-drop report builder with metrics, tasks, and PDF export.', category: 'Agency Operations' },
   { path: '/capacity-planner', name: 'Client Capacity Planner', emoji: '📅', description: 'Visualize your capacity, utilization rate, and room for new clients.', category: 'Agency Operations' },
   { path: '/timeline-generator', name: 'Project Timeline Generator', emoji: '📐', description: 'Build visual project timelines with phases, milestones, and Gantt charts.', category: 'Agency Operations' },
+  { path: '/deal-pipeline', name: 'Deal Flow Pipeline', emoji: '🔄', description: 'Visual Kanban pipeline to track deals from lead to close with drag-and-drop.', category: 'Agency Operations' },
   // Revenue & Growth
   { path: '/service-configurator', name: 'Services Configurator', emoji: '⚙️', description: 'Clients build their own custom quote with live price updates.', category: 'Revenue & Growth' },
   { path: '/revenue-goal', name: 'Revenue Goal Planner', emoji: '🎯', description: 'Set your income goal. See exactly how many clients and leads you need.', category: 'Revenue & Growth' },
@@ -60,6 +61,7 @@ const tools = [
   { path: '/lead-magnet-factory', name: 'Lead Magnet Factory', emoji: '🧲', description: 'Create a lead magnet AND its landing page in one workflow.', category: 'Authority Building' },
   { path: '/feedback-survey', name: 'Client Feedback Survey Builder', emoji: '📝', description: 'Build custom feedback surveys with ratings, NPS, and text responses.', category: 'Authority Building' },
   { path: '/social-calendar', name: 'Social Media Content Calendar', emoji: '📱', description: 'Plan and schedule content across all platforms with a visual calendar.', category: 'Authority Building' },
+  { path: '/case-study-generator', name: 'Case Study Generator', emoji: '📋', description: 'Create professional case studies with the Problem → Solution → Results framework.', category: 'Authority Building' },
 ]
 
 /** Total number of tools — useful for badges and stats */

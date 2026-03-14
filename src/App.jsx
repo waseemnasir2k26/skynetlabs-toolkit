@@ -35,6 +35,7 @@ const PostMortem = lazy(() => import('./tools/post-mortem/App'))
 const ClientReport = lazy(() => import('./tools/client-report/App'))
 const CapacityPlanner = lazy(() => import('./tools/capacity-planner/App'))
 const TimelineGenerator = lazy(() => import('./tools/timeline-generator/App'))
+const DealPipeline = lazy(() => import('./tools/deal-pipeline/App'))
 
 // Revenue & Growth
 const ServiceConfigurator = lazy(() => import('./tools/service-configurator/App'))
@@ -64,6 +65,7 @@ const WebsiteAudit = lazy(() => import('./tools/website-audit/App'))
 const LeadMagnetFactory = lazy(() => import('./tools/lead-magnet-factory/App'))
 const FeedbackSurvey = lazy(() => import('./tools/feedback-survey/App'))
 const SocialCalendar = lazy(() => import('./tools/social-calendar/App'))
+const CaseStudyGenerator = lazy(() => import('./tools/case-study-generator/App'))
 
 // Admin
 const AdminLogin = lazy(() => import('./pages/AdminLogin'))
@@ -117,6 +119,7 @@ export default function App() {
         <Route path="/client-report" element={<Tool><ClientReport /></Tool>} />
         <Route path="/capacity-planner" element={<Tool><CapacityPlanner /></Tool>} />
         <Route path="/timeline-generator" element={<Tool><TimelineGenerator /></Tool>} />
+        <Route path="/deal-pipeline" element={<Tool><DealPipeline /></Tool>} />
         {/* Revenue & Growth */}
         <Route path="/service-configurator" element={<Tool><ServiceConfigurator /></Tool>} />
         <Route path="/revenue-goal" element={<Tool><RevenueGoal /></Tool>} />
@@ -143,6 +146,7 @@ export default function App() {
         <Route path="/lead-magnet-factory" element={<Tool><LeadMagnetFactory /></Tool>} />
         <Route path="/feedback-survey" element={<Tool><FeedbackSurvey /></Tool>} />
         <Route path="/social-calendar" element={<Tool><SocialCalendar /></Tool>} />
+        <Route path="/case-study-generator" element={<Tool><CaseStudyGenerator /></Tool>} />
         {/* Admin */}
         <Route path="/admin" element={<Tool><AdminLogin /></Tool>} />
         <Route path="/admin/dashboard" element={<Tool><AdminDashboard /></Tool>} />

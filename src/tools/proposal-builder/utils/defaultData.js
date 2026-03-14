@@ -79,6 +79,27 @@ export const createEmptyProposal = () => ({
     paymentSchedule: '50-50',
     discount: 0,
     currency: 'USD',
+    tieredPricing: false,
+    tiers: {
+      good: {
+        name: 'Basic',
+        price: 0,
+        turnaround: '2 weeks',
+        deliverables: [],
+      },
+      better: {
+        name: 'Standard',
+        price: 0,
+        turnaround: '1 week',
+        deliverables: [],
+      },
+      best: {
+        name: 'Premium',
+        price: 0,
+        turnaround: '3 days',
+        deliverables: [],
+      },
+    },
   },
   terms: defaultTerms,
 });

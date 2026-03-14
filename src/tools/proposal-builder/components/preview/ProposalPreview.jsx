@@ -291,6 +291,148 @@ const ProposalPreview = () => {
           <div style={{ color: s.heading, fontSize: '11px', fontWeight: 600, marginBottom: '4px' }}>Payment Schedule</div>
           <div style={{ color: s.muted, fontSize: '11px' }}>{scheduleLabels[proposal.pricing.paymentSchedule]}</div>
         </div>
+
+        {/* Tiered Pricing Table */}
+        {proposal.pricing.tieredPricing && proposal.pricing.tiers && (() => {
+          const tiers = proposal.pricing.tiers;
+          const tierKeys = ['good', 'better', 'best'];
+          const goodDels = tiers.good?.deliverables || [];
+          const betterDels = tiers.better?.deliverables || [];
+          const bestDels = tiers.best?.deliverables || [];
+
+          // Compute inherited deliverables for each tier
+          const tierData = {
+            good: { ...tiers.good, allDeliverables: goodDels },
+            better: { ...tiers.better, allDeliverables: [...goodDels, ...betterDels] },
+            best: { ...tiers.best, allDeliverables: [...goodDels, ...betterDels, ...bestDels] },
+          };
+
+          const maxDels = Math.max(
+            tierData.good.allDeliverables.length,
+            tierData.better.allDeliverables.length,
+            tierData.best.allDeliverables.length
+          );
+
+          return (
+            <div style={{ marginTop: '28px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                <div style={{ width: '4px', height: '20px', background: s.accent, borderRadius: '2px' }} />
+                <h3 style={{ color: s.heading, fontSize: '14px', fontWeight: 700, margin: 0 }}>
+                  Package Options
+                </h3>
+              </div>
+              <table style={{ width: '100%', borderCollapse: 'collapse', border: `1px solid ${s.border}`, borderRadius: '8px', overflow: 'hidden' }}>
+                <thead>
+                  <tr>
+                    {tierKeys.map((key) => {
+                      const tier = tierData[key];
+                      const isBetter = key === 'better';
+                      return (
+                        <th
+                          key={key}
+                          style={{
+                            width: '33.33%',
+                            padding: '16px 12px 12px',
+                            textAlign: 'center',
+                            verticalAlign: 'top',
+                            background: isBetter ? s.accent : s.surface,
+                            borderLeft: key !== 'good' ? `1px solid ${s.border}` : 'none',
+                          }}
+                        >
+                          <div style={{
+                            color: isBetter ? (isDark ? '#000' : '#fff') : s.heading,
+                            fontSize: '13px',
+                            fontWeight: 700,
+                            marginBottom: '2px',
+                          }}>
+                            {tier.name || (key === 'good' ? 'Basic' : key === 'better' ? 'Standard' : 'Premium')}
+                            {isBetter && ' \u2605'}
+                          </div>
+                          {isBetter && (
+                            <div style={{
+                              fontSize: '8px',
+                              fontWeight: 700,
+                              textTransform: 'uppercase',
+                              letterSpacing: '1px',
+                              color: isDark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)',
+                              marginBottom: '6px',
+                            }}>
+                              Most Popular
+                            </div>
+                          )}
+                          <div style={{
+                            color: isBetter ? (isDark ? '#000' : '#fff') : s.accent,
+                            fontSize: '20px',
+                            fontWeight: 800,
+                            marginTop: '4px',
+                          }}>
+                            {sym}{(parseFloat(tier.price) || 0).toLocaleString('en-US', { minimumFractionDigits: 0 })}
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* Deliverables rows */}
+                  {Array.from({ length: maxDels }, (_, rowIdx) => (
+                    <tr key={`del-${rowIdx}`} style={{ borderTop: rowIdx === 0 ? `2px solid ${s.accent}` : `1px solid ${s.border}` }}>
+                      {tierKeys.map((key) => {
+                        const del = tierData[key].allDeliverables[rowIdx];
+                        const isBetter = key === 'better';
+                        return (
+                          <td
+                            key={key}
+                            style={{
+                              padding: '7px 12px',
+                              fontSize: '10px',
+                              color: del ? s.text : 'transparent',
+                              borderLeft: key !== 'good' ? `1px solid ${s.border}` : 'none',
+                              background: isBetter ? `${s.accent}08` : 'transparent',
+                            }}
+                          >
+                            {del ? (
+                              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span style={{ color: s.accent, fontSize: '11px' }}>{'\u2713'}</span>
+                                {del.text}
+                              </span>
+                            ) : (
+                              <span>{'\u00A0'}</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                  {/* Turnaround row */}
+                  <tr style={{ borderTop: `2px solid ${s.border}` }}>
+                    {tierKeys.map((key) => {
+                      const tier = tierData[key];
+                      const isBetter = key === 'better';
+                      return (
+                        <td
+                          key={key}
+                          style={{
+                            padding: '10px 12px',
+                            textAlign: 'center',
+                            fontSize: '10px',
+                            fontWeight: 600,
+                            color: s.heading,
+                            borderLeft: key !== 'good' ? `1px solid ${s.border}` : 'none',
+                            background: isBetter ? `${s.accent}08` : s.surface,
+                          }}
+                        >
+                          <div style={{ color: s.muted, fontSize: '9px', fontWeight: 400, marginBottom: '2px' }}>Turnaround</div>
+                          {tier.turnaround || '-'}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Terms */}
