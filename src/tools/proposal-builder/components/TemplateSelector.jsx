@@ -16,8 +16,8 @@ const templates = [
   {
     id: 'colorful',
     name: 'Colorful',
-    desc: 'Bold purple with teal accents',
-    preview: ['#1a0a2e', '#00e5a0', '#251245'],
+    desc: 'Bold violet with indigo accents',
+    preview: ['#1e1b4b', '#8b5cf6', '#312e81'],
   },
 ];
 

@@ -23,9 +23,9 @@ const templateStyles = {
     coverBg: 'linear-gradient(135deg, #ffffff 0%, #f0f4f0 50%, #e8f5e9 100%)',
   },
   colorful: {
-    bg: '#1a0a2e',
-    surface: '#251245',
-    accent: '#00e5a0',
+    bg: '#1e1b4b',
+    surface: '#312e81',
+    accent: '#8b5cf6',
     text: '#e0d8f0',
     muted: '#9988cc',
     border: '#3a2a5a',

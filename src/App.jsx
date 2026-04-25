@@ -1,5 +1,7 @@
 import React, { Suspense, lazy } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import Layout from './components/Layout'
 import LandingPage from './pages/LandingPage'
 import NotFound from './pages/NotFound'
@@ -61,6 +63,9 @@ function Tool({ children }) {
 
 export default function App() {
   return (
+    <>
+    <Analytics />
+    <SpeedInsights />
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<LandingPage />} />
@@ -99,5 +104,6 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
+    </>
   )
 }

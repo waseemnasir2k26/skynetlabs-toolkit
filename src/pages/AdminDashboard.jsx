@@ -12,7 +12,7 @@ const RANGES = [
   { key: '90d', label: '90 Days' },
 ]
 
-const PIE_COLORS = ['#00e5a0', '#06b6d4', '#8b5cf6', '#f59e0b', '#ef4444', '#ec4899', '#10b981', '#6366f1']
+const PIE_COLORS = ['#6366f1', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#f43f5e', '#ec4899', '#3b82f6']
 
 function StatCard({ label, value, sub }) {
   return (
