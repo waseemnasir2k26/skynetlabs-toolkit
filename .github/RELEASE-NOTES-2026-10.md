@@ -1,0 +1,4 @@
+- skynetlabs-toolkit is a public React 18 + Vite single-page app bundling free agency and freelancer tools (proposals, SOWs, contracts, onboarding, project tracking, audits, social planning) under the SkynetLabs brand, with serverless endpoints in api/ and Sentry, PostHog and Vercel analytics wired in.
+- State: no commits since the 2026.09 release (2026-09-16); last functional commit 2026-04-25 (rebrand and monitoring). Application code was not touched.
+- Reviewed October 2026: README, commit history and link check (the README contains no external links); package version bumped 1.1.0 -> 1.2.0; a Work with SkynetLabs section was added.
+- Known gaps: no LICENSE; no tests, lint config or CI; dependency versions were not audited this cycle.
