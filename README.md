@@ -1,42 +1,35 @@
-# skynetlabs-toolkit
+# SkynetLabs Toolkit
 
-A React + Vite single-page app bundling 22 free agency and freelancer tools (proposals, SOWs, contracts, client onboarding, project tracking, website audits, social planning) under one SkynetLabs brand.
+A React single-page app with 22 free tools for freelancers and agencies: proposals, SOWs, contracts, client onboarding (with NDA and e-signature pad), project tracking, website audit, social calendar, cold outreach, lead-magnet factory and more.
 
-## Status
+## Tools
 
-Last reviewed: October 2026 · release v2026.10
+Brand kit generator, brief analyzer, business scorecard, case study generator, client onboarding, client report, cold outreach, content planner, contract generator, email templates, feedback survey, Fiverr gig creator, lead magnet factory, meeting manager, onboarding portal, project tracker, proposal builder, social calendar, social proof manager, SOW generator, subject line tester, website audit.
 
-## Stack
+The list lives in `src/config/tools.js`; each tool is a folder under `src/tools/`.
 
-- React 18 + React Router 6, built with Vite 6
-- Tailwind CSS, Framer Motion, lucide-react, Recharts
-- jsPDF + html2canvas for document export, @dnd-kit for drag-and-drop
-- Sentry, PostHog and Vercel Analytics / Speed Insights (`src/lib/`)
-- Serverless endpoints in `api/` (`auth.js`, `analytics.js`, `track.js`), deployed on Vercel
-
-## Layout
-
-- `src/config/tools.js` — single source of truth for the tool list
-- `src/tools/<tool>/` — one folder per tool
-- `src/tools/shared/` — shared UI primitives and hooks
-- `src/pages/` — landing page, admin login/dashboard, 404
-
-## Local development
+## Run it
 
 ```bash
 npm install
-npm run dev      # vite dev server
-npm run build    # production build
-npm run preview  # preview the build
+cp .env.example .env     # Sentry and PostHog keys are optional
+npm run dev
+npm run build && npm run preview
 ```
 
-Copy `.env.example` to `.env` and fill in the values before running.
+Stack: React 18, Vite 6, React Router 6, Tailwind, Framer Motion, Recharts, jsPDF and html2canvas for PDF export. Deploys to Vercel; `api/` holds three serverless endpoints (`auth`, `analytics`, `track`) for the admin area.
 
+## Privacy note
 
-## Work with SkynetLabs
+The app includes optional Sentry and PostHog hooks and an admin login with analytics. Leave the keys blank to switch monitoring off. Check what each tool stores before you put client data in it.
 
-Built by [Waseem Nasir](https://www.skynetjoe.com/?utm_source=github&utm_medium=readme&utm_campaign=skynetlabs-toolkit) at SkynetLabs — n8n + AI automation for small businesses.
+## Status
 
-- Hire on Fiverr: https://www.fiverr.com/agencies/skynetjoellc
-- Hire on Upwork: https://www.upwork.com/freelancers/muhammadwaseemnasir
-- Book a free call: https://calendly.com/skynetlabs/schedule-a-free-consultation
+Working app, no automated tests in the repo. No license file yet.
+
+For you if: you run a small agency or freelance practice and want browser tools you can host yourself.
+
+---
+
+Need this wired into your business? SkynetLabs builds voice agents, n8n back offices and sites that convert → https://skynetjoe.com
+Contact: info@skynetjoe.com
