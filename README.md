@@ -32,4 +32,4 @@ For you if: you run a small agency or freelance practice and want browser tools 
 ---
 
 Need this wired into your business? SkynetLabs builds voice agents, n8n back offices and sites that convert → https://skynetjoe.com
-Contact: info@skynetjoe.com
+Contact: waseem@skynetjoe.com
